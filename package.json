@@ -2,12 +2,38 @@
   "name": "electron-context-bridge",
   "version": "0.0.1",
   "description": "",
+  "type": "module",
   "main": "./dist/cjs/index.js",
   "module": "./dist/es/index.js",
   "exports": {
+    ".": {
+      "import": {
     "types": "./dist/types/index.d.ts",
-    "import": "./dist/es/index.js",
+        "default": "./dist/es/index.js"
+      },
+      "require": {
     "default": "./dist/cjs/index.js"
+      }
+    },
+    "./main": {
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/es/main.js"
+      },
+      "require": {
+        "default": "./dist/cjs/main.js"
+      }
+    },
+    "./preload": {
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/es/preload.js"
+      },
+      "require": {
+        "default": "./dist/cjs/preload.js"
+      }
+    },
+    "./package.json": "./package.json"
   },
   "types": "./dist/types/index.d.ts",
   "scripts": {

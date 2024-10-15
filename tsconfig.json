@@ -10,6 +10,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts", "**/*.spec.ts"],
+  "include": ["rollup.config.ts", "src/**/*.ts", "**/*.spec.ts"],
   "exclude": ["node_modules/**"]
 }

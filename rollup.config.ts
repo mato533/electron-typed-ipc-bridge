@@ -1,13 +1,16 @@
-import { builtinModules } from 'module'
-import { readFileSync } from 'fs'
+import { builtinModules } from 'node:module'
+import { readFileSync } from 'node:fs'
+import { dirname } from 'node:path'
+
 import typescript from '@rollup/plugin-typescript'
 import copy from 'rollup-plugin-copy'
 import del from 'rollup-plugin-delete'
 import json from '@rollup/plugin-json'
-import { Plugin, WarningHandlerWithDefault } from 'rollup'
+import nodeExternals from 'rollup-plugin-node-externals'
+
+import type { Plugin, WarningHandlerWithDefault } from 'rollup'
 
 const onwarn: WarningHandlerWithDefault = (warning) => {
-  // eslint-disable-next-line no-console
   console.error(
     'Building Rollup produced warnings that need to be resolved. ' +
       'Please keep in mind that the browser build may never have external dependencies!'
@@ -31,7 +34,7 @@ const emitModulePackageFile = (): Plugin => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const defineConfig = (pkg: Record<string, any>) => {
   return {
-    input: 'src/index.ts',
+    input: { index: 'src/index.ts', main: 'src/main.ts', preload: 'src/preload.ts' },
     external: Object.keys(pkg.dependencies || {})
       .concat(Object.keys(pkg.peerDependencies || {}))
       .concat(builtinModules),
@@ -40,26 +43,29 @@ const defineConfig = (pkg: Record<string, any>) => {
     output: [
       {
         format: 'cjs',
-        file: pkg.main,
+        dir: dirname(pkg.main),
         exports: 'named',
         footer: 'module.exports = Object.assign(exports.default, exports);',
         sourcemap: true,
       },
       {
         format: 'es',
-        file: pkg.module,
+        dir: dirname(pkg.module),
         plugins: [emitModulePackageFile()],
         sourcemap: true,
       },
     ],
     plugins: [
-      typescript({ sourceMap: true }),
+      typescript({
+        sourceMap: true,
+      }),
       copy({
         targets: [{ src: 'src/types/index.d.ts', dest: 'dist/types' }],
         verbose: true,
       }),
       del({ targets: 'dist/*', runOnce: true }),
       json(),
+      nodeExternals(),
     ],
   }
 }

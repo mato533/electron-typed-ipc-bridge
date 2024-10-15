@@ -20,6 +20,9 @@ importers:
       '@types/deep-equal':
         specifier: ^1.0.4
         version: 1.0.4
+      '@types/eslint-config-prettier':
+        specifier: ^6.11.3
+        version: 6.11.3
       '@types/eslint__js':
         specifier: ^8.42.3
         version: 8.42.3
@@ -420,6 +423,9 @@ packages:
 
   '@types/deep-equal@1.0.4':
     resolution: {integrity: sha512-tqdiS4otQP4KmY0PR3u6KbZ5EWvhNdUoS/jc93UuK23C220lOZ/9TvjfxdPcKvqwwDVtmtSCrnr0p/2dirAxkA==}
+
+  '@types/eslint-config-prettier@6.11.3':
+    resolution: {integrity: sha512-3wXCiM8croUnhg9LdtZUJQwNcQYGWxxdOWDjPe1ykCqJFPVpzAKfs/2dgSoCtAvdPeaponcWPI7mPcGGp9dkKQ==}
 
   '@types/eslint@9.6.1':
     resolution: {integrity: sha512-FXx2pKgId/WyYo2jXw63kk7/+TY7u7AziEJxJAnSFzHlqTAS3Ync6SvgYAN/k4/PQpnnVuzoMuVnByKK2qp0ag==}
@@ -2188,6 +2194,8 @@ snapshots:
       '@types/responselike': 1.0.3
 
   '@types/deep-equal@1.0.4': {}
+
+  '@types/eslint-config-prettier@6.11.3': {}
 
   '@types/eslint@9.6.1':
     dependencies:

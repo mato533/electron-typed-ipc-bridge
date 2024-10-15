@@ -3,11 +3,12 @@ import js from '@eslint/js'
 import importPlugin from 'eslint-plugin-import'
 import eslintPluginUnicorn from 'eslint-plugin-unicorn'
 import tseslint from 'typescript-eslint'
+import eslintConfigPrettier from 'eslint-config-prettier'
 
 export default [
   js.configs.recommended,
   ...tseslint.configs.recommended,
-  prettierConfig,
+  eslintConfigPrettier,
   {
     files: [
       '**/*.js',
@@ -45,12 +46,6 @@ export default [
       ],
       'vue/require-default-prop': 'off',
       'vue/multi-word-component-names': 'off',
-      'prettier/prettier': [
-        'error',
-        {
-          trailingComma: 'es5',
-        },
-      ],
       'unicorn/prefer-node-protocol': 'error',
       'import/extensions': [
         'error',

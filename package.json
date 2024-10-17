@@ -42,6 +42,7 @@
     "test": "vitest --run",
     "test:watch": "vitest",
     "coverage": "vitest run --coverage",
+    "changelog": "git-cliff -o CHANGELOG.md",
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false",
     "build": "tsc --noEmit && rollup --config rollup.config.ts --configPlugin typescript"
   },
@@ -72,6 +73,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-unicorn": "^56.0.0",
+    "git-cliff": "^2.6.1",
     "prettier": "^3.3.3",
     "rollup": "^4.24.0",
     "rollup-plugin-delete": "^2.1.0",

@@ -3,10 +3,10 @@ import { readFileSync } from 'node:fs'
 import { dirname } from 'node:path'
 
 import typescript from '@rollup/plugin-typescript'
-import copy from 'rollup-plugin-copy'
 import del from 'rollup-plugin-delete'
 import json from '@rollup/plugin-json'
 import nodeExternals from 'rollup-plugin-node-externals'
+import { dts } from 'rollup-plugin-dts'
 
 import type { Plugin, WarningHandlerWithDefault } from 'rollup'
 
@@ -18,6 +18,11 @@ const onwarn: WarningHandlerWithDefault = (warning) => {
   throw Object.assign(new Error(), warning)
 }
 
+const onwarnGenDts: WarningHandlerWithDefault = (warning) => {
+  if (warning.code !== 'UNUSED_EXTERNAL_IMPORT') {
+    console.log(warning.message)
+  }
+}
 const emitModulePackageFile = (): Plugin => {
   return {
     name: 'emit-module-package-file',
@@ -31,43 +36,64 @@ const emitModulePackageFile = (): Plugin => {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const defineConfig = (pkg: Record<string, any>) => {
-  return {
-    input: { index: 'src/index.ts', main: 'src/main.ts', preload: 'src/preload.ts' },
-    external: Object.keys(pkg.dependencies || {})
-      .concat(Object.keys(pkg.peerDependencies || {}))
-      .concat(builtinModules),
-    onwarn,
-    strictDeprecations: true,
-    output: [
-      {
-        format: 'cjs',
-        dir: dirname(pkg.main),
-        exports: 'named',
-        footer: 'module.exports = Object.assign(exports.default, exports);',
-        sourcemap: true,
-      },
-      {
-        format: 'es',
-        dir: dirname(pkg.module),
-        plugins: [emitModulePackageFile()],
-        sourcemap: true,
-      },
-    ],
-    plugins: [
-      typescript({
-        sourceMap: true,
-      }),
-      copy({
-        targets: [{ src: 'src/types/index.d.ts', dest: 'dist/types' }],
+let isDeleted = false
+const getPlugins = (plugins: Plugin[]): Plugin[] => {
+  if (!isDeleted) {
+    isDeleted = true
+    return plugins.concat([
+      del({
+        targets: 'dist/*',
+        runOnce: true,
         verbose: true,
       }),
-      del({ targets: 'dist/*', runOnce: true }),
-      json(),
-      nodeExternals(),
-    ],
+    ])
+  } else {
+    return plugins
   }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const defineConfig = (pkg: Record<string, any>) => {
+  const external = Object.keys(pkg.dependencies || {})
+    .concat(Object.keys(pkg.peerDependencies || {}))
+    .concat(builtinModules)
+  return [
+    {
+      input: { index: 'src/index.ts', main: 'src/main.ts', preload: 'src/preload.ts' },
+      external,
+      onwarn,
+      strictDeprecations: true,
+      output: [
+        {
+          format: 'cjs',
+          dir: dirname(pkg.main),
+          exports: 'named',
+          footer: 'module.exports = Object.assign(exports.default, exports);',
+          sourcemap: true,
+        },
+        {
+          format: 'es',
+          dir: dirname(pkg.module),
+          plugins: [emitModulePackageFile()],
+          sourcemap: true,
+        },
+      ],
+      plugins: getPlugins([
+        typescript({
+          sourceMap: true,
+        }),
+        json(),
+        nodeExternals(),
+      ]),
+    },
+    {
+      input: 'src/types/index.d.ts',
+      output: [{ file: pkg.types }],
+      external,
+      onwarn: onwarnGenDts,
+      plugins: getPlugins([dts(), nodeExternals()]),
+    },
+  ]
 }
 
 export default defineConfig(

@@ -1,6 +1,6 @@
 {
   "name": "electron-typed-ipc-bridge",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Fully typesafe Electron context bridge generator for IPC (Inter-Process Communication).",
   "type": "module",
   "main": "./dist/cjs/index.js",

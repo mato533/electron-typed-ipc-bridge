@@ -67,7 +67,7 @@ async function getApiInvoker() {
   const result = await ipcRenderer.invoke(API_CHANNEL_MAP)
   if (!result) {
     console.debug(`  --> Faild to get mapping for api and channel `)
-    throw new Error(`'electron-context-bridge' is not working correctly`)
+    throw new Error(`'electron-typed-ipc-bridge' is not working correctly`)
   }
 
   let mode: ApiMode

@@ -14,24 +14,20 @@ export type { IpcBridgeApiTypeGenerator } from '../preload'
  */
 export type { IpcBridgeApiSenderTypeGenerator } from '../main'
 
-declare module 'electron-context-bridge/main' {
-  /**
-   * Resister IPC handler(for tow way)
-   * and generate api for send message to renderer process
-   * Use at the main process
-   * @param ipcBridgeApi Implementation for IPC api handlers
-   */
-  export function registerIpcHandler<T extends IpcBridgeApiImplementation>(
-    ipcBridgeApi: T
-  ): IpcBridgeApiSenderTypeGenerator<T>
-}
+/**
+ * Resister IPC handler(for tow way)
+ * and generate api for send message to renderer process
+ * Use at the main process
+ * @param ipcBridgeApi Implementation for IPC api handlers
+ */
+export function registerIpcHandler<T extends IpcBridgeApiImplementation>(
+  ipcBridgeApi: T
+): IpcBridgeApiSenderTypeGenerator<T>
 
-declare module 'electron-context-bridge/preload' {
-  /**
-   * Generate IPC api that will be exposed to renderer process.
-   * Use at the preload sctipt
-   */
-  export function getApiInvoker<
-    T extends IpcContextBridgeApi<IpcBridgeApiImplementation>,
-  >(): Promise<T>
-}
+/**
+ * Generate IPC api that will be exposed to renderer process.
+ * Use at the preload sctipt
+ */
+export function getApiInvoker<
+  T extends IpcContextBridgeApi<IpcBridgeApiImplementation>,
+>(): Promise<T>

@@ -14,7 +14,7 @@ importers:
       '@electron-toolkit/utils':
         specifier: ^3.0.0
         version: 3.0.0(electron@31.7.1)
-      electron-context-bridge:
+      electron-typed-ipc-bridge:
         specifier: link:..
         version: link:..
     devDependencies:

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import { getApiInvoker } from 'electron-context-bridge/preload'
+import { getApiInvoker } from 'electron-typed-ipc-bridge/preload'
 
 import type { IpcBridgeApi } from '../main/api'
 

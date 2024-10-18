@@ -2,7 +2,7 @@ import { join } from 'node:path'
 
 import { app, shell, BrowserWindow } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import { registerIpcHandler } from 'electron-context-bridge/main'
+import { registerIpcHandler } from 'electron-typed-ipc-bridge/main'
 
 import icon from '../../resources/icon.png?asset'
 import { api } from './api'

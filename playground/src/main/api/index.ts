@@ -3,7 +3,7 @@ import { getContextMenuHandler } from './showContextMenu'
 import type {
   IpcBridgeApiSenderTypeGenerator,
   IpcBridgeApiTypeGenerator
-} from 'electron-context-bridge'
+} from 'electron-typed-ipc-bridge'
 
 export const api = {
   invoke: {
@@ -17,4 +17,3 @@ export const api = {
 
 export type IpcSenderType = IpcBridgeApiSenderTypeGenerator<typeof api>
 export type IpcBridgeApi = IpcBridgeApiTypeGenerator<typeof api>
-// export type IpcBridgeApi = I

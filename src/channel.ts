@@ -60,4 +60,10 @@ function getApiChannelMap(apiHandlers: IpcBridgeApiImplementation) {
   return _getApiChannelMap(apiHandlers)
 }
 
-export { getApiChannelMap }
+const MODE = {
+  invoke: 0,
+  on: 1,
+} as const
+export type ApiMode = (typeof MODE)[keyof typeof MODE]
+
+export { getApiChannelMap, MODE }

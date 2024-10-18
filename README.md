@@ -1,4 +1,4 @@
-# electron-context-bridge
+# electron-typed-ipc-bridge
 
 Generate api on the bridge across isolated contexts of the electron.
 
@@ -7,7 +7,7 @@ Generate api on the bridge across isolated contexts of the electron.
 ## install
 
 ```
-npm install --save-dev electron-context-bridge
+npm install --save-dev electron-typed-ipc-bridge
 ```
 
 # Implimentation

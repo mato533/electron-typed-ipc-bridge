@@ -59,7 +59,12 @@ const defineConfig = (pkg: Record<string, any>) => {
     .concat(builtinModules)
   return [
     {
-      input: { index: 'src/index.ts', main: 'src/main.ts', preload: 'src/preload.ts' },
+      input: {
+        index: 'src/index.ts',
+        main: 'src/main.ts',
+        preload: 'src/preload.ts',
+        channel: 'src/channel.ts',
+      },
       external,
       onwarn,
       strictDeprecations: true,

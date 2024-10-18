@@ -1,6 +1,6 @@
 import { ipcMain } from 'electron'
 
-import { API_CHANNEL_MAP, getApiChannelMap } from './channel'
+import { API_CHANNEL_MAP, getApiChannelMap, MODE } from './channel'
 
 import type { BrowserWindow } from 'electron'
 import type {
@@ -9,17 +9,12 @@ import type {
   ApiHandler,
   ApiOnFunction,
   ApiOnHandler,
+  ApiMode,
 } from './channel'
 
 const isApiFunction = (value: unknown): value is ApiFunction => {
   return typeof value === 'function' ? true : false
 }
-
-const MODE = {
-  invoke: 0,
-  on: 1,
-} as const
-export type ApiMode = (typeof MODE)[keyof typeof MODE]
 
 type IpcBridgeApiSenderTypeConverter<T extends ApiOnHandler> = {
   [K in keyof T]: T[K] extends ApiFunction
@@ -104,4 +99,4 @@ function registerIpcHandler(ipcBridgeApi: IpcBridgeApiImplementation) {
   return _registerIpcHandler()
 }
 
-export { registerIpcHandler, MODE }
+export { registerIpcHandler }

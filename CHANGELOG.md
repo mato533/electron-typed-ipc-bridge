@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.7] - 2024-10-18
+
+### ⚙️ Miscellaneous Tasks
+
 ## [0.0.6] - 2024-10-18
 
 ### ⚙️ Miscellaneous Tasks

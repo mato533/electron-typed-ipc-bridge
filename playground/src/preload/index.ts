@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
+import { getApiInvoker } from 'electron-context-bridge/preload'
+
+import type { IpcBridgeApi } from '../main/api'
 
 // Custom APIs for renderer
-const api = {}
+const api = await getApiInvoker<IpcBridgeApi>()
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise

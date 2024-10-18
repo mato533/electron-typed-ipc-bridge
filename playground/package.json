@@ -2,6 +2,7 @@
   "name": "electron-app",
   "version": "1.0.0",
   "description": "An Electron application with Vue and TypeScript",
+  "type": "module",
   "main": "./out/main/index.js",
   "author": "example.com",
   "homepage": "https://electron-vite.org",
@@ -22,7 +23,8 @@
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
-    "@electron-toolkit/utils": "^3.0.0"
+    "@electron-toolkit/utils": "^3.0.0",
+    "electron-context-bridge": "link:.."
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^1.0.2",

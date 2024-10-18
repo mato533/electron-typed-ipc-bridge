@@ -1,11 +1,16 @@
 import { join } from 'node:path'
 
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { registerIpcHandler } from 'electron-context-bridge/main'
 
 import icon from '../../resources/icon.png?asset'
+import { api } from './api'
+import { setMenu } from './menu'
 
-function createWindow(): void {
+import type { IpcSenderType } from './api'
+
+function createWindow(api: IpcSenderType): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
@@ -14,10 +19,12 @@ function createWindow(): void {
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
+      preload: join(__dirname, '../preload/index.mjs'),
       sandbox: false
     }
   })
+
+  setMenu(mainWindow, api)
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
@@ -52,14 +59,14 @@ app.whenReady().then(() => {
   })
 
   // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  const ipcApi = registerIpcHandler(api)
 
-  createWindow()
+  createWindow(ipcApi)
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+    if (BrowserWindow.getAllWindows().length === 0) createWindow(ipcApi)
   })
 })
 

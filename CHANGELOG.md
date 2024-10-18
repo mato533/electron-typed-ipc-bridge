@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.6] - 2024-10-18
+
+### ⚙️ Miscellaneous Tasks
+
+- Add the option --no-git-checks when pnpm publish ([#8](https://github.com/mato533/electron-typed-ipc-bridge/issues/8))
+
 ## [0.0.5] - 2024-10-18
 
 ### 🚀 Features

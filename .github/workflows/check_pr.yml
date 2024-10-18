@@ -120,6 +120,9 @@ jobs:
 
           echo "-- after"
           cat package.json|grep version
+          echo "Update changelog"
+          pnpm run changelog --tag ${APP_VERSION}
+          pnpm exec prettier --write CHANGELOG.md
 
       - name: Check if there are any changes
         id: check-changes-package-json

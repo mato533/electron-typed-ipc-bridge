@@ -7,7 +7,7 @@ export default defineConfig({
     globals: true,
     reporters: 'verbose',
     coverage: {
-      exclude: ['src/index.ts', ...coverageConfigDefaults.exclude],
+      exclude: ['src/index.ts', 'playground/*', ...coverageConfigDefaults.exclude],
     },
   },
   resolve: {

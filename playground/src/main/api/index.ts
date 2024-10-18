@@ -1,5 +1,6 @@
 import { getContextMenuHandler } from './showContextMenu'
 
+import type { IpcMainInvokeEvent } from 'electron'
 import type {
   IpcBridgeApiSenderTypeGenerator,
   IpcBridgeApiTypeGenerator
@@ -8,6 +9,10 @@ import type {
 export const api = {
   invoke: {
     ping: () => console.log('pong'),
+    culc: {
+      add: (_event: IpcMainInvokeEvent, arg0: number, arg1: number) => arg0 + arg1,
+      minus: (_event: IpcMainInvokeEvent, arg0: number, arg1: number) => arg0 - arg1
+    },
     showContextMenu: getContextMenuHandler()
   },
   on: {

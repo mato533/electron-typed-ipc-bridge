@@ -19,9 +19,14 @@ body = """
 {% else %}\
     ## [unreleased]
 {% endif %}\
-{% for group, commits in commits | group_by(attribute="group") %}
+{% for group, commits in commits | filter(attribute="merge_commit", value=false) | group_by(attribute="group") %}
     ### {{ group | striptags | trim | upper_first }}
     {% for commit in commits %}
+        {% if commit.message is matching("\\[(\\w+\\s)?#([0-9]+)\\]") %}\
+            {# pass #}\
+        {% else %}\
+            {% continue %}\
+        {% endif %}\
         - {% if commit.scope %}*({{ commit.scope }})* {% endif %}\
             {% if commit.breaking %}[**breaking**] {% endif %}\
             {{ commit.message | upper_first }}\

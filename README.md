@@ -1,3 +1,4 @@
+[![npm version](https://badge.fury.io/js/electron-typed-ipc-bridge.svg)](https://badge.fury.io/js/electron-typed-ipc-bridge)
 [![Run Test](https://github.com/mato533/electron-typed-ipc-bridge/actions/workflows/test.yml/badge.svg)](https://github.com/mato533/electron-typed-ipc-bridge/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/mato533/electron-typed-ipc-bridge/graph/badge.svg?token=T4ICAR3SCF)](https://codecov.io/gh/mato533/electron-typed-ipc-bridge)
 [![GitHub](https://img.shields.io/github/license/mato533/rollup-plugin-gas)](https://github.com/mato533/rollup-plugin-gas/blob/main/LICENSE)

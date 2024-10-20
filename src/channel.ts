@@ -42,10 +42,16 @@ export type ApiChannelMapGenerator<T extends IpcBridgeApiImplementation> = {
   invoke: ApiChannelMapItemTypeGenerator<T['invoke']>
 }
 
+let channelMap = undefined
+
 function getApiChannelMap<T extends IpcBridgeApiImplementation>(
   apiHandlers: T
 ): ApiChannelMapGenerator<T>
 function getApiChannelMap(apiHandlers: IpcBridgeApiImplementation) {
+  if (channelMap) {
+    return channelMap
+  }
+
   const _getApiChannelMap = (apiHandler: ApiHandler) => {
     const channelMap: ApiChannelMapItem = {}
     Object.keys(apiHandler).forEach((key) => {
@@ -57,7 +63,8 @@ function getApiChannelMap(apiHandlers: IpcBridgeApiImplementation) {
     })
     return channelMap
   }
-  return _getApiChannelMap(apiHandlers)
+  channelMap = _getApiChannelMap(apiHandlers)
+  return channelMap
 }
 
 const MODE = {

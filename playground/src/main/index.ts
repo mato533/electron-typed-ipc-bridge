@@ -2,7 +2,7 @@ import { join } from 'node:path'
 
 import { app, shell, BrowserWindow } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import { registerIpcHandler } from 'electron-typed-ipc-bridge/main'
+import { getIpcApiEmitter, registerIpcHandler } from 'electron-typed-ipc-bridge/main'
 
 import icon from '../../resources/icon.png?asset'
 import { api } from './api'
@@ -59,7 +59,9 @@ app.whenReady().then(() => {
   })
 
   // IPC test
-  const ipcApi = registerIpcHandler(api)
+  registerIpcHandler(api)
+
+  const ipcApi = getIpcApiEmitter(api)
 
   createWindow(ipcApi)
 

@@ -97,7 +97,7 @@ jobs:
 
       - name: Generate changelog
         run: |
-          pnpm run changelog -c github
+          pnpm run changelog -c cliff-github.toml
           pnpm exec prettier --write CHANGELOG.md
 
       - name: Create Release

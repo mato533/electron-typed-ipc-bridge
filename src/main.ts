@@ -88,7 +88,6 @@ function createhandler(ipcBridgeApi: IpcBridgeApiImplementation, mode: ApiMode) 
             break
           case MODE.on: {
             const _api = api[key] as ApiOnFunction
-            console.log(`=====${key}`)
             sender[senderKey] = (window: BrowserWindow, ...args: Parameters<typeof _api>) => {
               window.webContents.send(apiInfo[key], _api(...args))
             }

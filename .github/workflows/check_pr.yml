@@ -106,7 +106,7 @@ jobs:
             style: format and lint source codes
 
             [AUTO] this commit is created by github actions automatialy.
-            EOF
+          EOF
             RESULT="${VAR_NAME_FOR_CHANGED}=1"
           fi
           echo "${RESULT}">>"${GITHUB_OUTPUT}"
@@ -144,7 +144,7 @@ jobs:
             chore: update version of package.json
 
             [AUTO] this commit is created by github actions automatialy.
-            EOF
+          EOF
             RESULT="${VAR_NAME_FOR_CHANGED}=1"
           fi
           echo "${RESULT}">>"${GITHUB_OUTPUT}"

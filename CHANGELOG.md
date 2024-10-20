@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.0] - 2024-10-20
+
+### 🚀 Features
+
+- Split functon register and emmiter at main process ([#23](https://github.com/mato533/electron-typed-ipc-bridge/issues/23))
+
+### 📚 Documentation
+
+- Add git-cliff config for github release note ([#22](https://github.com/mato533/electron-typed-ipc-bridge/issues/22))
+
 ## [0.0.10] - 2024-10-20
 
 ### 🐛 Bug Fixes
@@ -13,6 +23,7 @@ All notable changes to this project will be documented in this file.
 - Update release workflow ([#13](https://github.com/mato533/electron-typed-ipc-bridge/issues/13))
 - Fix undefinde env ([#19](https://github.com/mato533/electron-typed-ipc-bridge/issues/19))
 - Fix mismatch of condition and command ([#20](https://github.com/mato533/electron-typed-ipc-bridge/issues/20))
+- _(release)_ V0.0.10 ([#21](https://github.com/mato533/electron-typed-ipc-bridge/issues/21))
 
 ## [0.0.9] - 2024-10-18
 

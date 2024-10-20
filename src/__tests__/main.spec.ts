@@ -1,5 +1,5 @@
 import { API_CHANNEL_MAP } from '../channel'
-import { registerIpcHandler } from '../main'
+import { getIpcApiEmitter, registerIpcHandler } from '../main'
 
 import type { BrowserWindow, IpcMainInvokeEvent } from 'electron'
 
@@ -95,7 +95,7 @@ describe('main', () => {
         send: mockSend,
       },
     } as unknown as BrowserWindow
-    const api = registerIpcHandler(_apiHandlers)
+    const api = getIpcApiEmitter(_apiHandlers)
 
     const lastArgs = mocks.ipcMain.handle.mock.calls[0]
     expect(lastArgs[0]).toBe(API_CHANNEL_MAP)

@@ -1,7 +1,7 @@
 import type { BrowserWindow, IpcMainInvokeEvent, IpcRendererEvent } from 'electron'
 import type { RemoveEventArg, IpcBridgeApiTypeGenerator, IpcBridgeApiInvoker } from '../preload'
 import type { ApiChannelMapGenerator } from '../channel'
-import type { IpcBridgeApiSenderTypeGenerator } from '../main'
+import type { IpcBridgeApiEmitterTypeGenerator } from '../main'
 
 describe('Type check', () => {
   it('RemoveEventArg', () => {
@@ -83,7 +83,7 @@ describe('Type check', () => {
         },
       }
 
-      type TestTarget = IpcBridgeApiSenderTypeGenerator<typeof _apiHandlers>
+      type TestTarget = IpcBridgeApiEmitterTypeGenerator<typeof _apiHandlers>
       type ExpectedType = {
         send: {
           fn1: (window: BrowserWindow, arg1: string) => void
@@ -105,7 +105,7 @@ describe('Type check', () => {
         },
       }
 
-      type TestTarget = IpcBridgeApiSenderTypeGenerator<typeof _apiHandlers>
+      type TestTarget = IpcBridgeApiEmitterTypeGenerator<typeof _apiHandlers>
 
       expectTypeOf<undefined>().toEqualTypeOf<TestTarget>()
     })
@@ -122,7 +122,7 @@ describe('Type check', () => {
         },
       }
 
-      type TestTarget = IpcBridgeApiSenderTypeGenerator<typeof _apiHandlers>
+      type TestTarget = IpcBridgeApiEmitterTypeGenerator<typeof _apiHandlers>
       type ExpectedType = {
         send: {
           fn1: (window: BrowserWindow, arg1: string) => void

@@ -102,7 +102,11 @@ jobs:
           else
             echo "Changes detected."
             git add .
-            git commit -m "style: format and lint source codes" -m "[AUTO]"
+            git commit -F-<<EOF
+            style: format and lint source codes
+
+            [AUTO] this commit is created by github actions automatialy.
+          EOF
             RESULT="${VAR_NAME_FOR_CHANGED}=1"
           fi
           echo "${RESULT}">>"${GITHUB_OUTPUT}"
@@ -136,42 +140,18 @@ jobs:
           else
             echo "Changes detected."
             git add .
-            git commit -m "chore: update version of package.json" -m "[AUTO]"
-            RESULT="${VAR_NAME_FOR_CHANGED}=1"
-          fi
-          echo "${RESULT}">>"${GITHUB_OUTPUT}"
-          echo "${RESULT}"
+            git commit -F-<<EOF
+            chore: update version of package.json
 
-      - name: Generate a changelog
-        env:
-          APP_VERSION: ${{ needs.get-version.outputs.app-version }}
-        run: |
-          echo "Update changelog"
-          pnpm run changelog --tag ${APP_VERSION}
-          pnpm exec prettier --write CHANGELOG.md
-
-      - name: Check if there are any changes
-        id: check-changes-changelog
-        env:
-          GH_TOKEN: ${{ steps.app-token.outputs.token }}
-          IS_CHANGED: ${{ steps.check-changes-package-json.outputs.done-change }}
-        run: |
-          git add -N .
-          OLD_VALUE="${IS_CHANGED}"
-          if git diff --exit-code --quiet; then
-            echo "No changes detected."
-            RESULT="${VAR_NAME_FOR_CHANGED}=${OLD_VALUE}"
-          else
-            echo "Changes detected."
-            git add .
-            git commit -m "chore: update CHANGELOG.md" -m "[AUTO]"
+            [AUTO] this commit is created by github actions automatialy.
+          EOF
             RESULT="${VAR_NAME_FOR_CHANGED}=1"
           fi
           echo "${RESULT}">>"${GITHUB_OUTPUT}"
           echo "${RESULT}"
 
       - name: push
-        if: ${{ steps.check-changes-changelog.outputs.done-change > 0 }}
+        if: ${{ steps.check-changes-package-json.outputs.done-change > 0 }}
         env:
           GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: git push
@@ -179,7 +159,7 @@ jobs:
       - name: Set the output
         id: result
         env:
-          IS_UPDATED: '${{ steps.check-changes-changelog.outputs.done-change }}'
+          IS_UPDATED: '${{ steps.check-changes-package-json.outputs.done-change }}'
         run: |
           RESULT="is-updated=${IS_UPDATED}"
           echo "${RESULT}">>"${GITHUB_OUTPUT}"

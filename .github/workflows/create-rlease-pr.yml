@@ -93,12 +93,14 @@ jobs:
           fi
 
       - name: Checkout new repository
+        id: create-repository
         env:
           APP_VERSION: ${{steps.identify-version.outputs.app-version}}
           APP_VERSION_TEXT: ${{steps.identify-version.outputs.app-version-text}}
         run: |
           BRANCH_NAME="release/${APP_VERSION_TEXT}"
           git checkout -b "${BRANCH_NAME}"
+          echo "branch-name=${BRANCH_NAME}" >>"${GITHUB_OUTPUT}"
 
       - name: Update the changelog
         env:
@@ -126,6 +128,8 @@ jobs:
           [AUTO] this commit is created by github actions automatialy.
           EOF
       - name: Push commits
+        env:
+          BRANCH_NAME: ${{ steps.create-repository.outputs.branch-name }}
         run: |
           git push -u origin "${BRANCH_NAME}"
 

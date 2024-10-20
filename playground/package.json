@@ -8,7 +8,7 @@
   "homepage": "https://electron-vite.org",
   "scripts": {
     "format": "prettier --write .",
-    "lint": "eslint . --ext .js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts,.vue --fix",
+    "lint": "eslint . --fix",
     "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
     "typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
     "typecheck": "npm run typecheck:node && npm run typecheck:web",
@@ -38,7 +38,7 @@
     "electron": "^33.0.1",
     "electron-builder": "^25.1.8",
     "electron-vite": "^2.3.0",
-    "eslint": "^8.57.1",
+    "eslint": "^9.13.0",
     "eslint-plugin-vue": "^9.29.0",
     "prettier": "^3.3.3",
     "typescript": "^5.6.3",

@@ -66,7 +66,7 @@ jobs:
               ;;
             patch)
               echo "Bumping patch version"
-              pnpm version minor --no-commit-hooks --no-git-tag-version
+              pnpm version patch --no-commit-hooks --no-git-tag-version
               ;;
           esac
 

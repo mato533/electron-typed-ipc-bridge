@@ -1,4 +1,4 @@
-import { randomUUID } from 'node:crypto'
+import { genUUID } from './utils/uuid'
 
 import type { IpcMainInvokeEvent } from 'electron'
 
@@ -44,11 +44,14 @@ export type ApiChannelMapGenerator<T extends IpcBridgeApiImplementation> = {
 
 let channelMap = undefined
 
-function haveSameStructure(obj1, obj2) {
+export function haveSameStructure<T extends IpcBridgeApiImplementation>(
+  obj1: T,
+  obj2: ApiChannelMapGenerator<T>
+) {
   if (!obj1 || !obj2) {
     return false
   }
-  if (typeof obj1 !== 'object' && typeof obj2 !== 'object') {
+  if (typeof obj1 === 'function' && typeof obj2 === 'string') {
     return true
   }
   if (typeof obj1 !== 'object' || typeof obj2 !== 'object') {
@@ -79,7 +82,7 @@ function getApiChannelMap(apiHandlers: IpcBridgeApiImplementation) {
       if (typeof apiHandler[key] === 'object') {
         channelMap[key] = _getApiChannelMap(apiHandler[key])
       } else {
-        channelMap[key] = randomUUID()
+        channelMap[key] = genUUID()
       }
     })
     return channelMap

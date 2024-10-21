@@ -2,13 +2,14 @@ import { join } from 'node:path'
 
 import { app, shell, BrowserWindow } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import { getIpcApiEmitter, registerIpcHandler } from 'electron-typed-ipc-bridge/main'
+import { getIpcApiEmitter, initialise, registerIpcHandler } from 'electron-typed-ipc-bridge/main'
 
 import icon from '../../resources/icon.png?asset'
 import { api } from './api'
 import { setMenu } from './menu'
 
 import type { IpcSenderType } from './api'
+import { MyLogger } from './logger'
 
 function createWindow(api: IpcSenderType): void {
   // Create the browser window.
@@ -59,6 +60,9 @@ app.whenReady().then(() => {
   })
 
   // IPC test
+  initialise({ logger: { main: new MyLogger() } })
+  // if disable looging, pass the empty object
+  // initialise({ logger: {} })
   registerIpcHandler(api)
 
   const ipcApi = getIpcApiEmitter(api)

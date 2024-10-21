@@ -10,8 +10,14 @@ export const api = {
   invoke: {
     ping: () => console.log('pong'),
     culc: {
-      add: (_event: IpcMainInvokeEvent, arg0: number, arg1: number) => arg0 + arg1,
-      minus: (_event: IpcMainInvokeEvent, arg0: number, arg1: number) => arg0 - arg1
+      add: async (_event: IpcMainInvokeEvent, arg0: number, arg1: number) => {
+        console.log(`arg0: ${arg0}, arg1:${arg1}`)
+        return arg0 + arg1
+      },
+      minus: async (_event: IpcMainInvokeEvent, arg0: number, arg1: number) => {
+        console.log(`arg0: ${arg0}, arg1: ${arg1}`)
+        return arg0 - arg1
+      }
     },
     showContextMenu: getContextMenuHandler()
   },

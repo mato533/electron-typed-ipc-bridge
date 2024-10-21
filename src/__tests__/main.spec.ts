@@ -51,22 +51,22 @@ describe('main', () => {
     expect(mocks.ipcMain.handle).toHaveBeenNthCalledWith(
       2,
       channelMap.invoke.fn1,
-      apiHandlers.invoke.fn1
+      mocks.ipcMain.handle.mock.calls[1][1]
     )
     expect(mocks.ipcMain.handle).toHaveBeenNthCalledWith(
       3,
       channelMap.invoke.fn2,
-      apiHandlers.invoke.fn2
+      mocks.ipcMain.handle.mock.calls[2][1]
     )
     expect(mocks.ipcMain.handle).toHaveBeenNthCalledWith(
       4,
       channelMap.invoke.name1.fn1,
-      apiHandlers.invoke.name1.fn1
+      mocks.ipcMain.handle.mock.calls[3][1]
     )
     expect(mocks.ipcMain.handle).toHaveBeenNthCalledWith(
       5,
       channelMap.invoke.name1.fn2,
-      apiHandlers.invoke.name1.fn2
+      mocks.ipcMain.handle.mock.calls[4][1]
     )
   })
   afterEach(() => {

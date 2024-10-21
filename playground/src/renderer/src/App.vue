@@ -3,6 +3,11 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import Versions from './components/Versions.vue'
 
 const ipcHandle = () => window.api.invoke.ping()
+const ipcHandleAdd = async () => {
+  counter.value = await window.api.invoke.culc.add(counter.value, 2)
+}
+const ipcHandleMinus = async () =>
+  (counter.value = await window.api.invoke.culc.minus(counter.value, 2))
 const counter = ref(0)
 const handler = (event: MouseEvent) => {
   event.preventDefault()
@@ -36,6 +41,12 @@ onBeforeUnmount(() => {
     </div>
     <div class="action">
       <a target="_blank" rel="noreferrer" @click="ipcHandle">Send IPC</a>
+    </div>
+    <div class="action">
+      <a target="_blank" rel="noreferrer" @click="ipcHandleAdd">Add 2 to counter</a>
+    </div>
+    <div class="action">
+      <a target="_blank" rel="noreferrer" @click="ipcHandleMinus">Minus 2 to counter</a>
     </div>
   </div>
   <p class="tip">Please try right click and test message menu. Updated below counter</p>

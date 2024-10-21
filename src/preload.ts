@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron'
 
 import { API_CHANNEL_MAP, MODE } from './channel'
+import { AbstractLogger, initialise, preloadLogger } from './utils/logger'
 
 import type { IpcMainInvokeEvent, IpcRendererEvent } from 'electron'
 import type { ApiHandler, IpcBridgeApiImplementation, ApiMode } from './channel'
@@ -63,50 +64,58 @@ export type IpcContextBridgeApi<T extends IpcBridgeApiImplementation> =
 
 function getApiInvoker<T extends IpcContextBridgeApi<IpcBridgeApiImplementation>>(): Promise<T>
 async function getApiInvoker() {
-  console.debug('Generation IpcBridgeAPI Invoker is stated.')
+  preloadLogger.info('Generation IpcBridgeAPI is stated.')
   const result = await ipcRenderer.invoke(API_CHANNEL_MAP)
   if (!result) {
-    console.debug(`  --> Faild to get mapping for api and channel `)
+    preloadLogger.error(`  --> Faild to get mapping for api and channel `)
     throw new Error(`'electron-typed-ipc-bridge' is not working correctly`)
   }
 
   let mode: ApiMode
-  const _getApiInvoker = (apiChannelMap: ApiChannelMap, level = 0) => {
+  const _getApiInvoker = (apiChannelMap: ApiChannelMap, level = 0, path: string[] = []) => {
     const apiInvoker = {}
     Object.keys(apiChannelMap).forEach((key) => {
       if (level === 0) {
         mode = MODE[key]
       }
 
-      const value = apiChannelMap[key]
-      if (typeof value === 'object') {
-        console.debug(`${'  '.repeat(level)} - ${key}`)
-        apiInvoker[key] = _getApiInvoker(value, level + 1)
+      const channel = apiChannelMap[key]
+      const _path = path.concat([key])
+      if (typeof channel === 'object') {
+        preloadLogger.debug(`${'  '.repeat(level)} - ${key}`)
+        apiInvoker[key] = _getApiInvoker(channel, level + 1, _path)
       } else {
-        console.debug(`${'  '.repeat(level)} - ${key} (chanel: ${value})`)
+        preloadLogger.debug(`${'  '.repeat(level)} - ${key} (chanel: ${channel})`)
         switch (mode) {
           case MODE.invoke:
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             apiInvoker[key] = (...args: any[]) => {
-              return ipcRenderer.invoke(value, ...args)
+              preloadLogger.silly(`called from renderer: ${_path.join('.')} (chanel: ${channel})`)
+              return ipcRenderer.invoke(channel, ...args)
             }
             break
           case MODE.on:
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             apiInvoker[key] = (callback: (event: IpcRendererEvent, arg0: any) => void) =>
-              ipcRenderer.on(value, (event, value) => callback(event, value))
+              ipcRenderer.on(channel, (event, value) => {
+                preloadLogger.silly(
+                  `recive message from main: ${_path.join('.')} (chanel: ${channel})`
+                )
+                callback(event, value)
+              })
             break
           default:
-            throw new Error(`implimentation error: ${value}`)
+            preloadLogger.error(`implimentation error: ${_path.join('.')} (chanel: ${channel}`)
+            throw new Error(`implimentation error: ${_path.join('.')} (chanel: ${channel}`)
         }
       }
     })
     if (level === 0) {
-      console.debug(`  --> Finish`)
+      preloadLogger.info(`Finish`)
     }
     return apiInvoker
   }
   return _getApiInvoker(result)
 }
 
-export { getApiInvoker }
+export { getApiInvoker, initialise, AbstractLogger }

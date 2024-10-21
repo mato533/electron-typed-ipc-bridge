@@ -1,6 +1,7 @@
 import { ipcMain } from 'electron'
 
 import { API_CHANNEL_MAP, getApiChannelMap, MODE } from './channel'
+import { AbstractLogger, initialise, mainLogger } from './utils/logger'
 
 import type { BrowserWindow } from 'electron'
 import type {
@@ -10,6 +11,7 @@ import type {
   ApiOnFunction,
   ApiOnHandler,
   ApiMode,
+  ApiInvokeFunction,
 } from './channel'
 
 const isApiFunction = (value: unknown): value is ApiFunction => {
@@ -53,11 +55,13 @@ function createhandler(ipcBridgeApi: IpcBridgeApiImplementation, mode: ApiMode) 
   const channelMap = getApiChannelMap(ipcBridgeApi)
 
   let _mode: ApiMode
-  const _registerIpcHandler = (api: ApiHandler = ipcBridgeApi, apiInfo = channelMap, level = 0) => {
+  const _registerIpcHandler = (
+    api: ApiHandler = ipcBridgeApi,
+    apiInfo = channelMap,
+    level = 0,
+    path: string[] = []
+  ) => {
     const keys = Object.keys(apiInfo)
-    if (level === 0) {
-      console.debug('IpcBridgeAPI registration is stated.')
-    }
     const sender = {}
     keys.forEach((key) => {
       if (level === 0) {
@@ -66,50 +70,67 @@ function createhandler(ipcBridgeApi: IpcBridgeApiImplementation, mode: ApiMode) 
           return
         }
       }
+      if (level === 0) {
+        mainLogger.info(
+          _mode === MODE.invoke
+            ? 'IpcBridgeAPI registration is stated.'
+            : 'Generateing IpcBrigeApi Emitter is started'
+        )
+      }
       const senderKey = level === 0 ? 'send' : key
+      const _path = path.concat([key])
 
       if (typeof apiInfo[key] === 'object' && !isApiFunction(api[key])) {
-        console.debug(`${'  '.repeat(level)} - ${key}`)
+        mainLogger.debug(`${'  '.repeat(level)} - ${key}`)
         switch (_mode) {
           case MODE.invoke:
-            _registerIpcHandler(api[key], apiInfo[key], level + 1)
+            _registerIpcHandler(api[key], apiInfo[key], level + 1, _path)
             break
           case MODE.on:
-            sender[senderKey] = _registerIpcHandler(api[key], apiInfo[key], level + 1)
+            sender[senderKey] = _registerIpcHandler(api[key], apiInfo[key], level + 1, _path)
             break
           default:
             throw new Error(`implimentation error: ${apiInfo[key]}`)
         }
       } else if (typeof apiInfo[key] !== 'object' && isApiFunction(api[key])) {
-        console.debug(`${'  '.repeat(level)} - ${key} (chanel: ${apiInfo[key]})`)
+        mainLogger.debug(`${'  '.repeat(level)} - ${key} (chanel: ${apiInfo[key]})`)
         switch (_mode) {
-          case MODE.invoke:
-            ipcMain.handle(apiInfo[key], api[key])
+          case MODE.invoke: {
+            const _api = api[key] as ApiInvokeFunction
+            ipcMain.handle(apiInfo[key], (...args) => {
+              mainLogger.silly(`called from renderer: ${_path.join('.')} (channel:${apiInfo[key]})`)
+              return _api(...args)
+            })
             break
+          }
           case MODE.on: {
             const _api = api[key] as ApiOnFunction
             sender[senderKey] = (window: BrowserWindow, ...args: Parameters<typeof _api>) => {
+              mainLogger.silly(`send to renderer: ${_path.join('.')} (channel::${apiInfo[key]})`)
               window.webContents.send(apiInfo[key], _api(...args))
             }
             break
           }
           default:
-            throw new Error(`implimentation error: ${apiInfo[key]}`)
+            mainLogger.error(`implimentation error: ${_path.join('.')} (channel::${apiInfo[key]})`)
+            throw new Error(`implimentation error: ${_path.join('.')} (channel::${apiInfo[key]})`)
         }
       } else {
-        throw new Error(`implimentation error: ${apiInfo[key]}`)
+        mainLogger.error(`implimentation error: ${_path.join('.')} (channel::${apiInfo[key]})`)
+        throw new Error(`implimentation error: ${_path.join('.')} (channel::${apiInfo[key]})`)
       }
     })
 
     if (level === 0) {
-      console.debug(`  --> Finish`)
+      mainLogger.debug(`Finish`)
     }
     return sender
   }
   if (mode === MODE.invoke) {
+    mainLogger.debug(`API handler for channel map is resistred (chanel: ${API_CHANNEL_MAP})`)
     ipcMain.handle(API_CHANNEL_MAP, () => channelMap)
   }
   return _registerIpcHandler()
 }
 
-export { registerIpcHandler, getIpcApiEmitter }
+export { registerIpcHandler, getIpcApiEmitter, initialise, AbstractLogger }

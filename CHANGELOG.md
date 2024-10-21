@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2024-10-21
+
+### 🚀 Features
+
+- Add logging functions ([#27](https://github.com/mato533/electron-typed-ipc-bridge/issues/27))
+
+### 🧪 Testing
+
+- Add tests for functions about channelmap ([#26](https://github.com/mato533/electron-typed-ipc-bridge/issues/26))
+
+### ⚙️ Miscellaneous Tasks
+
+- Update env at build workflow for git-cliff ([#25](https://github.com/mato533/electron-typed-ipc-bridge/issues/25))
+
 ## [1.0.0] - 2024-10-20
 
 ### 🚀 Features
@@ -11,6 +25,10 @@ All notable changes to this project will be documented in this file.
 ### 📚 Documentation
 
 - Add git-cliff config for github release note ([#22](https://github.com/mato533/electron-typed-ipc-bridge/issues/22))
+
+### ⚙️ Miscellaneous Tasks
+
+- _(release)_ V1.0.0 ([#24](https://github.com/mato533/electron-typed-ipc-bridge/issues/24))
 
 ## [0.0.10] - 2024-10-20
 

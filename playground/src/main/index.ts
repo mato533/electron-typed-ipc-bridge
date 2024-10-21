@@ -7,9 +7,9 @@ import { getIpcApiEmitter, initialise, registerIpcHandler } from 'electron-typed
 import icon from '../../resources/icon.png?asset'
 import { api } from './api'
 import { setMenu } from './menu'
+import { MyLogger } from './logger'
 
 import type { IpcSenderType } from './api'
-import { MyLogger } from './logger'
 
 function createWindow(api: IpcSenderType): void {
   // Create the browser window.

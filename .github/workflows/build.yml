@@ -96,6 +96,8 @@ jobs:
         run: pnpm install
 
       - name: Generate changelog
+        env:
+          GITHUB_REPO: ${{ github.repository }}
         run: |
           pnpm run changelog -c cliff-github.toml
           pnpm exec prettier --write CHANGELOG.md

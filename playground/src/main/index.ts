@@ -2,16 +2,20 @@ import { join } from 'node:path'
 
 import { app, shell, BrowserWindow } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import { getIpcApiEmitter, initialise, registerIpcHandler } from 'electron-typed-ipc-bridge/main'
+import {
+  getIpcBridgeApiEmitter,
+  initialise,
+  registerIpcHandler
+} from 'electron-typed-ipc-bridge/main'
 
 import icon from '../../resources/icon.png?asset'
 import { api } from './api'
 import { setMenu } from './menu'
 import { MyLogger } from './logger'
 
-import type { IpcSenderType } from './api'
+import type { IpcBridgeApiEmitter } from './api'
 
-function createWindow(api: IpcSenderType): void {
+function createWindow(api: IpcBridgeApiEmitter): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 900,
@@ -65,7 +69,7 @@ app.whenReady().then(() => {
   // initialise({ logger: {} })
   registerIpcHandler(api)
 
-  const ipcApi = getIpcApiEmitter(api)
+  const ipcApi = getIpcBridgeApiEmitter(api)
 
   createWindow(ipcApi)
 

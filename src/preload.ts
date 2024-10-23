@@ -4,10 +4,10 @@ import { API_CHANNEL_MAP, MODE } from './channel'
 import { AbstractLogger, initialisePreload as initialise, preloadLogger } from './utils/logger'
 
 import type { IpcMainInvokeEvent, IpcRendererEvent } from 'electron'
-import type { ApiHandler, IpcBridgeApiImplementation, ApiMode } from './channel'
+import type { IpcBridgeApiHandler, IpcBridgeApiImplementation, IpcBridgeApiMode } from './channel'
 
-type ApiChannelMap = {
-  [key: string]: string | ApiChannelMap
+type IpcBridgeApiChannelMap = {
+  [key: string]: string | IpcBridgeApiChannelMap
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -21,14 +21,12 @@ export type IpcBridgeApiFunction<F> = F extends (
   : never
 
 export type IpcBridgeApiInvoker<T> = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [K in keyof T]: T[K] extends (...args: any[]) => any
-    ? IpcBridgeApiFunction<T[K]>
-    : IpcBridgeApiInvoker<T[K]>
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
+  [K in keyof T]: T[K] extends Function ? IpcBridgeApiFunction<T[K]> : IpcBridgeApiInvoker<T[K]>
 }
 
 type IpcBridgeApiReciver<T> = {
-  [K in keyof T]: T[K] extends ApiHandler
+  [K in keyof T]: T[K] extends IpcBridgeApiHandler
     ? IpcBridgeApiReciver<T[K]>
     : // eslint-disable-next-line @typescript-eslint/no-explicit-any
       T[K] extends (...args: any[]) => infer R
@@ -36,7 +34,7 @@ type IpcBridgeApiReciver<T> = {
       : never
 }
 
-export type IpcBridgeApiTypeGenerator<T extends IpcBridgeApiImplementation> = keyof T extends never
+export type IpcBridgeApiGenerator<T extends IpcBridgeApiImplementation> = keyof T extends never
   ? undefined
   : 'on' extends keyof T
     ? 'invoke' extends keyof T
@@ -51,7 +49,7 @@ export type IpcBridgeApiTypeGenerator<T extends IpcBridgeApiImplementation> = ke
         invoke: IpcBridgeApiInvoker<T['invoke']>
       }
 
-export type IpcContextBridgeApi<T extends IpcBridgeApiImplementation> =
+export type IpcBridgeApiTypeGenerator<T extends IpcBridgeApiImplementation> =
   | {
       invoke: IpcBridgeApiInvoker<T['invoke']>
       on: IpcBridgeApiReciver<T['on']>
@@ -63,8 +61,10 @@ export type IpcContextBridgeApi<T extends IpcBridgeApiImplementation> =
       invoke: IpcBridgeApiInvoker<T['invoke']>
     }
 
-function getApiInvoker<T extends IpcContextBridgeApi<IpcBridgeApiImplementation>>(): Promise<T>
-async function getApiInvoker() {
+function generateIpcBridgeApi<
+  T extends IpcBridgeApiTypeGenerator<IpcBridgeApiImplementation>,
+>(): Promise<T>
+async function generateIpcBridgeApi() {
   preloadLogger.info('Generation IpcBridgeAPI is stated.')
   const result = await ipcRenderer.invoke(API_CHANNEL_MAP)
   if (!result) {
@@ -72,8 +72,12 @@ async function getApiInvoker() {
     throw new Error(`'electron-typed-ipc-bridge' is not working correctly`)
   }
 
-  let mode: ApiMode
-  const _getApiInvoker = (apiChannelMap: ApiChannelMap, level = 0, path: string[] = []) => {
+  let mode: IpcBridgeApiMode
+  const _getApiInvoker = (
+    apiChannelMap: IpcBridgeApiChannelMap,
+    level = 0,
+    path: string[] = []
+  ) => {
     const apiInvoker = {}
     Object.keys(apiChannelMap).forEach((key) => {
       if (level === 0) {
@@ -119,4 +123,4 @@ async function getApiInvoker() {
   return _getApiInvoker(result)
 }
 
-export { getApiInvoker, initialise, AbstractLogger }
+export { generateIpcBridgeApi, initialise, AbstractLogger }

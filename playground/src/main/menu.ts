@@ -1,9 +1,9 @@
 import { Menu, MenuItem } from 'electron'
 
-import type { IpcSenderType } from './api'
+import type { IpcBridgeApiEmitter } from './api'
 import type { BrowserWindow } from 'electron'
 
-const createMenu = (targetWindow: BrowserWindow, api: IpcSenderType) => {
+const createMenu = (targetWindow: BrowserWindow, api: IpcBridgeApiEmitter) => {
   return new MenuItem({
     label: 'Test Message',
     submenu: [
@@ -21,7 +21,7 @@ const createMenu = (targetWindow: BrowserWindow, api: IpcSenderType) => {
   })
 }
 
-export const setMenu = (targetWindow: BrowserWindow, api: IpcSenderType) => {
+export const setMenu = (targetWindow: BrowserWindow, api: IpcBridgeApiEmitter) => {
   const appMenu = Menu.getApplicationMenu()
   const menuItems = appMenu
     ? appMenu.items.concat([new MenuItem({ type: 'separator' })], createMenu(targetWindow, api))

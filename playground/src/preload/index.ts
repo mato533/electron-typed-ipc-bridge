@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { contextBridge } from 'electron'
-import { electronAPI } from '@electron-toolkit/preload'
-import { AbstractLogger, getApiInvoker, initialise } from 'electron-typed-ipc-bridge/preload'
+import { exposeElectronAPI } from '@electron-toolkit/preload'
+import { AbstractLogger, generateIpcBridgeApi, initialise } from 'electron-typed-ipc-bridge/preload'
 
 import type { LogLevel } from 'electron-typed-ipc-bridge/preload'
 import type { IpcBridgeApi } from '../main/api'
@@ -12,25 +12,23 @@ class MyLogger extends AbstractLogger {
     console.log(`[${level}] ${message}`)
   }
 }
+exposeElectronAPI()
 
 initialise({ logger: { preload: new MyLogger() } })
 // if disable looging, pass the empty object
 // initialise({ logger: {} })
-const api = await getApiInvoker<IpcBridgeApi>()
+const api = await generateIpcBridgeApi<IpcBridgeApi>()
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
 // just add to the DOM global.
 if (process.contextIsolated) {
   try {
-    contextBridge.exposeInMainWorld('electron', electronAPI)
     contextBridge.exposeInMainWorld('api', api)
   } catch (error) {
     console.error(error)
   }
 } else {
-  // @ts-ignore (define in dts)
-  window.electron = electronAPI
   // @ts-ignore (define in dts)
   window.api = api
 }

@@ -1,2 +1,1 @@
-export { registerIpcHandler } from './main'
-export { getApiInvoker } from './preload'
+export { AbstractLogger } from './utils/logger'

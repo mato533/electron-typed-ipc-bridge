@@ -12,24 +12,27 @@
         "default": "./dist/es/index.js"
       },
       "require": {
+        "types": "./dist/types/index.d.ts",
         "default": "./dist/cjs/index.js"
       }
     },
     "./main": {
       "import": {
-        "types": "./dist/types/index.d.ts",
+        "types": "./dist/types/main.d.ts",
         "default": "./dist/es/main.js"
       },
       "require": {
+        "types": "./dist/types/main.d.ts",
         "default": "./dist/cjs/main.js"
       }
     },
     "./preload": {
       "import": {
-        "types": "./dist/types/index.d.ts",
+        "types": "./dist/types/preload.d.ts",
         "default": "./dist/es/preload.js"
       },
       "require": {
+        "types": "./dist/types/preload.d.ts",
         "default": "./dist/cjs/preload.js"
       }
     },
@@ -40,6 +43,12 @@
     "*": {
       "*": [
         "dist/types/index.d.ts"
+      ],
+      "main": [
+        "dist/types/main.d.ts"
+      ],
+      "preload": [
+        "dist/types/preload.d.ts"
       ]
     }
   },

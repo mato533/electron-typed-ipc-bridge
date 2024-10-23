@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2024-10-23
+
+### 🚀 Features
+
+- Change the return value for ipc with "on" to be Promise ([#32](https://github.com/mato533/electron-typed-ipc-bridge/issues/32))
+
+### 📚 Documentation
+
+- Fix invalid indents at readme ([#33](https://github.com/mato533/electron-typed-ipc-bridge/issues/33))
+
+### 🧪 Testing
+
+- Add tests for logger and some adjustments for logic ([#34](https://github.com/mato533/electron-typed-ipc-bridge/issues/34))
+
 ## [1.1.0] - 2024-10-21
 
 ### 🚀 Features
@@ -15,6 +29,7 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Update env at build workflow for git-cliff ([#25](https://github.com/mato533/electron-typed-ipc-bridge/issues/25))
+- _(release)_ V1.1.0 ([#28](https://github.com/mato533/electron-typed-ipc-bridge/issues/28))
 
 ## [1.0.0] - 2024-10-20
 

@@ -13,7 +13,7 @@ There are following reasends.
 
 1. When implementing IPC using contextBridge, we want to use it in a type-safe.
 
-<img width="824" alt="image" src="https://github.com/user-attachments/assets/cbe58812-bda6-4294-bb28-911f549c6a3e">
+   <img width="824" alt="image" src="https://github.com/user-attachments/assets/cbe58812-bda6-4294-bb28-911f549c6a3e">
 
 1. We want to be freed from channel management.
 

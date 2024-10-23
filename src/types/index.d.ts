@@ -1,7 +1,7 @@
 import type { IpcContextBridgeApi } from '../preload'
 import type { IpcBridgeApiEmitterTypeGenerator } from '../main'
 import type { IpcBridgeApiImplementation } from '../channel'
-import type { Option, LogLevel, Logger } from '../utils/logger'
+import type { MainOption, PreloadOption, LogLevel, Logger } from '../utils/logger'
 
 /**
  * Type generator for api that will be exposed to renderer process
@@ -34,8 +34,9 @@ export function getApiInvoker<
   T extends IpcContextBridgeApi<IpcBridgeApiImplementation>,
 >(): Promise<T>
 
-export function initialise(option: Option): void
-export type { Option, LogLevel } from '../utils/logger'
+export type { MainOption, PreloadOption, LogLevel } from '../utils/logger'
+export function initialise(option: MainOption): void
+export function initialise(option: PreloadOption): void
 
 export abstract class AbstractLogger implements Logger {
   info(message: string): void

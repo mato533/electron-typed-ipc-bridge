@@ -100,7 +100,6 @@ describe('haveSameStructure', () => {
       },
     }
     expect(haveSameStructure(apiHandlers, channelMap)).toBeTruthy()
-    console.log()
   })
 
   it('fail', () => {

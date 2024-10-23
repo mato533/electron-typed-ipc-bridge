@@ -1,7 +1,7 @@
 import { ipcMain } from 'electron'
 
 import { API_CHANNEL_MAP, getApiChannelMap, MODE } from './channel'
-import { AbstractLogger, initialise, mainLogger } from './utils/logger'
+import { AbstractLogger, initialiseMain as initialise, mainLogger } from './utils/logger'
 
 import type { BrowserWindow } from 'electron'
 import type {

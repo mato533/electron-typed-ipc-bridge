@@ -5,37 +5,37 @@ import { AbstractLogger, initialiseMain as initialise, mainLogger } from './util
 
 import type { BrowserWindow } from 'electron'
 import type {
-  ApiFunction,
+  IpcBridgeApiFunction,
   IpcBridgeApiImplementation,
-  ApiHandler,
-  ApiOnFunction,
-  ApiOnHandler,
-  ApiMode,
-  ApiInvokeFunction,
+  IpcBridgeApiHandler,
+  IpcBridgeApiOnFunction,
+  IpcBridgeApiOnHandler,
+  IpcBridgeApiMode,
+  IpcBridgeApiInvokeFunction,
 } from './channel'
 
-const isApiFunction = (value: unknown): value is ApiFunction => {
+const isApiFunction = (value: unknown): value is IpcBridgeApiFunction => {
   return typeof value === 'function' ? true : false
 }
 
-type IpcBridgeApiSenderTypeConverter<T extends ApiOnHandler> = {
-  [K in keyof T]: T[K] extends ApiFunction
+type IpcBridgeApiEmitterTypeConverter<T extends IpcBridgeApiOnHandler> = {
+  [K in keyof T]: T[K] extends IpcBridgeApiFunction
     ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
       T[K] extends (...args: infer Args) => any
       ? (window: BrowserWindow, ...args: Args) => void
       : never
-    : T[K] extends ApiHandler
-      ? IpcBridgeApiSenderTypeConverter<T[K]>
+    : T[K] extends IpcBridgeApiHandler
+      ? IpcBridgeApiEmitterTypeConverter<T[K]>
       : never
 }
 
-export type IpcBridgeApiEmitterTypeGenerator<T extends IpcBridgeApiImplementation> =
+export type IpcBridgeApiEmitterGenerator<T extends IpcBridgeApiImplementation> =
   'on' extends keyof T
     ? T['on'] extends undefined
       ? undefined
-      : T['on'] extends ApiOnHandler
+      : T['on'] extends IpcBridgeApiOnHandler
         ? {
-            send: IpcBridgeApiSenderTypeConverter<T['on']>
+            send: IpcBridgeApiEmitterTypeConverter<T['on']>
           }
         : never
     : undefined
@@ -45,18 +45,18 @@ function registerIpcHandler(ipcBridgeApi: IpcBridgeApiImplementation) {
   createhandler(ipcBridgeApi, MODE.invoke)
 }
 
-function getIpcApiEmitter<T extends IpcBridgeApiImplementation>(
+function getIpcBridgeApiEmitter<T extends IpcBridgeApiImplementation>(
   ipcBridgeApi: T
-): IpcBridgeApiEmitterTypeGenerator<T>
-function getIpcApiEmitter(ipcBridgeApi: IpcBridgeApiImplementation) {
+): IpcBridgeApiEmitterGenerator<T>
+function getIpcBridgeApiEmitter(ipcBridgeApi: IpcBridgeApiImplementation) {
   return createhandler(ipcBridgeApi, MODE.on)
 }
-function createhandler(ipcBridgeApi: IpcBridgeApiImplementation, mode: ApiMode) {
+function createhandler(ipcBridgeApi: IpcBridgeApiImplementation, mode: IpcBridgeApiMode) {
   const channelMap = getApiChannelMap(ipcBridgeApi)
 
-  let _mode: ApiMode
+  let _mode: IpcBridgeApiMode
   const _registerIpcHandler = (
-    api: ApiHandler = ipcBridgeApi,
+    api: IpcBridgeApiHandler = ipcBridgeApi,
     apiInfo = channelMap,
     level = 0,
     path: string[] = []
@@ -96,7 +96,7 @@ function createhandler(ipcBridgeApi: IpcBridgeApiImplementation, mode: ApiMode) 
         mainLogger.debug(`${'  '.repeat(level)} - ${key} (chanel: ${apiInfo[key]})`)
         switch (_mode) {
           case MODE.invoke: {
-            const _api = api[key] as ApiInvokeFunction
+            const _api = api[key] as IpcBridgeApiInvokeFunction
             ipcMain.handle(apiInfo[key], (...args) => {
               mainLogger.silly(`called from renderer: ${_path.join('.')} (channel:${apiInfo[key]})`)
               return _api(...args)
@@ -104,7 +104,7 @@ function createhandler(ipcBridgeApi: IpcBridgeApiImplementation, mode: ApiMode) 
             break
           }
           case MODE.on: {
-            const _api = api[key] as ApiOnFunction
+            const _api = api[key] as IpcBridgeApiOnFunction
             sender[senderKey] = (window: BrowserWindow, ...args: Parameters<typeof _api>) => {
               mainLogger.silly(`send to renderer: ${_path.join('.')} (channel::${apiInfo[key]})`)
               window.webContents.send(apiInfo[key], _api(...args))
@@ -133,4 +133,4 @@ function createhandler(ipcBridgeApi: IpcBridgeApiImplementation, mode: ApiMode) 
   return _registerIpcHandler()
 }
 
-export { registerIpcHandler, getIpcApiEmitter, initialise, AbstractLogger }
+export { registerIpcHandler, getIpcBridgeApiEmitter, initialise, AbstractLogger }

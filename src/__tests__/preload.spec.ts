@@ -1,8 +1,8 @@
-import { getApiInvoker } from '../preload'
+import { generateIpcBridgeApi } from '../preload'
 import { API_CHANNEL_MAP } from '../channel'
 import { registerIpcHandler } from '../main'
 
-import type { IpcBridgeApiTypeGenerator } from '../preload'
+import type { IpcBridgeApiGenerator } from '../preload'
 import type { IpcMainInvokeEvent, IpcRendererEvent } from 'electron'
 
 describe('preload', () => {
@@ -57,7 +57,7 @@ describe('preload', () => {
         return channelMap
       }
     })
-    const _apiPreload = await getApiInvoker<IpcBridgeApiTypeGenerator<typeof _apiHandlers>>()
+    const _apiPreload = await generateIpcBridgeApi<IpcBridgeApiGenerator<typeof _apiHandlers>>()
     _apiPreload.invoke.fn2('BOB')
     expect(mocks.ipcRenderer.invoke).toHaveBeenLastCalledWith(channelMap.invoke.fn2, 'BOB')
 

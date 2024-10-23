@@ -7,7 +7,7 @@ export const getContextMenuHandler = () => {
     return Menu.getApplicationMenu()
   }
 
-  return async (_e: IpcMainInvokeEvent) => {
+  return (_e: IpcMainInvokeEvent) => {
     const menu = getMenu()
     if (menu) {
       menu!.popup()

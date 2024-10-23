@@ -92,8 +92,12 @@ const defineConfig = (pkg: Record<string, any>) => {
       ]),
     },
     {
-      input: 'src/types/index.d.ts',
-      output: [{ file: pkg.types }],
+      input: {
+        index: 'src/types/index.d.ts',
+        main: 'src/types/main.d.ts',
+        preload: 'src/types/preload.d.ts',
+      },
+      output: [{ dir: dirname(pkg.types) }],
       external,
       onwarn: onwarnGenDts,
       plugins: getPlugins([dts(), nodeExternals()]),

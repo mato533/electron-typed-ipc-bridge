@@ -1,11 +1,15 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
-
-const versions = reactive({ ...window.electron.process.versions })
+import { onMounted, ref } from 'vue'
+const versions = ref()
+onMounted(() => {
+  const _versions = window.electron.process.versions
+  console.log(_versions)
+  versions.value = { ..._versions }
+})
 </script>
 
 <template>
-  <ul class="versions">
+  <ul v-if="versions" class="versions">
     <li class="electron-version">Electron v{{ versions.electron }}</li>
     <li class="chrome-version">Chromium v{{ versions.chrome }}</li>
     <li class="node-version">Node v{{ versions.node }}</li>

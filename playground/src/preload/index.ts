@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { contextBridge } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
-import { AbstractLogger, getApiInvoker, initialise } from 'electron-typed-ipc-bridge/preload'
+import { AbstractLogger, generateIpcBridgeApi, initialise } from 'electron-typed-ipc-bridge/preload'
 
 import type { LogLevel } from 'electron-typed-ipc-bridge/preload'
 import type { IpcBridgeApi } from '../main/api'
@@ -16,7 +16,7 @@ class MyLogger extends AbstractLogger {
 initialise({ logger: { preload: new MyLogger() } })
 // if disable looging, pass the empty object
 // initialise({ logger: {} })
-const api = await getApiInvoker<IpcBridgeApi>()
+const api = await generateIpcBridgeApi<IpcBridgeApi>()
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise

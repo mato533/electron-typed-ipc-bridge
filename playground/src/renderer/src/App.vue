@@ -13,11 +13,11 @@ const handler = (event: MouseEvent) => {
   event.preventDefault()
   window.api.invoke.showContextMenu()
 }
-// handle message from main process
-window.api.on.updateCounter((_e, value) => (counter.value = counter.value + value))
 
 onMounted(() => {
   window.addEventListener('contextmenu', handler)
+  // handle message from main process
+  window.api.on.updateCounter((_e, value) => (counter.value = counter.value + value))
 })
 
 onBeforeUnmount(() => {

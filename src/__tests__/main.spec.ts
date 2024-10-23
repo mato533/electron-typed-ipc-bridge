@@ -1,5 +1,5 @@
 import { API_CHANNEL_MAP, getApiChannelMap } from '../channel'
-import { getIpcApiEmitter, registerIpcHandler } from '../main'
+import { getIpcBridgeApiEmitter, registerIpcHandler } from '../main'
 
 import type { BrowserWindow, IpcMainInvokeEvent } from 'electron'
 
@@ -95,7 +95,7 @@ describe('main', () => {
         send: mockSend,
       },
     } as unknown as BrowserWindow
-    const api = getIpcApiEmitter(_apiHandlers)
+    const api = getIpcBridgeApiEmitter(_apiHandlers)
 
     const channelMap = getApiChannelMap(_apiHandlers)
 

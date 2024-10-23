@@ -8,6 +8,7 @@
   ],
   "compilerOptions": {
     "composite": true,
+    "moduleResolution": "Bundler",
     "baseUrl": ".",
     "paths": {
       "@renderer/*": ["src/renderer/src/*"]

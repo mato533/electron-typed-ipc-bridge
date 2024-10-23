@@ -5,48 +5,48 @@ import type { IpcMainInvokeEvent } from 'electron'
 export const API_CHANNEL_MAP = `06675f7b-d88f-a064-d3ba-6a60dcbc091c` as const
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ApiOnFunction = (...args: any[]) => any
+export type IpcBridgeApiOnFunction = (...args: any[]) => any
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ApiInvokeFunction = (event: IpcMainInvokeEvent, ...args: any[]) => any
+export type IpcBridgeApiInvokeFunction = (event: IpcMainInvokeEvent, ...args: any[]) => any
 
-export type ApiOnHandler = {
-  readonly [key: string]: ApiOnFunction | ApiOnHandler
+export type IpcBridgeApiOnHandler = {
+  readonly [key: string]: IpcBridgeApiOnFunction | IpcBridgeApiOnHandler
 }
-export type ApiInvokeHandler = {
-  readonly [key: string]: ApiInvokeFunction | ApiInvokeHandler
+export type IpcBridgeApiInvokeHandler = {
+  readonly [key: string]: IpcBridgeApiInvokeFunction | IpcBridgeApiInvokeHandler
 }
 
-export type ApiHandler = ApiInvokeHandler | ApiOnHandler
-export type ApiFunction = ApiInvokeFunction | ApiOnFunction
+export type IpcBridgeApiHandler = IpcBridgeApiInvokeHandler | IpcBridgeApiOnHandler
+export type IpcBridgeApiFunction = IpcBridgeApiInvokeFunction | IpcBridgeApiOnFunction
 
 export type IpcBridgeApiImplementation = {
-  on?: ApiOnHandler
-  invoke?: ApiInvokeHandler
+  on?: IpcBridgeApiOnHandler
+  invoke?: IpcBridgeApiInvokeHandler
 }
 
-type ApiChannelMapItem = {
-  [key: string]: string | ApiChannelMapItem
+type IpcBridgeApiChannelMapItem = {
+  [key: string]: string | IpcBridgeApiChannelMapItem
 }
 
-type ApiChannelMapItemTypeGenerator<T extends ApiHandler> = {
-  [K in keyof T]: T[K] extends ApiFunction
+type IpcBridgeApiChannelMapItemTypeGenerator<T extends IpcBridgeApiHandler> = {
+  [K in keyof T]: T[K] extends IpcBridgeApiFunction
     ? string
-    : T[K] extends ApiHandler
-      ? ApiChannelMapItemTypeGenerator<T[K]>
+    : T[K] extends IpcBridgeApiHandler
+      ? IpcBridgeApiChannelMapItemTypeGenerator<T[K]>
       : never
 }
 
-export type ApiChannelMapGenerator<T extends IpcBridgeApiImplementation> = {
-  on: ApiChannelMapItemTypeGenerator<T['on']>
-  invoke: ApiChannelMapItemTypeGenerator<T['invoke']>
+export type IpcBridgeApiChannelMapGenerator<T extends IpcBridgeApiImplementation> = {
+  on: IpcBridgeApiChannelMapItemTypeGenerator<T['on']>
+  invoke: IpcBridgeApiChannelMapItemTypeGenerator<T['invoke']>
 }
 
 let channelMap = undefined
 
 export function haveSameStructure<T extends IpcBridgeApiImplementation>(
   obj1: T,
-  obj2: ApiChannelMapGenerator<T>
+  obj2: IpcBridgeApiChannelMapGenerator<T>
 ) {
   if (!obj1 || !obj2) {
     return false
@@ -70,14 +70,14 @@ export function haveSameStructure<T extends IpcBridgeApiImplementation>(
 
 function getApiChannelMap<T extends IpcBridgeApiImplementation>(
   apiHandlers: T
-): ApiChannelMapGenerator<T>
+): IpcBridgeApiChannelMapGenerator<T>
 function getApiChannelMap(apiHandlers: IpcBridgeApiImplementation) {
   if (channelMap && haveSameStructure(apiHandlers, channelMap)) {
     return channelMap
   }
 
-  const _getApiChannelMap = (apiHandler: ApiHandler) => {
-    const channelMap: ApiChannelMapItem = {}
+  const _getApiChannelMap = (apiHandler: IpcBridgeApiHandler) => {
+    const channelMap: IpcBridgeApiChannelMapItem = {}
     Object.keys(apiHandler).forEach((key) => {
       if (typeof apiHandler[key] === 'object') {
         channelMap[key] = _getApiChannelMap(apiHandler[key])
@@ -95,6 +95,7 @@ const MODE = {
   invoke: 0,
   on: 1,
 } as const
-export type ApiMode = (typeof MODE)[keyof typeof MODE]
+
+export type IpcBridgeApiMode = (typeof MODE)[keyof typeof MODE]
 
 export { getApiChannelMap, MODE }

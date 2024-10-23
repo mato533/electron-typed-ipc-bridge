@@ -1,11 +1,7 @@
 import type { BrowserWindow, IpcMainInvokeEvent, IpcRendererEvent } from 'electron'
-import type {
-  IpcBridgeApiFunction,
-  IpcBridgeApiTypeGenerator,
-  IpcBridgeApiInvoker,
-} from '../preload'
-import type { ApiChannelMapGenerator } from '../channel'
-import type { IpcBridgeApiEmitterTypeGenerator } from '../main'
+import type { IpcBridgeApiFunction, IpcBridgeApiGenerator, IpcBridgeApiInvoker } from '../preload'
+import type { IpcBridgeApiChannelMapGenerator } from '../channel'
+import type { IpcBridgeApiEmitterGenerator } from '../main'
 
 describe('Type check', () => {
   it('IpcBridgeApiFunction', () => {
@@ -38,7 +34,7 @@ describe('Type check', () => {
     expectTypeOf<ExpectedType>().toEqualTypeOf<IpcBridgeApi>()
   })
 
-  it('ApiChannelMapGenerator', () => {
+  it('IpcBridgeApiChannelMapGenerator', () => {
     const _apiHandlers = {
       invoke: {
         fn1: (e: IpcMainInvokeEvent) => console.log(e),
@@ -53,7 +49,7 @@ describe('Type check', () => {
       },
     }
 
-    type TestTarget = ApiChannelMapGenerator<typeof _apiHandlers>
+    type TestTarget = IpcBridgeApiChannelMapGenerator<typeof _apiHandlers>
     type ExpectedType = {
       invoke: {
         fn1: string
@@ -87,7 +83,7 @@ describe('Type check', () => {
         },
       }
 
-      type TestTarget = IpcBridgeApiEmitterTypeGenerator<typeof _apiHandlers>
+      type TestTarget = IpcBridgeApiEmitterGenerator<typeof _apiHandlers>
       type ExpectedType = {
         send: {
           fn1: (window: BrowserWindow, arg1: string) => void
@@ -109,7 +105,7 @@ describe('Type check', () => {
         },
       }
 
-      type TestTarget = IpcBridgeApiEmitterTypeGenerator<typeof _apiHandlers>
+      type TestTarget = IpcBridgeApiEmitterGenerator<typeof _apiHandlers>
 
       expectTypeOf<undefined>().toEqualTypeOf<TestTarget>()
     })
@@ -126,7 +122,7 @@ describe('Type check', () => {
         },
       }
 
-      type TestTarget = IpcBridgeApiEmitterTypeGenerator<typeof _apiHandlers>
+      type TestTarget = IpcBridgeApiEmitterGenerator<typeof _apiHandlers>
       type ExpectedType = {
         send: {
           fn1: (window: BrowserWindow, arg1: string) => void
@@ -141,7 +137,7 @@ describe('Type check', () => {
     })
   })
 
-  describe('IpcBridgeApiTypeGenerator', () => {
+  describe('IpcBridgeApiGenerator', () => {
     it('invoke and on is existed', () => {
       const _apiHandlers = {
         invoke: {
@@ -161,7 +157,7 @@ describe('Type check', () => {
           },
         },
       }
-      type TestTarget = IpcBridgeApiTypeGenerator<typeof _apiHandlers>
+      type TestTarget = IpcBridgeApiGenerator<typeof _apiHandlers>
       type ExpectedType = {
         invoke: {
           fn1: () => Promise<void>
@@ -194,7 +190,7 @@ describe('Type check', () => {
           },
         },
       }
-      type TestTarget = IpcBridgeApiTypeGenerator<typeof _apiHandlers>
+      type TestTarget = IpcBridgeApiGenerator<typeof _apiHandlers>
       type ExpectedType = {
         invoke: {
           fn1: () => Promise<void>
@@ -219,7 +215,7 @@ describe('Type check', () => {
           },
         },
       }
-      type TestTarget = IpcBridgeApiTypeGenerator<typeof _apiHandlers>
+      type TestTarget = IpcBridgeApiGenerator<typeof _apiHandlers>
       type ExpectedType = {
         on: {
           fn1: (callback: (event: IpcRendererEvent, arg1: string) => void) => void

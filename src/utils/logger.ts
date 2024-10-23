@@ -82,20 +82,28 @@ class DefaultLogger extends AbstractLogger {
 let mainLogger: Logger = new DefaultLogger()
 let preloadLogger: Logger = new DefaultLogger()
 
-type Option = {
+type MainOption = {
   logger?: {
     main?: Logger
+  }
+}
+type PreloadOption = {
+  logger?: {
     preload?: Logger
   }
 }
 
-const initialise = (option: Option = {}) => {
+const initialiseMain = (option: MainOption = {}) => {
   if (option.logger) {
     if (option.logger.main) {
       mainLogger = option.logger.main
     } else {
       mainLogger = new DefaultLogger({ isEnabled: false })
     }
+  }
+}
+const initialisePreload = (option: PreloadOption = {}) => {
+  if (option.logger) {
     if (option.logger.preload) {
       preloadLogger = option.logger.preload
     } else {
@@ -103,14 +111,15 @@ const initialise = (option: Option = {}) => {
     }
   }
 }
-
 export {
   Logger,
   AbstractLogger,
   DefaultLogger,
-  Option,
+  MainOption,
+  PreloadOption,
   LOG_LEVEL,
-  initialise,
+  initialiseMain,
+  initialisePreload,
   mainLogger,
   preloadLogger,
 }

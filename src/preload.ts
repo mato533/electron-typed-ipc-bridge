@@ -1,7 +1,7 @@
 import { ipcRenderer } from 'electron'
 
 import { API_CHANNEL_MAP, MODE } from './channel'
-import { AbstractLogger, initialise, preloadLogger } from './utils/logger'
+import { AbstractLogger, initialisePreload as initialise, preloadLogger } from './utils/logger'
 
 import type { IpcMainInvokeEvent, IpcRendererEvent } from 'electron'
 import type { ApiHandler, IpcBridgeApiImplementation, ApiMode } from './channel'

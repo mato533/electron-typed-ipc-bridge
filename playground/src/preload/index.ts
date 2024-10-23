@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { contextBridge } from 'electron'
-import { electronAPI } from '@electron-toolkit/preload'
+import { exposeElectronAPI } from '@electron-toolkit/preload'
 import { AbstractLogger, generateIpcBridgeApi, initialise } from 'electron-typed-ipc-bridge/preload'
 
 import type { LogLevel } from 'electron-typed-ipc-bridge/preload'
@@ -12,6 +12,7 @@ class MyLogger extends AbstractLogger {
     console.log(`[${level}] ${message}`)
   }
 }
+exposeElectronAPI()
 
 initialise({ logger: { preload: new MyLogger() } })
 // if disable looging, pass the empty object
@@ -23,14 +24,11 @@ const api = await generateIpcBridgeApi<IpcBridgeApi>()
 // just add to the DOM global.
 if (process.contextIsolated) {
   try {
-    contextBridge.exposeInMainWorld('electron', electronAPI)
     contextBridge.exposeInMainWorld('api', api)
   } catch (error) {
     console.error(error)
   }
 } else {
-  // @ts-ignore (define in dts)
-  window.electron = electronAPI
   // @ts-ignore (define in dts)
   window.api = api
 }

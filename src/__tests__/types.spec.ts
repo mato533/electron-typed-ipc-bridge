@@ -1,14 +1,18 @@
 import type { BrowserWindow, IpcMainInvokeEvent, IpcRendererEvent } from 'electron'
-import type { RemoveEventArg, IpcBridgeApiTypeGenerator, IpcBridgeApiInvoker } from '../preload'
+import type {
+  IpcBridgeApiFunction,
+  IpcBridgeApiTypeGenerator,
+  IpcBridgeApiInvoker,
+} from '../preload'
 import type { ApiChannelMapGenerator } from '../channel'
 import type { IpcBridgeApiEmitterTypeGenerator } from '../main'
 
 describe('Type check', () => {
-  it('RemoveEventArg', () => {
+  it('IpcBridgeApiFunction', () => {
     const _fn = (e: IpcMainInvokeEvent, arg1: string) => arg1
-    type ExpectedApiType = (arg1: string) => string
+    type ExpectedApiType = (arg1: string) => Promise<string>
 
-    expectTypeOf<ExpectedApiType>().toEqualTypeOf<RemoveEventArg<typeof _fn>>()
+    expectTypeOf<ExpectedApiType>().toEqualTypeOf<IpcBridgeApiFunction<typeof _fn>>()
   })
 
   it('IpcBridgeApiInvoker', () => {
@@ -23,11 +27,11 @@ describe('Type check', () => {
 
     type IpcBridgeApi = IpcBridgeApiInvoker<typeof _apiHandlers>
     type ExpectedType = {
-      fn1: () => void
-      fn2: () => string
+      fn1: () => Promise<void>
+      fn2: () => Promise<string>
       name1: {
-        fn1: (arg1: string) => string
-        fn2: () => void
+        fn1: (arg1: string) => Promise<string>
+        fn2: () => Promise<void>
       }
     }
 
@@ -160,11 +164,11 @@ describe('Type check', () => {
       type TestTarget = IpcBridgeApiTypeGenerator<typeof _apiHandlers>
       type ExpectedType = {
         invoke: {
-          fn1: () => void
-          fn2: () => string
+          fn1: () => Promise<void>
+          fn2: () => Promise<string>
           name1: {
-            fn1: (arg1: number, arg2: number) => number
-            fn2: (arg1: string) => string
+            fn1: (arg1: number, arg2: number) => Promise<number>
+            fn2: (arg1: string) => Promise<string>
           }
         }
         on: {
@@ -193,11 +197,11 @@ describe('Type check', () => {
       type TestTarget = IpcBridgeApiTypeGenerator<typeof _apiHandlers>
       type ExpectedType = {
         invoke: {
-          fn1: () => void
-          fn2: () => string
+          fn1: () => Promise<void>
+          fn2: () => Promise<string>
           name1: {
-            fn1: (arg1: number, arg2: number) => number
-            fn2: (arg1: string) => string
+            fn1: (arg1: number, arg2: number) => Promise<number>
+            fn2: (arg1: string) => Promise<string>
           }
         }
       }

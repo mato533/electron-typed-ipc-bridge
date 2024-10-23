@@ -10,21 +10,22 @@ type ApiChannelMap = {
   [key: string]: string | ApiChannelMap
 }
 
-export type RemoveEventArg<F> = F extends (
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Awaitable<T> = T extends Promise<any> ? T : Promise<T>
+
+export type IpcBridgeApiFunction<F> = F extends (
   event: IpcMainInvokeEvent,
   ...args: infer Args
 ) => infer R
-  ? (...args: Args) => R
+  ? (...args: Args) => Awaitable<R>
   : never
 
 export type IpcBridgeApiInvoker<T> = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [K in keyof T]: T[K] extends (...args: any[]) => any
-    ? RemoveEventArg<T[K]>
+    ? IpcBridgeApiFunction<T[K]>
     : IpcBridgeApiInvoker<T[K]>
 }
-
-// export type IpcBridgeApiInvoker = IpcBridgeApiInvokerTypeGenerator<ApiHandler>
 
 type IpcBridgeApiReciver<T> = {
   [K in keyof T]: T[K] extends ApiHandler

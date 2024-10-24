@@ -40,8 +40,7 @@ export type IpcBridgeApiEmitterGenerator<T extends IpcBridgeApiImplementation> =
         : never
     : undefined
 
-function registerIpcHandler<T extends IpcBridgeApiImplementation>(ipcBridgeApi: T): void
-function registerIpcHandler(ipcBridgeApi: IpcBridgeApiImplementation) {
+function registerIpcHandler(ipcBridgeApi: IpcBridgeApiImplementation): void {
   createhandler(ipcBridgeApi, MODE.invoke)
 }
 

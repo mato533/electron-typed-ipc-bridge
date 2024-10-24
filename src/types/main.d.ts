@@ -20,7 +20,7 @@ export { AbstractLogger } from '.'
  * Use at the main process
  * @param ipcBridgeApi Implementation for IPC api handlers
  */
-declare function registerIpcHandler<T extends IpcBridgeApiImplementation>(ipcBridgeApi: T): void
+declare function registerIpcHandler(ipcBridgeApi: IpcBridgeApiImplementation): void
 
 /**
  * Generate api for send message to renderer process.

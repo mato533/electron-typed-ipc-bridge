@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.1] - 2024-10-24
+
+### 🐛 Bug Fixes
+
+- Export LogLevel from index.d.ts ([#40](https://github.com/mato533/electron-typed-ipc-bridge/issues/40))
+
+### 🚜 Refactor
+
+- Logging function ([#45](https://github.com/mato533/electron-typed-ipc-bridge/issues/45))
+
+### 📚 Documentation
+
+- Add sample codes and descriptions ([#39](https://github.com/mato533/electron-typed-ipc-bridge/issues/39))
+
+### ⚙️ Miscellaneous Tasks
+
+- Update changelog configration at build ([#41](https://github.com/mato533/electron-typed-ipc-bridge/issues/41))
+- Update renovate configration ([#42](https://github.com/mato533/electron-typed-ipc-bridge/issues/42))
+
 ## [2.0.0] - 2024-10-23
 
 ### 🚜 Refactor
@@ -11,6 +30,7 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Update ci for release ([#36](https://github.com/mato533/electron-typed-ipc-bridge/issues/36))
+- _(release)_ V2.0.0 ([#38](https://github.com/mato533/electron-typed-ipc-bridge/issues/38))
 
 ## [1.2.0] - 2024-10-23
 

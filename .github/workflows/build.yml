@@ -99,7 +99,7 @@ jobs:
         env:
           GITHUB_REPO: ${{ github.repository }}
         run: |
-          pnpm run changelog -c cliff-github.toml
+          pnpm run changelog -c cliff-github.toml -l
           pnpm exec prettier --write CHANGELOG.md
 
       - name: Create Release

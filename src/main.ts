@@ -1,7 +1,7 @@
 import { ipcMain } from 'electron'
 
 import { API_CHANNEL_MAP, getApiChannelMap, MODE } from './channel'
-import { AbstractLogger, initialiseMain as initialise, mainLogger } from './utils/logger'
+import { AbstractLogger, initialiseMain as initialise, mainLogger as log } from './utils/logger'
 
 import type { BrowserWindow } from 'electron'
 import type {
@@ -71,7 +71,7 @@ function createhandler(ipcBridgeApi: IpcBridgeApiImplementation, mode: IpcBridge
         }
       }
       if (level === 0) {
-        mainLogger.info(
+        log.info(
           _mode === MODE.invoke
             ? 'IpcBridgeAPI registration is stated.'
             : 'Generateing IpcBrigeApi Emitter is started'
@@ -81,7 +81,7 @@ function createhandler(ipcBridgeApi: IpcBridgeApiImplementation, mode: IpcBridge
       const _path = path.concat([key])
 
       if (typeof apiInfo[key] === 'object' && !isApiFunction(api[key])) {
-        mainLogger.debug(`${'  '.repeat(level)} - ${key}`)
+        log.debug(`${'  '.repeat(level)} - ${key}`)
         switch (_mode) {
           case MODE.invoke:
             _registerIpcHandler(api[key], apiInfo[key], level + 1, _path)
@@ -93,12 +93,12 @@ function createhandler(ipcBridgeApi: IpcBridgeApiImplementation, mode: IpcBridge
             throw new Error(`implimentation error: ${apiInfo[key]}`)
         }
       } else if (typeof apiInfo[key] !== 'object' && isApiFunction(api[key])) {
-        mainLogger.debug(`${'  '.repeat(level)} - ${key} (chanel: ${apiInfo[key]})`)
+        log.debug(`${'  '.repeat(level)} - ${key} (channel: ${apiInfo[key]})`)
         switch (_mode) {
           case MODE.invoke: {
             const _api = api[key] as IpcBridgeApiInvokeFunction
             ipcMain.handle(apiInfo[key], (...args) => {
-              mainLogger.silly(`called from renderer: ${_path.join('.')} (channel:${apiInfo[key]})`)
+              log.silly(`called from renderer: ${_path.join('.')} (channel: ${apiInfo[key]})`)
               return _api(...args)
             })
             break
@@ -106,28 +106,28 @@ function createhandler(ipcBridgeApi: IpcBridgeApiImplementation, mode: IpcBridge
           case MODE.on: {
             const _api = api[key] as IpcBridgeApiOnFunction
             sender[senderKey] = (window: BrowserWindow, ...args: Parameters<typeof _api>) => {
-              mainLogger.silly(`send to renderer: ${_path.join('.')} (channel::${apiInfo[key]})`)
+              log.silly(`send to renderer: ${_path.join('.')} (channel::${apiInfo[key]})`)
               window.webContents.send(apiInfo[key], _api(...args))
             }
             break
           }
           default:
-            mainLogger.error(`implimentation error: ${_path.join('.')} (channel::${apiInfo[key]})`)
+            log.error(`implimentation error: ${_path.join('.')} (channel::${apiInfo[key]})`)
             throw new Error(`implimentation error: ${_path.join('.')} (channel::${apiInfo[key]})`)
         }
       } else {
-        mainLogger.error(`implimentation error: ${_path.join('.')} (channel::${apiInfo[key]})`)
+        log.error(`implimentation error: ${_path.join('.')} (channel::${apiInfo[key]})`)
         throw new Error(`implimentation error: ${_path.join('.')} (channel::${apiInfo[key]})`)
       }
     })
 
     if (level === 0) {
-      mainLogger.debug(`Finish`)
+      log.debug(`Finish`)
     }
     return sender
   }
   if (mode === MODE.invoke) {
-    mainLogger.debug(`API handler for channel map is resistred (chanel: ${API_CHANNEL_MAP})`)
+    log.debug(`API handler for channel map is resistred (channel: ${API_CHANNEL_MAP})`)
     ipcMain.handle(API_CHANNEL_MAP, () => channelMap)
   }
   return _registerIpcHandler()

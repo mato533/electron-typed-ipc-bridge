@@ -1,7 +1,11 @@
 import { ipcRenderer } from 'electron'
 
 import { API_CHANNEL_MAP, MODE } from './channel'
-import { AbstractLogger, initialisePreload as initialise, preloadLogger } from './utils/logger'
+import {
+  AbstractLogger,
+  initialisePreload as initialise,
+  preloadLogger as log,
+} from './utils/logger'
 
 import type { IpcMainInvokeEvent, IpcRendererEvent } from 'electron'
 import type { IpcBridgeApiHandler, IpcBridgeApiImplementation, IpcBridgeApiMode } from './channel'
@@ -65,10 +69,10 @@ function generateIpcBridgeApi<
   T extends IpcBridgeApiTypeGenerator<IpcBridgeApiImplementation>,
 >(): Promise<T>
 async function generateIpcBridgeApi() {
-  preloadLogger.info('Generation IpcBridgeAPI is stated.')
+  log.info('Generation IpcBridgeAPI is stated.')
   const result = await ipcRenderer.invoke(API_CHANNEL_MAP)
   if (!result) {
-    preloadLogger.error(`  --> Faild to get mapping for api and channel `)
+    log.error(`  --> Faild to get mapping for api and channel `)
     throw new Error(`'electron-typed-ipc-bridge' is not working correctly`)
   }
 
@@ -87,15 +91,15 @@ async function generateIpcBridgeApi() {
       const channel = apiChannelMap[key]
       const _path = path.concat([key])
       if (typeof channel === 'object') {
-        preloadLogger.debug(`${'  '.repeat(level)} - ${key}`)
+        log.debug(`${'  '.repeat(level)} - ${key}`)
         apiInvoker[key] = _getApiInvoker(channel, level + 1, _path)
       } else {
-        preloadLogger.debug(`${'  '.repeat(level)} - ${key} (chanel: ${channel})`)
+        log.debug(`${'  '.repeat(level)} - ${key} (channel: ${channel})`)
         switch (mode) {
           case MODE.invoke:
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             apiInvoker[key] = (...args: any[]) => {
-              preloadLogger.silly(`called from renderer: ${_path.join('.')} (chanel: ${channel})`)
+              log.silly(`calling from renderer: ${_path.join('.')} (channel: ${channel})`)
               return ipcRenderer.invoke(channel, ...args)
             }
             break
@@ -103,20 +107,18 @@ async function generateIpcBridgeApi() {
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             apiInvoker[key] = (callback: (event: IpcRendererEvent, arg0: any) => void) =>
               ipcRenderer.on(channel, (event, value) => {
-                preloadLogger.silly(
-                  `recive message from main: ${_path.join('.')} (chanel: ${channel})`
-                )
+                log.silly(`recive message from main: ${_path.join('.')} (channel: ${channel})`)
                 callback(event, value)
               })
             break
           default:
-            preloadLogger.error(`implimentation error: ${_path.join('.')} (chanel: ${channel}`)
-            throw new Error(`implimentation error: ${_path.join('.')} (chanel: ${channel}`)
+            log.error(`implimentation error: ${_path.join('.')} (channel: ${channel}`)
+            throw new Error(`implimentation error: ${_path.join('.')} (channel: ${channel}`)
         }
       }
     })
     if (level === 0) {
-      preloadLogger.info(`Finish`)
+      log.info(`Finish`)
     }
     return apiInvoker
   }

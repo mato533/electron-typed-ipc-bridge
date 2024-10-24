@@ -1,6 +1,6 @@
 export type LogLevel = 'info' | 'warn' | 'error' | 'verbose' | 'debug' | 'silly'
 
-const PACKAGE_NAME = 'electron-typed-ipc-bridge'
+const PACKAGE_NAME = 'ipc-bridge'
 
 const LOG_LEVEL = {
   info: 'info',
@@ -20,9 +20,16 @@ interface Logger {
   silly(message: string): void
 }
 
-abstract class AbstractLogger implements Logger {
+abstract class ProcessType {
+  constructor(
+    protected type: string = (this.type = process.type === 'browser' ? 'main' : process.type)
+  ) {}
+}
+
+abstract class AbstractLogger extends ProcessType implements Logger {
   protected isEnabled: boolean
   constructor(option = { isEnabled: true }) {
+    super()
     this.isEnabled = option.isEnabled
   }
   info(message: string) {
@@ -52,7 +59,7 @@ abstract class AbstractLogger implements Logger {
     if (!this.isEnabled) {
       return
     }
-    const _message = `[${PACKAGE_NAME}] ${message}`
+    const _message = `[${PACKAGE_NAME}] [${this.type}] ${message}`
     this.writeLog(level, _message)
   }
   protected abstract writeLog(level: LogLevel, message: string): void

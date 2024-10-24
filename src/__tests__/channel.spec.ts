@@ -37,7 +37,7 @@ describe('Generate api channel map', () => {
     })
   })
 
-  it('same chanelmap are retured when multiple called', () => {
+  it('same channelmap are retured when multiple called', () => {
     uuidSpy.mockRestore()
     const apiHandlers = {
       invoke: {

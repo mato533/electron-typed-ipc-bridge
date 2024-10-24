@@ -176,9 +176,11 @@ Call it before calling another fuctions expoted by this library.
 
 <details>
 
-<summary>
-Import `AbstractLogger` and implimente it.<br>
-Sample code is here. Please expand this section who are interested in.
+<summary>Sample code is here.
+
+Import `AbstractLogger` and implimente it.  
+Please expand this section who are interested in.
+
 </summary>
 
 ```ts

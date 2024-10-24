@@ -9,3 +9,5 @@ export abstract class AbstractLogger implements Logger {
   silly(message: string): void
   protected abstract writeLog(level: LogLevel, message: string): void
 }
+
+export type { LogLevel }

@@ -16,4 +16,11 @@
   major: {
     automerge: false,
   },
+  "packageRules": [
+    {
+      "description": "Group dependencies from playglound package.json files",
+      "matchFileNames": ["playground/package.json"],
+      "groupName": "playglound package.json changes"
+    }
+  ]
 }

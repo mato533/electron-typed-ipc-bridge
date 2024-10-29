@@ -51,6 +51,7 @@ const getPlugins = (plugins: Plugin[]): Plugin[] => {
     return plugins
   }
 }
+const sourcemap = () => process.env.CI !== 'true'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const defineConfig = (pkg: Record<string, any>) => {
@@ -74,18 +75,18 @@ const defineConfig = (pkg: Record<string, any>) => {
           dir: dirname(pkg.main),
           exports: 'named',
           footer: 'module.exports = Object.assign(exports.default, exports);',
-          sourcemap: true,
+          sourcemap: sourcemap(),
         },
         {
           format: 'es',
           dir: dirname(pkg.module),
           plugins: [emitModulePackageFile()],
-          sourcemap: true,
+          sourcemap: sourcemap(),
         },
       ],
       plugins: getPlugins([
         typescript({
-          sourceMap: true,
+          sourceMap: sourcemap(),
         }),
         json(),
         nodeExternals(),

@@ -6,15 +6,18 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
+- Update ci to use common actions ([#50](https://github.com/mato533/electron-typed-ipc-bridge/pull/50))
+- Update rollup config to disable sourcemap in the CI ([#52](https://github.com/mato533/electron-typed-ipc-bridge/pull/52))
+
+### 🛠️ Bump Dependencies
+
 - _(deps)_ Update dependency @types/node to ^20.17.1 ([#47](https://github.com/mato533/electron-typed-ipc-bridge/pull/47))
 - _(deps)_ Update dependency @types/node to ^22.8.1 ([#48](https://github.com/mato533/electron-typed-ipc-bridge/pull/48))
 - _(deps)_ Update dependency vue-tsc to ^2.1.8 ([#49](https://github.com/mato533/electron-typed-ipc-bridge/pull/49))
 - _(deps)_ Update all non-major dependencies ([#51](https://github.com/mato533/electron-typed-ipc-bridge/pull/51))
-- Update ci to use common actions ([#50](https://github.com/mato533/electron-typed-ipc-bridge/pull/50))
 - _(deps)_ Update all non-major dependencies ([#53](https://github.com/mato533/electron-typed-ipc-bridge/pull/53))
 - _(deps)_ Update playglound package.json changes ([#54](https://github.com/mato533/electron-typed-ipc-bridge/pull/54))
 - _(deps)_ Update dependency @types/node to v22 ([#55](https://github.com/mato533/electron-typed-ipc-bridge/pull/55))
-- Update rollup config to disable sourcemap in the CI ([#52](https://github.com/mato533/electron-typed-ipc-bridge/pull/52))
 
 ## [2.0.1] - 2024-10-24
 
@@ -34,9 +37,12 @@ All notable changes to this project will be documented in this file.
 
 - Update changelog configration at build ([#41](https://github.com/mato533/electron-typed-ipc-bridge/pull/41))
 - Update renovate configration ([#42](https://github.com/mato533/electron-typed-ipc-bridge/pull/42))
+- _(release)_ V2.0.1 ([#46](https://github.com/mato533/electron-typed-ipc-bridge/pull/46))
+
+### 🛠️ Bump Dependencies
+
 - _(deps)_ Update all non-major dependencies ([#43](https://github.com/mato533/electron-typed-ipc-bridge/pull/43))
 - _(deps)_ Update playglound package.json changes ([#44](https://github.com/mato533/electron-typed-ipc-bridge/pull/44))
-- _(release)_ V2.0.1 ([#46](https://github.com/mato533/electron-typed-ipc-bridge/pull/46))
 
 ## [2.0.0] - 2024-10-23
 
@@ -65,8 +71,11 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
-- _(deps)_ Update all non-major dependencies ([#30](https://github.com/mato533/electron-typed-ipc-bridge/pull/30))
 - _(release)_ V1.2.0 ([#35](https://github.com/mato533/electron-typed-ipc-bridge/pull/35))
+
+### 🛠️ Bump Dependencies
+
+- _(deps)_ Update all non-major dependencies ([#30](https://github.com/mato533/electron-typed-ipc-bridge/pull/30))
 
 ## [1.1.0] - 2024-10-21
 
@@ -106,13 +115,16 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Update release workflow ([#13](https://github.com/mato533/electron-typed-ipc-bridge/pull/13))
+- Fix undefinde env ([#19](https://github.com/mato533/electron-typed-ipc-bridge/pull/19))
+- Fix mismatch of condition and command ([#20](https://github.com/mato533/electron-typed-ipc-bridge/pull/20))
+- _(release)_ V0.0.10 ([#21](https://github.com/mato533/electron-typed-ipc-bridge/pull/21))
+
+### 🛠️ Bump Dependencies
+
 - _(deps)_ Update dependency electron to v33 ([#17](https://github.com/mato533/electron-typed-ipc-bridge/pull/17))
 - _(deps)_ Update dependency @vue/eslint-config-prettier to v10 ([#16](https://github.com/mato533/electron-typed-ipc-bridge/pull/16))
 - _(deps)_ Update dependency @vue/eslint-config-typescript to v14 ([#15](https://github.com/mato533/electron-typed-ipc-bridge/pull/15))
 - _(deps)_ Update dependency eslint to v9 ([#18](https://github.com/mato533/electron-typed-ipc-bridge/pull/18))
-- Fix undefinde env ([#19](https://github.com/mato533/electron-typed-ipc-bridge/pull/19))
-- Fix mismatch of condition and command ([#20](https://github.com/mato533/electron-typed-ipc-bridge/pull/20))
-- _(release)_ V0.0.10 ([#21](https://github.com/mato533/electron-typed-ipc-bridge/pull/21))
 
 ## [0.0.9] - 2024-10-18
 

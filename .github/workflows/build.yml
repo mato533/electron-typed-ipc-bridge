@@ -15,7 +15,7 @@ jobs:
     name: Build applications
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       id-token: write
     steps:
       - uses: mato533/cicd-actions/setup-pnpm@main
@@ -30,6 +30,19 @@ jobs:
         run: pnpm publish --provenance --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Generate changelog for the Release
+        env:
+          GITHUB_REPO: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pnpm run changelog -c cliff-github.toml -l
+          pnpm exec prettier --write CHANGELOG.md
+
+      - name: Create Release
+        env:
+          GIT_TAG: ${{ github.ref_name }}
+        run: gh release create "${GIT_TAG}" ./*.tgz --draft=false -t "${GIT_TAG}" -F CHANGELOG.md
 
   coverage:
     name: Upload the coverage
@@ -49,33 +62,3 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/coverage-final.json
           verbose: true
-
-  create-release:
-    needs:
-      - build
-    name: Create Release
-    runs-on: ubuntu-latest
-    steps:
-      - uses: mato533/cicd-actions/setup-pnpm@main
-        with:
-          fetch-depth: 0
-          cache: 'pnpm'
-
-      - name: Generate changelog
-        env:
-          GITHUB_REPO: ${{ github.repository }}
-        run: |
-          pnpm run changelog -c cliff-github.toml -l
-          pnpm exec prettier --write CHANGELOG.md
-
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          tag_name: ${{ github.ref_name }}
-          release_name: ${{ github.ref_name }}
-          draft: false
-          prerelease: false
-          body_path: CHANGELOG.md

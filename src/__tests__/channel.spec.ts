@@ -139,7 +139,7 @@ describe('haveSameStructure', () => {
         },
       },
     }
-    // @ts-ignore
+    // @ts-expect-error
     expect(haveSameStructure(apiHandlers, channelMap)).toBeFalsy()
   })
 })

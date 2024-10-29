@@ -5,6 +5,7 @@ import { defineConfig, coverageConfigDefaults } from 'vitest/config'
 export default defineConfig({
   test: {
     globals: true,
+    silent: true,
     reporters: 'verbose',
     coverage: {
       exclude: ['src/index.ts', 'playground/*', ...coverageConfigDefaults.exclude],

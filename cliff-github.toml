@@ -1,7 +1,7 @@
 # git-cliff ~ configuration file
 # https://git-cliff.org/docs/configuration
 
-# [remote.github]
+[remote.github]
 owner = "mato533"
 repo = "electron-typed-ipc-bridge"
 # token = ""

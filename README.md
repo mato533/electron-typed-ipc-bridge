@@ -9,7 +9,7 @@ Generate api on the bridge across isolated contexts of the electron.
 
 # Why use this library？
 
-There are following reasends.
+There are following reasons.
 
 1. When implementing IPC using contextBridge, we want to use it in a type-safe.
 
@@ -17,7 +17,7 @@ There are following reasends.
 
 1. We want to be freed from channel management.
 
-   This library is automaticaly generate channel ids with uuid.  
+   This library is automatically generate channel ids with uuid.  
    We can feel free to manage channel strings.(don't worry about typos. e.g. say-hello or do-hello??)
 
 # How to use it?
@@ -28,7 +28,7 @@ There are following reasends.
 npm install electron-typed-ipc-bridge
 ```
 
-## Implimentation
+## How to implement this library？?
 
 ### Core
 
@@ -36,7 +36,7 @@ npm install electron-typed-ipc-bridge
 
 1. #### Create api on **`main`** script
 
-   1. Impliment the API of the IPC context bridge
+   1. Implement the API of the IPC context bridge
 
       - `invoke` : **renderer --(data)--> main --(return data)--> renderer**  
         return data is the option
@@ -57,7 +57,7 @@ npm install electron-typed-ipc-bridge
 
    1. Generate and export type definitions
 
-      - `IpcBridgeApiEmitter`: For the type of Emtter to use message from main to renderer.(defined at `on` by step.1-1)
+      - `IpcBridgeApiEmitter`: For the type of Emitter to use message from main to renderer.(defined at `on` by step.1-1)
       - `IpcBridgeApi` : For the type of exposed api(exposed to renderer, defined at `invoke` and `on` by step.1-1)
 
       ```typescript
@@ -82,14 +82,14 @@ npm install electron-typed-ipc-bridge
       ```
 
    1. Generate the Ipc context bridge API Emitter(apis defined at `on`)  
-      The type of `ipcApi` is same as `IpcBridgeApiEmitter` expoted by [Step1](#create-api-on-main-script)
+      The type of `ipcApi` is same as `IpcBridgeApiEmitter` exported by [Step1](#create-api-on-main-script)
 
       ```typescript
       const ipcApi = getIpcBridgeApiEmitter(api)
 
       // When send a message to renderer,
-      // use as folloing code
-      //(see the playgrond code of `setMenu(mainWindow, api)`
+      // use as following code
+      //(see the playground code of `setMenu(mainWindow, api)`
       // at the `createWindow(ipcApi)`)
       ipcApi.send.updateCounter(mainWindow, 1)
       ```
@@ -110,7 +110,7 @@ npm install electron-typed-ipc-bridge
 
    See the playground code: [`preload/index.ts`](playground/src/preload/index.ts)
 
-1. #### Add type decolation
+1. #### Add type decoration
 
    Extends the window object.  
    Import the type exported by [Step1](#create-api-on-main-script) and use it as follow.
@@ -144,17 +144,17 @@ npm install electron-typed-ipc-bridge
 
    See the playground code: [`renderer/src/App.vue`](playground/src/renderer/src/App.vue)
 
-### Logging for this libraly
+### Logging for this library
 
-This libraly is implimented the logger using `console.log`, `console.error` and `console.debug`.
+This library is implemented the logger using `console.log`, `console.error` and `console.debug`.
 
 But you may want to disable logging or use another logging library(e.g. [`electron-log`](https://github.com/megahertz/electron-log/tree/master)).  
- This libraly provides a way in which you can do so.
+ This library provides a way in which you can do so.
 
 #### Disable logging
 
 Import the `initialise` function and set empty object to `logger`.
-Call it before calling another fuctions expoted by this library.
+Call it before calling another functions exported by this library.
 
 - main.ts
 
@@ -172,7 +172,7 @@ Call it before calling another fuctions expoted by this library.
   initialise({ logger: {} })
   ```
 
-#### implimente custom logger.
+#### Implement custom logger.
 
 <details>
 
@@ -228,16 +228,16 @@ Set to the logger to this library.
 
 </details>
 
-#### Loglevel
+#### Log Level
 
-Each log levels are output following infomations.  
+Each log levels are output following information.  
 (This is what we do now, but this may change in the future.)
 
 |  level  | overview                                                               |
 | :-----: | ---------------------------------------------------------------------- |
 |  info   | Output the start and end of processing by the library                  |
 |  warn   | - (Not used)                                                           |
-|  error  | Output the message when runtime error occurd.                          |
+|  error  | Output the message when runtime error occurred.                        |
 | verbose | - (Not used)                                                           |
 |  debug  | Output detailed log regarding `IpcBridgeApi` generation process        |
 |  silly  | Output the function name and channel every time `IpcBridgeApi` is used |

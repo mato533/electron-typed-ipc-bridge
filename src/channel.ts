@@ -42,15 +42,15 @@ export type IpcBridgeApiChannelMapGenerator<T extends IpcBridgeApiImplementation
   'on' extends keyof T
     ? 'invoke' extends keyof T
       ? {
-  on: IpcBridgeApiChannelMapItemTypeGenerator<T['on']>
+          on: IpcBridgeApiChannelMapItemTypeGenerator<T['on']>
           invoke: IpcBridgeApiChannelMapItemTypeGenerator<T['invoke']>
         }
       : {
           on: IpcBridgeApiChannelMapItemTypeGenerator<T['on']>
         }
     : {
-  invoke: IpcBridgeApiChannelMapItemTypeGenerator<T['invoke']>
-}
+        invoke: IpcBridgeApiChannelMapItemTypeGenerator<T['invoke']>
+      }
 
 let channelMap = undefined
 
@@ -81,7 +81,5 @@ const MODE = {
   invoke: 'invoke',
   on: 'on',
 } as const
-
-export type IpcBridgeApiMode = (typeof MODE)[keyof typeof MODE]
 
 export { getApiChannelMap, MODE }

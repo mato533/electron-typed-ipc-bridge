@@ -10,8 +10,8 @@ import type {
   IpcBridgeApiHandler,
   IpcBridgeApiOnFunction,
   IpcBridgeApiOnHandler,
-  IpcBridgeApiMode,
   IpcBridgeApiInvokeFunction,
+  IpcBridgeApiChannelMapItemTypeGenerator,
 } from './channel'
 
 const isApiFunction = (value: unknown): value is IpcBridgeApiFunction => {
@@ -29,107 +29,94 @@ type IpcBridgeApiEmitterTypeConverter<T extends IpcBridgeApiOnHandler> = {
       : never
 }
 
-export type IpcBridgeApiEmitterGenerator<T extends IpcBridgeApiImplementation> =
-  'on' extends keyof T
-    ? T['on'] extends undefined
-      ? undefined
-      : T['on'] extends IpcBridgeApiOnHandler
-        ? {
-            send: IpcBridgeApiEmitterTypeConverter<T['on']>
-          }
-        : never
-    : undefined
+type IpcBridgeApiEmitterGenerator<T extends IpcBridgeApiImplementation> = 'on' extends keyof T
+  ? T['on'] extends undefined
+    ? undefined
+    : T['on'] extends IpcBridgeApiOnHandler
+      ? {
+          send: IpcBridgeApiEmitterTypeConverter<T['on']>
+        }
+      : never
+  : undefined
 
-function registerIpcHandler(ipcBridgeApi: IpcBridgeApiImplementation): void {
-  createhandler(ipcBridgeApi, MODE.invoke)
-}
+type ChannelMap = IpcBridgeApiChannelMapItemTypeGenerator<IpcBridgeApiImplementation>
 
-function getIpcBridgeApiEmitter<T extends IpcBridgeApiImplementation>(
-  ipcBridgeApi: T
-): IpcBridgeApiEmitterGenerator<T>
-function getIpcBridgeApiEmitter(ipcBridgeApi: IpcBridgeApiImplementation) {
-  return createhandler(ipcBridgeApi, MODE.on)
-}
-function createhandler(ipcBridgeApi: IpcBridgeApiImplementation, mode: IpcBridgeApiMode) {
+const registerIpcHandler = (ipcBridgeApi: IpcBridgeApiImplementation): void => {
   const channelMap = getApiChannelMap(ipcBridgeApi)
 
-  let _mode: IpcBridgeApiMode
-  const _registerIpcHandler = (
-    api: IpcBridgeApiHandler = ipcBridgeApi,
-    apiInfo = channelMap,
-    level = 0,
-    path: string[] = []
-  ) => {
-    const keys = Object.keys(apiInfo)
-    const sender = {}
-    keys.forEach((key) => {
-      if (level === 0) {
-        _mode = MODE[key]
-        if (MODE[key] !== mode) {
-          return
-        }
-      }
-      if (level === 0) {
-        log.info(
-          _mode === MODE.invoke
-            ? 'IpcBridgeAPI registration is stated.'
-            : 'Generateing IpcBrigeApi Emitter is started'
-        )
-      }
-      const senderKey = level === 0 ? 'send' : key
-      const _path = path.concat([key])
+  log.info('IpcBridgeAPI registration is stated.')
+  log.debug(`API handler for channel map is resistred (channel: ${API_CHANNEL_MAP})`)
+  ipcMain.handle(API_CHANNEL_MAP, () => channelMap)
 
-      if (typeof apiInfo[key] === 'object' && !isApiFunction(api[key])) {
-        log.debug(`${'  '.repeat(level)} - ${key}`)
-        switch (_mode) {
-          case MODE.invoke:
-            _registerIpcHandler(api[key], apiInfo[key], level + 1, _path)
-            break
-          case MODE.on:
-            sender[senderKey] = _registerIpcHandler(api[key], apiInfo[key], level + 1, _path)
-            break
-          default:
-            throw new Error(`implimentation error: ${apiInfo[key]}`)
-        }
-      } else if (typeof apiInfo[key] !== 'object' && isApiFunction(api[key])) {
-        log.debug(`${'  '.repeat(level)} - ${key} (channel: ${apiInfo[key]})`)
-        switch (_mode) {
-          case MODE.invoke: {
-            const _api = api[key] as IpcBridgeApiInvokeFunction
-            ipcMain.handle(apiInfo[key], (...args) => {
-              log.silly(`called from renderer: ${_path.join('.')} (channel: ${apiInfo[key]})`)
-              return _api(...args)
-            })
-            break
-          }
-          case MODE.on: {
-            const _api = api[key] as IpcBridgeApiOnFunction
-            sender[senderKey] = (window: BrowserWindow, ...args: Parameters<typeof _api>) => {
-              log.silly(`send to renderer: ${_path.join('.')} (channel::${apiInfo[key]})`)
-              window.webContents.send(apiInfo[key], _api(...args))
-            }
-            break
-          }
-          default:
-            log.error(`implimentation error: ${_path.join('.')} (channel::${apiInfo[key]})`)
-            throw new Error(`implimentation error: ${_path.join('.')} (channel::${apiInfo[key]})`)
-        }
-      } else {
-        log.error(`implimentation error: ${_path.join('.')} (channel::${apiInfo[key]})`)
-        throw new Error(`implimentation error: ${_path.join('.')} (channel::${apiInfo[key]})`)
-      }
-    })
+  serializeApi(ipcBridgeApi[MODE.invoke], channelMap[MODE.invoke], [MODE.invoke])
 
-    if (level === 0) {
-      log.debug(`Finish`)
-    }
-    return sender
-  }
-  if (mode === MODE.invoke) {
-    log.debug(`API handler for channel map is resistred (channel: ${API_CHANNEL_MAP})`)
-    ipcMain.handle(API_CHANNEL_MAP, () => channelMap)
-  }
-  return _registerIpcHandler()
+  log.debug(`Finish`)
 }
 
-export { registerIpcHandler, getIpcBridgeApiEmitter, initialise, AbstractLogger }
+const getIpcBridgeApiEmitter = <T extends IpcBridgeApiImplementation>(
+  ipcBridgeApi: T
+): IpcBridgeApiEmitterGenerator<T> => {
+  const channelMap = getApiChannelMap(ipcBridgeApi)
+
+  log.info('Generateing IpcBrigeApi Emitter is started')
+  const emmiterApi = serializeApi(ipcBridgeApi[MODE.on], channelMap[MODE.on], [MODE.on])
+
+  log.debug(`Finish`)
+  return { send: emmiterApi } as IpcBridgeApiEmitterGenerator<T>
+}
+
+const addHandler = (channel: string, handler: IpcBridgeApiInvokeFunction, path: string[]) => {
+  ipcMain.handle(channel, (...args) => {
+    log.silly(`called from renderer: ${path.join('.')} (channel: ${channel})`)
+    return handler(...args)
+  })
+}
+
+const createEmitter = (channel: string, onFunction: IpcBridgeApiOnFunction, path: string[]) => {
+  return (window: BrowserWindow, ...args: Parameters<typeof onFunction>) => {
+    log.silly(`send to renderer: ${path.join('.')} (channel: ${channel})`)
+    window.webContents.send(channel, onFunction(...args))
+  }
+}
+
+const getCallback = (mode: string) => {
+  switch (mode) {
+    case MODE.on:
+      return createEmitter
+    case MODE.invoke:
+      return addHandler
+    default: {
+      const mssage = `Implimentation error: Top level is must be 'on' or 'invoke'. (${mode})`
+      log.error(mssage)
+      throw new Error(mssage)
+    }
+  }
+}
+
+const serializeApi = (
+  ipcBridgeApi: IpcBridgeApiHandler,
+  channelMap: ChannelMap,
+  path: string[]
+) => {
+  const callback = getCallback(path[0])
+
+  return Object.keys(channelMap).reduce((api, key) => {
+    const _path = path.concat(key)
+    if (isApiFunction(ipcBridgeApi[key])) {
+      log.debug(`${'  '.repeat(path.length)} - ${key} (channel: ${channelMap[key]})`)
+      api[key] = callback(channelMap[key], ipcBridgeApi[key], _path)
+    } else {
+      log.debug(`${'  '.repeat(path.length)} - ${key}`)
+      api[key] = serializeApi(ipcBridgeApi[key], channelMap[key], _path)
+    }
+    return api
+  }, {})
+}
+
+export {
+  registerIpcHandler,
+  getIpcBridgeApiEmitter,
+  initialise,
+  AbstractLogger,
+  type IpcBridgeApiEmitterGenerator,
+}

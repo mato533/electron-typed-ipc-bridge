@@ -45,7 +45,7 @@ describe('preload', () => {
       },
     }
 
-    const _api = registerIpcHandler(_apiHandlers)
+    registerIpcHandler(_apiHandlers)
 
     const lastArgs = mocks.ipcMain.handle.mock.calls[0]
     expect(lastArgs[0]).toBe(API_CHANNEL_MAP)

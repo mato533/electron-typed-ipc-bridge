@@ -15,7 +15,7 @@ jobs:
     name: Build applications
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
       id-token: write
     steps:
       - uses: mato533/cicd-actions/setup-pnpm@main
@@ -31,19 +31,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Generate changelog for the Release
-        env:
-          GITHUB_REPO: ${{ github.repository }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          pnpm run changelog -c cliff-github.toml -l
-          pnpm exec prettier --write CHANGELOG.md
-
-      - name: Create Release
-        env:
-          GIT_TAG: ${{ github.ref_name }}
-        run: gh release create "${GIT_TAG}" ./*.tgz --draft=false -t "${GIT_TAG}" -F CHANGELOG.md
-
   coverage:
     name: Upload the coverage
     needs:
@@ -54,11 +41,63 @@ jobs:
         with:
           cache: 'pnpm'
 
-      - name: Run the coverage
-        run: pnpm run coverage
+      - name: Run tests with coverage
+        id: test
+        env:
+          TEST_RESULT: 'junit.xml'
+        run: |
+          pnpm exec vitest run --coverage --reporter=junit --outputFile="${TEST_RESULT}"
+          echo "file-name=${TEST_RESULT}" >>"${GITHUB_OUTPUT}"
+          echo "file-name=${TEST_RESULT}"
 
       - uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/coverage-final.json
           verbose: true
+
+      - name: Upload test results to Codecov
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ${{ steps.test.outputs.file-name }}
+
+  create-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    needs:
+      - build
+    permissions:
+      contents: write
+    steps:
+      - uses: mato533/cicd-actions/setup-pnpm@main
+        with:
+          fetch-depth: 0
+          cache: 'pnpm'
+
+      - name: Generate changelog
+        env:
+          GITHUB_REPO: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          pnpm run changelog -c cliff-github.toml -l
+          pnpm exec prettier --write CHANGELOG.md
+
+      - name: Download tarball
+        id: download
+        run: |
+          APP_NAME="$(cat ./package.json |jq .name|sed -e 's/"//g'| head -n1)"
+          APP_VERSION="$(cat ./package.json |jq .version|sed -e 's/"//g'| head -n1)"
+          TAR_URL="$(pnpm view "${APP_NAME}@${APP_VERSION}" dist.tarball)"
+          TAR_NAME="${TAR_URL##*/}"
+          echo "URL: ${TAR_URL}"
+          curl -sS -OL "${TAR_URL}"
+          echo "file-name=${TAR_NAME}" >>"${GITHUB_OUTPUT}"
+          echo "file-name=${TAR_NAME}"
+          ls -l "${TAR_NAME}"
+
+      - name: Create Release
+        env:
+          GIT_TAG: ${{ github.ref_name }}
+          TAR_NAME: ${{ steps.download.outputs.file-name }}
+        run: gh release create "${GIT_TAG}" "${TAR_NAME}" --draft=false -t "${GIT_TAG}" -F CHANGELOG.md

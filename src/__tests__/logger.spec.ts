@@ -10,19 +10,19 @@ import {
 
 import type { LogLevel } from '../utils/logger'
 
+const getLogger = (procName: string) => {
+  switch (procName) {
+    case 'main':
+      return mainLogger
+
+    case 'preload':
+      return preloadLogger
+  }
+}
 describe.each([
   ['main', initialiseMain],
   ['preload', initialisePreload],
 ])('Logger (%s)', (procName: string, initialise) => {
-  const getLogger = (procName) => {
-    switch (procName) {
-      case 'main':
-        return mainLogger
-
-      case 'preload':
-        return preloadLogger
-    }
-  }
   describe('DefaultLogger', () => {
     const errorSpy = vi.spyOn(console, 'error')
     const debugSpy = vi.spyOn(console, 'debug')

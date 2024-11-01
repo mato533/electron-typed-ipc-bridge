@@ -3,7 +3,9 @@ import { ipcRenderer } from 'electron'
 import { API_CHANNEL_MAP, MODE } from './channel'
 import {
   AbstractLogger,
-  initialisePreload as initialise,
+  initializePreload as initialize,
+  // todo: remove this method on next major version
+  oldInitializePreload as initialise,
   preloadLogger as log,
 } from './utils/logger'
 
@@ -125,7 +127,13 @@ const createReceiver = (channel: string, path: string[]) => {
     })
 }
 
-export { generateIpcBridgeApi, initialise, AbstractLogger }
+export {
+  generateIpcBridgeApi,
+  initialize,
+  // todo: remove this method on next major version
+  initialise,
+  AbstractLogger,
+}
 export type {
   IpcBridgeApiFunction,
   IpcBridgeApiInvoker,

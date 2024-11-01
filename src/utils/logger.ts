@@ -100,22 +100,38 @@ type PreloadOption = {
   }
 }
 
-const initialiseMain = (option: MainOption = {}) => {
-  if (option.logger) {
-    if (option.logger.main) {
-      mainLogger = option.logger.main
-    } else {
-      mainLogger = new DefaultLogger({ isEnabled: false })
-    }
+const getLogger = (logger: Logger | undefined) => {
+  if (logger) {
+    return logger
+  } else {
+    return new DefaultLogger({ isEnabled: false })
   }
 }
-const initialisePreload = (option: PreloadOption = {}) => {
+
+// todo: remove this method on next major version
+const oldInitializeMain = (option: MainOption = {}) => {
+  initializeMain(option)
+  mainLogger.warn(
+    "⚠️ [DEPRECATION NOTICE] This method ('initialise') will be REMOVED on next major version."
+  )
+}
+
+// todo: remove this method on next major version
+const oldInitializePreload = (option: PreloadOption = {}) => {
+  initializePreload(option)
+  preloadLogger.warn(
+    "⚠️ [DEPRECATION NOTICE] This method ('initialise') will be REMOVED on next major version."
+  )
+}
+
+const initializeMain = (option: MainOption = {}) => {
   if (option.logger) {
-    if (option.logger.preload) {
-      preloadLogger = option.logger.preload
-    } else {
-      preloadLogger = new DefaultLogger({ isEnabled: false })
-    }
+    mainLogger = getLogger(option.logger.main)
+  }
+}
+const initializePreload = (option: PreloadOption = {}) => {
+  if (option.logger) {
+    preloadLogger = getLogger(option.logger.preload)
   }
 }
 export {
@@ -125,8 +141,11 @@ export {
   MainOption,
   PreloadOption,
   LOG_LEVEL,
-  initialiseMain,
-  initialisePreload,
+  initializeMain,
+  initializePreload,
   mainLogger,
   preloadLogger,
+  // todo: remove this method on next major version
+  oldInitializeMain,
+  oldInitializePreload,
 }

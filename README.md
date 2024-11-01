@@ -153,23 +153,23 @@ But you may want to disable logging or use another logging library(e.g. [`electr
 
 #### Disable logging
 
-Import the `initialise` function and set empty object to `logger`.
+Import the `initialize` function and set empty object to `logger`.
 Call it before calling another functions exported by this library.
 
 - main.ts
 
   ```typescript
-  import { initialise } from 'electron-typed-ipc-bridge/main'
+  import { initialize } from 'electron-typed-ipc-bridge/main'
 
-  initialise({ logger: {} })
+  initialize({ logger: {} })
   ```
 
 - preload.ts
 
   ```typescript
-  import { initialise } from 'electron-typed-ipc-bridge/preload'
+  import { initialize } from 'electron-typed-ipc-bridge/preload'
 
-  initialise({ logger: {} })
+  initialize({ logger: {} })
   ```
 
 #### Implement custom logger.
@@ -178,7 +178,7 @@ Call it before calling another functions exported by this library.
 
 <summary>Sample code is here.
 
-Import `AbstractLogger` and implimente it.  
+Import `AbstractLogger` and implement it.  
 Please expand this section who are interested in.
 
 </summary>
@@ -213,17 +213,17 @@ Set to the logger to this library.
 - main.ts
 
   ```typescript
-  import { initialise } from 'electron-typed-ipc-bridge/main'
+  import { initialize } from 'electron-typed-ipc-bridge/main'
 
-  initialise({ logger: { main: new MyLogger() } })
+  initialize({ logger: { main: new MyLogger() } })
   ```
 
 - preload.ts
 
   ```typescript
-  import { initialise } from 'electron-typed-ipc-bridge/preload'
+  import { initialize } from 'electron-typed-ipc-bridge/preload'
 
-  initialise({ logger: { preload: new MyLogger() } })
+  initialize({ logger: { preload: new MyLogger() } })
   ```
 
 </details>

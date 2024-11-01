@@ -31,7 +31,16 @@ declare function getIpcBridgeApiEmitter<T extends IpcBridgeApiImplementation>(
   ipcBridgeApi: T
 ): IpcBridgeApiEmitterGenerator<T>
 
+declare function initialize(option: Option): void
+
+// todo: remove this method on next major version
 declare function initialise(option: Option): void
 
-export { registerIpcHandler, getIpcBridgeApiEmitter, initialise }
+export {
+  registerIpcHandler,
+  getIpcBridgeApiEmitter,
+  initialize,
+  // todo: remove this method on next major version
+  initialise,
+}
 export type { Option, LogLevel }

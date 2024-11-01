@@ -5,6 +5,20 @@ import { registerIpcHandler } from '../main'
 import type { IpcBridgeApiGenerator } from '../preload'
 import type { IpcMainInvokeEvent, IpcRendererEvent } from 'electron'
 
+const _apiHandlers = {
+  invoke: {
+    fn1: (e: IpcMainInvokeEvent) => console.log(e),
+    fn2: (_e: IpcMainInvokeEvent, arg0: string) => `hello ${arg0}`,
+  },
+  on: {
+    fn1: (arg1: string) => arg1,
+    fn2: (arg1: number, arg2: number) => arg1 + arg2,
+    name1: {
+      fn2: (arg1: string) => arg1,
+      fn1: (arg1: number, arg2: number) => arg1 + arg2,
+    },
+  },
+}
 describe('preload', () => {
   const mocks = vi.hoisted(() => {
     return {
@@ -28,23 +42,13 @@ describe('preload', () => {
 
   // disable console outputs
   vi.spyOn(console, 'debug').mockImplementation(() => {})
-
+  beforeEach(() => {
+    mocks.ipcMain.handle.mockReset()
+    mocks.ipcRenderer.invoke.mockReset()
+    mocks.ipcRenderer.on.mockReset()
+    mocks.randomUUID.mockReset()
+  })
   it('sender test', async () => {
-    const _apiHandlers = {
-      invoke: {
-        fn1: (e: IpcMainInvokeEvent) => console.log(e),
-        fn2: (_e: IpcMainInvokeEvent, arg0: string) => `hello ${arg0}`,
-      },
-      on: {
-        fn1: (arg1: string) => arg1,
-        fn2: (arg1: number, arg2: number) => arg1 + arg2,
-        name1: {
-          fn2: (arg1: string) => arg1,
-          fn1: (arg1: number, arg2: number) => arg1 + arg2,
-        },
-      },
-    }
-
     registerIpcHandler(_apiHandlers)
 
     const lastArgs = mocks.ipcMain.handle.mock.calls[0]
@@ -77,5 +81,45 @@ describe('preload', () => {
     // test
     expect(callback).toHaveBeenCalledOnce()
     expect(result).toBe(expectedValue)
+  })
+
+  it('error test', async () => {
+    mocks.ipcRenderer.invoke.mockImplementation((key: string) => {
+      if (key === API_CHANNEL_MAP) {
+        return undefined
+      }
+    })
+
+    expect(() =>
+      generateIpcBridgeApi<IpcBridgeApiGenerator<typeof _apiHandlers>>()
+    ).rejects.toThrowError('electron-typed-ipc-bridge')
+  })
+  it('error test', async () => {
+    mocks.ipcRenderer.invoke.mockImplementation((key: string) => {
+      if (key === API_CHANNEL_MAP) {
+        return {
+          invalid: { api: 'uuid' },
+        }
+      }
+    })
+
+    expect(() =>
+      generateIpcBridgeApi<IpcBridgeApiGenerator<typeof _apiHandlers>>()
+    ).rejects.toThrowError('Implementation error')
+  })
+
+  it('error test', async () => {
+    mocks.ipcRenderer.invoke.mockImplementation((key: string) => {
+      if (key === API_CHANNEL_MAP) {
+        return {
+          on: { api: 'uuid1a' },
+          invalid: { api: 'uuid2' },
+        }
+      }
+    })
+
+    expect(() =>
+      generateIpcBridgeApi<IpcBridgeApiGenerator<typeof _apiHandlers>>()
+    ).rejects.toThrowError('Implementation error')
   })
 })

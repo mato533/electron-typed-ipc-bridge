@@ -73,6 +73,17 @@ describe('main', () => {
     mocks.ipcMain.handle.mockClear()
   })
 
+  it('invalid api structure', () => {
+    const apiHandlers = {
+      dummy: {
+        fn1: (_e: IpcMainInvokeEvent, arg1: string) => arg1,
+      },
+    }
+
+    // @ts-expect-error
+    expect(() => registerIpcHandler(apiHandlers)).toThrowError('Implementation error')
+  })
+
   it('sender test', () => {
     const _apiHandlers = {
       invoke: {

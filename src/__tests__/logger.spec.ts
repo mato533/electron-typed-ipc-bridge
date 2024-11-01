@@ -6,6 +6,9 @@ import {
   preloadLogger,
   initializeMain,
   initializePreload,
+  // todo: remove this method on next major version
+  oldInitializeMain,
+  oldInitializePreload,
 } from '../utils/logger'
 
 import type { LogLevel } from '../utils/logger'
@@ -71,5 +74,26 @@ describe.each([
       getLogger(procName)[logLevel]('TEST')
       expect(logMock).toHaveBeenCalled()
     })
+  })
+})
+
+// todo: remove this method on next major version
+describe.each([
+  ['main', oldInitializeMain],
+  ['preload', oldInitializePreload],
+])('Logger (%s)', (procName: string, initialize) => {
+  const logSpy = vi.spyOn(console, 'log')
+
+  beforeEach(() => {
+    logSpy.mockReset()
+  })
+
+  it('log test', () => {
+    initialize({ logger: { [procName]: new DefaultLogger() } })
+
+    expect(logSpy).toHaveBeenCalledOnce()
+
+    const message = logSpy.mock.calls[0][0]
+    expect(message.includes('[DEPRECATION NOTICE]')).toBeTruthy()
   })
 })

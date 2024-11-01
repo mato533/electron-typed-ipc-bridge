@@ -18,9 +18,9 @@
   },
   packageRules: [
     {
-      description: 'Group dependencies from playglound package.json files',
+      description: 'Group dependencies from playground package.json files',
       matchFileNames: ['playground/package.json'],
-      groupName: 'playglound package.json changes',
+      groupName: 'playground package.json changes',
     },
   ],
 }

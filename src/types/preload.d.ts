@@ -12,7 +12,15 @@ declare function generateIpcBridgeApi<
   T extends IpcBridgeApiTypeGenerator<IpcBridgeApiImplementation>,
 >(): Promise<T>
 
+declare function initialize(option: Option): void
+
+// todo: remove this method on next major version
 declare function initialise(option: Option): void
 
-export { generateIpcBridgeApi, initialise }
+export {
+  generateIpcBridgeApi,
+  initialize,
+  // todo: remove this method on next major version
+  initialise,
+}
 export type { LogLevel }

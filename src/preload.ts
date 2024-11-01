@@ -3,12 +3,18 @@ import { ipcRenderer } from 'electron'
 import { API_CHANNEL_MAP, MODE } from './channel'
 import {
   AbstractLogger,
-  initialisePreload as initialise,
+  initializePreload as initialize,
+  // todo: remove this method on next major version
+  oldInitializePreload as initialise,
   preloadLogger as log,
 } from './utils/logger'
 
 import type { IpcMainInvokeEvent, IpcRendererEvent } from 'electron'
-import type { IpcBridgeApiHandler, IpcBridgeApiImplementation } from './channel'
+import type {
+  IpcBridgeApiCommonGenerator,
+  IpcBridgeApiHandler,
+  IpcBridgeApiImplementation,
+} from './channel'
 
 type IpcBridgeApiChannelMap = {
   [key: string]: string | IpcBridgeApiChannelMap
@@ -37,18 +43,7 @@ type IpcBridgeApiReceiver<T> = {
 
 type IpcBridgeApiGenerator<T extends IpcBridgeApiImplementation> = keyof T extends never
   ? undefined
-  : 'on' extends keyof T
-    ? 'invoke' extends keyof T
-      ? {
-          invoke: IpcBridgeApiInvoker<T['invoke']>
-          on: IpcBridgeApiReceiver<T['on']>
-        }
-      : {
-          on: IpcBridgeApiReceiver<T['on']>
-        }
-    : {
-        invoke: IpcBridgeApiInvoker<T['invoke']>
-      }
+  : IpcBridgeApiCommonGenerator<T, IpcBridgeApiReceiver<T['on']>, IpcBridgeApiInvoker<T['invoke']>>
 
 type IpcBridgeApiTypeGenerator<T extends IpcBridgeApiImplementation> =
   | {
@@ -125,7 +120,13 @@ const createReceiver = (channel: string, path: string[]) => {
     })
 }
 
-export { generateIpcBridgeApi, initialise, AbstractLogger }
+export {
+  generateIpcBridgeApi,
+  initialize,
+  // todo: remove this method on next major version
+  initialise,
+  AbstractLogger,
+}
 export type {
   IpcBridgeApiFunction,
   IpcBridgeApiInvoker,

@@ -4,7 +4,7 @@ import { app, shell, BrowserWindow } from 'electron'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import {
   getIpcBridgeApiEmitter,
-  initialise,
+  initialize,
   registerIpcHandler
 } from 'electron-typed-ipc-bridge/main'
 
@@ -64,9 +64,9 @@ app.whenReady().then(() => {
   })
 
   // IPC test
-  initialise({ logger: { main: new MyLogger() } })
-  // if disable looging, pass the empty object
-  // initialise({ logger: {} })
+  initialize({ logger: { main: new MyLogger() } })
+  // if disable logging, pass the empty object
+  // initialize({ logger: {} })
   registerIpcHandler(api)
 
   const ipcApi = getIpcBridgeApiEmitter(api)

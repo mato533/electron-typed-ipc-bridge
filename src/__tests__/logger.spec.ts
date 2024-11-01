@@ -4,8 +4,8 @@ import {
   LOG_LEVEL,
   mainLogger,
   preloadLogger,
-  initialiseMain,
-  initialisePreload,
+  initializeMain,
+  initializePreload,
 } from '../utils/logger'
 
 import type { LogLevel } from '../utils/logger'
@@ -20,9 +20,9 @@ const getLogger = (procName: string) => {
   }
 }
 describe.each([
-  ['main', initialiseMain],
-  ['preload', initialisePreload],
-])('Logger (%s)', (procName: string, initialise) => {
+  ['main', initializeMain],
+  ['preload', initializePreload],
+])('Logger (%s)', (procName: string, initialize) => {
   describe('DefaultLogger', () => {
     const errorSpy = vi.spyOn(console, 'error')
     const debugSpy = vi.spyOn(console, 'debug')
@@ -35,7 +35,7 @@ describe.each([
     })
 
     it('disable', () => {
-      initialise({ logger: {} })
+      initialize({ logger: {} })
       getLogger(procName).info('TEST')
       expect(logSpy).not.toHaveBeenCalled()
       expect(debugSpy).not.toHaveBeenCalled()
@@ -49,7 +49,7 @@ describe.each([
       ['debug', debugSpy],
       ['silly', debugSpy],
     ])('Assert output the log at each log level (%s)', (logLevel, spy) => {
-      initialise({ logger: { [procName]: new DefaultLogger() } })
+      initialize({ logger: { [procName]: new DefaultLogger() } })
       getLogger(procName)[logLevel]('TEST')
       expect(spy).toHaveBeenCalled()
     })
@@ -64,7 +64,7 @@ describe.each([
     }
     beforeEach(() => {
       logMock.mockReset()
-      initialise({ logger: { [procName]: new Logger() } })
+      initialize({ logger: { [procName]: new Logger() } })
     })
 
     it.each([...Object.keys(LOG_LEVEL)])('logger test (%s)', (logLevel) => {

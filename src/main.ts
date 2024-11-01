@@ -1,7 +1,13 @@
 import { ipcMain } from 'electron'
 
 import { API_CHANNEL_MAP, getApiChannelMap, MODE } from './channel'
-import { AbstractLogger, initialiseMain as initialise, mainLogger as log } from './utils/logger'
+import {
+  AbstractLogger,
+  initializeMain as initialize,
+  // todo: remove this method on next major version
+  oldInitializeMain as initialise,
+  mainLogger as log,
+} from './utils/logger'
 
 import type { BrowserWindow } from 'electron'
 import type {
@@ -120,6 +126,8 @@ const serializeApi = (
 export {
   registerIpcHandler,
   getIpcBridgeApiEmitter,
+  initialize,
+  // todo: remove this method on next major version
   initialise,
   AbstractLogger,
   type IpcBridgeApiEmitterGenerator,

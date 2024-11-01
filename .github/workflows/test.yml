@@ -22,7 +22,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        node-version: [18.x, 20.x]
+        node-version: [20.x]
     steps:
       - uses: mato533/cicd-actions/setup-pnpm@main
         with:
@@ -37,3 +37,20 @@ jobs:
 
       - name: Build
         run: pnpm run build
+
+  coverage:
+    name: Upload coverage to code climate
+    runs-on: ubuntu-latest
+    needs:
+      - test
+    if: github.event_name == 'push'
+    steps:
+      - uses: mato533/cicd-actions/setup-pnpm@main
+        with:
+          cache: 'pnpm'
+
+      - uses: paambaati/codeclimate-action@v9
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE }}
+        with:
+          coverageCommand: pnpm run coverage

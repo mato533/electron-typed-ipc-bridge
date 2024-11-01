@@ -10,10 +10,11 @@ on:
       - '*'
       - src/**
       - '!**.md'
-
 concurrency:
   group: test-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   test:
@@ -51,6 +52,7 @@ jobs:
 
       - uses: paambaati/codeclimate-action@v9
         env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CODE_CLIMATE }}
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageCommand: pnpm run coverage
+          coverageCommand: pnpm exec vitest run --coverage
+          coverageLocations: ${{github.workspace}}/coverage/clover.xml:clover

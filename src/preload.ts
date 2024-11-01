@@ -59,12 +59,45 @@ type IpcBridgeApiTypeGenerator<T extends IpcBridgeApiImplementation> =
 
 type IpcBridgeApi = IpcBridgeApiTypeGenerator<IpcBridgeApiImplementation>
 
+const requiredKeys = ['on', 'invoke'] as const
+
+const hasRequiredKeys = (keys: string[]) => {
+  if (!requiredKeys.some((key) => keys.includes(key))) {
+    throw new Error()
+  }
+}
+
+const checkInvalidKeys = (keys: string[]) => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-expect-error
+  if (!keys.every((key) => requiredKeys.includes(key))) {
+    throw new Error()
+  }
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const checkTopLevelKeys = (channelMap: any) => {
+  try {
+    const keys = Object.keys(channelMap)
+
+    hasRequiredKeys(keys)
+
+    checkInvalidKeys(keys)
+  } catch (_) {
+    const message = `Implementation error: Top level must be 'on' or 'invoke'. Both properties are not set.`
+    log.error(message)
+    throw new Error(message)
+  }
+}
+
 const generateIpcBridgeApi = async <T extends IpcBridgeApi>(): Promise<T> => {
   const result = await ipcRenderer.invoke(API_CHANNEL_MAP)
   if (!result) {
     log.error(`  --> Failed to get mapping for api and channel `)
     throw new Error(`'electron-typed-ipc-bridge' is not working correctly`)
   }
+  checkTopLevelKeys(result)
+
   log.info('Generation IpcBridgeAPI is stated.')
 
   const endpoint = getEndpointApi(result) as T
@@ -96,11 +129,6 @@ const createIpcBridgeApi = (channel: string, path: string[]) => {
       return createInvoker(channel, path)
     case MODE.on:
       return createReceiver(channel, path)
-    default: {
-      const message = `implementation error: ${path.join('.')} (channel: ${channel}`
-      log.error(message)
-      throw new Error(message)
-    }
   }
 }
 

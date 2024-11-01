@@ -95,11 +95,14 @@ const getCallback = (mode: string) => {
       return createEmitter
     case MODE.invoke:
       return addHandler
-    default: {
-      const massage = `Implementation error: Top level is must be 'on' or 'invoke'. (${mode})`
-      log.error(massage)
-      throw new Error(massage)
-    }
+  }
+}
+
+const checkTruthy = (ipcBridgeApi: IpcBridgeApiHandler, channelMap: ChannelMap) => {
+  if (!ipcBridgeApi || !channelMap) {
+    const massage = `Implementation error: Top level must be 'on' or 'invoke'. Both properties are not set.`
+    log.error(massage)
+    throw new Error(massage)
   }
 }
 
@@ -108,6 +111,8 @@ const serializeApi = (
   channelMap: ChannelMap,
   path: string[]
 ) => {
+  checkTruthy(ipcBridgeApi, channelMap)
+
   const callback = getCallback(path[0])
 
   return Object.keys(channelMap).reduce((api, key) => {

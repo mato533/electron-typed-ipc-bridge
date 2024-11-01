@@ -15,10 +15,10 @@ describe('checkFalsy', () => {
   it('ok', () => {
     expect(checkFalsy(api, channelMap)).toBeTruthy()
   })
-  it('ng1', () => {
+  it('undefined - channelMap', () => {
     expect(checkFalsy(api, undefined)).toBeFalsy()
   })
-  it('ng2', () => {
+  it('undefined - ipcBridge', () => {
     expect(checkFalsy(undefined, channelMap)).toBeFalsy()
   })
 })

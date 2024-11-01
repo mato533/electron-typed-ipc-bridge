@@ -35,8 +35,8 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
-- Update changelog configration at build ([#41](https://github.com/mato533/electron-typed-ipc-bridge/pull/41))
-- Update renovate configration ([#42](https://github.com/mato533/electron-typed-ipc-bridge/pull/42))
+- Update changelog configuration at build ([#41](https://github.com/mato533/electron-typed-ipc-bridge/pull/41))
+- Update renovate configuration ([#42](https://github.com/mato533/electron-typed-ipc-bridge/pull/42))
 - _(release)_ V2.0.1 ([#46](https://github.com/mato533/electron-typed-ipc-bridge/pull/46))
 
 ### 🛠️ Bump Dependencies
@@ -96,7 +96,7 @@ All notable changes to this project will be documented in this file.
 
 ### 🚀 Features
 
-- Split functon register and emmiter at main process ([#23](https://github.com/mato533/electron-typed-ipc-bridge/pull/23))
+- Split function register and emmiter at main process ([#23](https://github.com/mato533/electron-typed-ipc-bridge/pull/23))
 
 ### 📚 Documentation
 
@@ -163,7 +163,7 @@ All notable changes to this project will be documented in this file.
 
 ### ⚙️ Miscellaneous Tasks
 
-- Initial repository configrations ([#2](https://github.com/mato533/electron-typed-ipc-bridge/pull/2))
+- Initial repository configurations ([#2](https://github.com/mato533/electron-typed-ipc-bridge/pull/2))
 - Add configurations for Renovate ([#1](https://github.com/mato533/electron-typed-ipc-bridge/pull/1))
-- Add configration for ci/cd ([#5](https://github.com/mato533/electron-typed-ipc-bridge/pull/5))
+- Add configuration for ci/cd ([#5](https://github.com/mato533/electron-typed-ipc-bridge/pull/5))
 - _(release)_ Prepare for v0.0.5 ([#6](https://github.com/mato533/electron-typed-ipc-bridge/pull/6))

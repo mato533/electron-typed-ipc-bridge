@@ -6,7 +6,7 @@ export { AbstractLogger } from '.'
 
 /**
  * Generate IPC api that will be exposed to renderer process.
- * Use at the preload sctipt
+ * Use at the preload script
  */
 declare function generateIpcBridgeApi<
   T extends IpcBridgeApiTypeGenerator<IpcBridgeApiImplementation>,

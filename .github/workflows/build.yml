@@ -83,6 +83,12 @@ jobs:
           pnpm run changelog -c cliff-github.toml -l
           pnpm exec prettier --write CHANGELOG.md
 
+      - name: Spell Check and Fix of changelog
+        uses: crate-ci/typos@master
+        with:
+          files: ./CHANGELOG.md
+          write_changes: true
+
       - name: Download tarball
         id: download
         run: |

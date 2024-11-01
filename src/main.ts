@@ -42,13 +42,15 @@ type IpcBridgeApiEmitterGenerator<T extends IpcBridgeApiImplementation> = 'on' e
 type ChannelMap = IpcBridgeApiChannelMapItemTypeGenerator<IpcBridgeApiImplementation>
 
 const registerIpcHandler = (ipcBridgeApi: IpcBridgeApiImplementation): void => {
+  const mode = MODE.invoke
   const channelMap = getApiChannelMap(ipcBridgeApi)
 
   log.info('IpcBridgeAPI registration is stated.')
-  log.debug(`API handler for channel map is resistred (channel: ${API_CHANNEL_MAP})`)
+  log.debug(`API handler for channel map is registered (channel: ${API_CHANNEL_MAP})`)
   ipcMain.handle(API_CHANNEL_MAP, () => channelMap)
 
-  serializeApi(ipcBridgeApi[MODE.invoke], channelMap[MODE.invoke], [MODE.invoke])
+  log.debug(` - ${mode}`)
+  serializeApi(ipcBridgeApi[mode], channelMap[mode], [mode])
 
   log.debug(`Finish`)
 }
@@ -56,13 +58,15 @@ const registerIpcHandler = (ipcBridgeApi: IpcBridgeApiImplementation): void => {
 const getIpcBridgeApiEmitter = <T extends IpcBridgeApiImplementation>(
   ipcBridgeApi: T
 ): IpcBridgeApiEmitterGenerator<T> => {
+  const mode = MODE.on
   const channelMap = getApiChannelMap(ipcBridgeApi)
 
-  log.info('Generateing IpcBrigeApi Emitter is started')
-  const emmiterApi = serializeApi(ipcBridgeApi[MODE.on], channelMap[MODE.on], [MODE.on])
+  log.info('Generating IpcBridgeApi Emitter is started')
+  log.debug(` - ${mode}`)
+  const emitterApi = serializeApi(ipcBridgeApi[mode], channelMap[mode], [mode])
 
   log.debug(`Finish`)
-  return { send: emmiterApi } as IpcBridgeApiEmitterGenerator<T>
+  return { send: emitterApi } as IpcBridgeApiEmitterGenerator<T>
 }
 
 const addHandler = (channel: string, handler: IpcBridgeApiInvokeFunction, path: string[]) => {
@@ -86,9 +90,9 @@ const getCallback = (mode: string) => {
     case MODE.invoke:
       return addHandler
     default: {
-      const mssage = `Implimentation error: Top level is must be 'on' or 'invoke'. (${mode})`
-      log.error(mssage)
-      throw new Error(mssage)
+      const massage = `Implementation error: Top level is must be 'on' or 'invoke'. (${mode})`
+      log.error(massage)
+      throw new Error(massage)
     }
   }
 }

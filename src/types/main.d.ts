@@ -4,7 +4,7 @@ import type { MainOption as Option, LogLevel } from '../utils/logger'
 
 /**
  * Type generator for api that will be exposed to renderer process
- * Use at the preload sctipt
+ * Use at the preload script
  */
 export type { IpcBridgeApiGenerator } from '../preload'
 /**

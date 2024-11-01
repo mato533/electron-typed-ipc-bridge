@@ -26,9 +26,9 @@ type IpcBridgeApiInvoker<T> = {
   [K in keyof T]: T[K] extends Function ? IpcBridgeApiFunction<T[K]> : IpcBridgeApiInvoker<T[K]>
 }
 
-type IpcBridgeApiReciver<T> = {
+type IpcBridgeApiReceiver<T> = {
   [K in keyof T]: T[K] extends IpcBridgeApiHandler
-    ? IpcBridgeApiReciver<T[K]>
+    ? IpcBridgeApiReceiver<T[K]>
     : // eslint-disable-next-line @typescript-eslint/no-explicit-any
       T[K] extends (...args: any[]) => infer R
       ? (callback: (event: IpcRendererEvent, args: R) => void) => void
@@ -41,10 +41,10 @@ type IpcBridgeApiGenerator<T extends IpcBridgeApiImplementation> = keyof T exten
     ? 'invoke' extends keyof T
       ? {
           invoke: IpcBridgeApiInvoker<T['invoke']>
-          on: IpcBridgeApiReciver<T['on']>
+          on: IpcBridgeApiReceiver<T['on']>
         }
       : {
-          on: IpcBridgeApiReciver<T['on']>
+          on: IpcBridgeApiReceiver<T['on']>
         }
     : {
         invoke: IpcBridgeApiInvoker<T['invoke']>
@@ -53,10 +53,10 @@ type IpcBridgeApiGenerator<T extends IpcBridgeApiImplementation> = keyof T exten
 type IpcBridgeApiTypeGenerator<T extends IpcBridgeApiImplementation> =
   | {
       invoke: IpcBridgeApiInvoker<T['invoke']>
-      on: IpcBridgeApiReciver<T['on']>
+      on: IpcBridgeApiReceiver<T['on']>
     }
   | {
-      on: IpcBridgeApiReciver<T['on']>
+      on: IpcBridgeApiReceiver<T['on']>
     }
   | {
       invoke: IpcBridgeApiInvoker<T['invoke']>
@@ -67,7 +67,7 @@ type IpcBridgeApi = IpcBridgeApiTypeGenerator<IpcBridgeApiImplementation>
 const generateIpcBridgeApi = async <T extends IpcBridgeApi>(): Promise<T> => {
   const result = await ipcRenderer.invoke(API_CHANNEL_MAP)
   if (!result) {
-    log.error(`  --> Faild to get mapping for api and channel `)
+    log.error(`  --> Failed to get mapping for api and channel `)
     throw new Error(`'electron-typed-ipc-bridge' is not working correctly`)
   }
   log.info('Generation IpcBridgeAPI is stated.')
@@ -100,10 +100,12 @@ const createIpcBridgeApi = (channel: string, path: string[]) => {
     case MODE.invoke:
       return createInvoker(channel, path)
     case MODE.on:
-      return createReciver(channel, path)
-    default:
-      log.error(`implimentation error: ${path.join('.')} (channel: ${channel}`)
-      throw new Error(`implimentation error: ${path.join('.')} (channel: ${channel}`)
+      return createReceiver(channel, path)
+    default: {
+      const message = `implementation error: ${path.join('.')} (channel: ${channel}`
+      log.error(message)
+      throw new Error(message)
+    }
   }
 }
 
@@ -114,11 +116,11 @@ const createInvoker = (channel: string, path: string[]) => {
     return ipcRenderer.invoke(channel, ...args)
   }
 }
-const createReciver = (channel: string, path: string[]) => {
+const createReceiver = (channel: string, path: string[]) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return (callback: (event: IpcRendererEvent, arg0: any) => void) =>
     ipcRenderer.on(channel, (event, value) => {
-      log.silly(`recive message from main: ${path.join('.')} (channel: ${channel})`)
+      log.silly(`receive message from main: ${path.join('.')} (channel: ${channel})`)
       callback(event, value)
     })
 }

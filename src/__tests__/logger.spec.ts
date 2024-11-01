@@ -48,7 +48,7 @@ describe.each([
       ['verbose', debugSpy],
       ['debug', debugSpy],
       ['silly', debugSpy],
-    ])('Assert output the log at each log lebel (%s)', (logLevel, spy) => {
+    ])('Assert output the log at each log level (%s)', (logLevel, spy) => {
       initialise({ logger: { [procName]: new DefaultLogger() } })
       getLogger(procName)[logLevel]('TEST')
       expect(spy).toHaveBeenCalled()

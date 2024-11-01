@@ -24,7 +24,7 @@ describe('Generate api channel map', () => {
   const dummyUUID = '1234-abcd-1234-abcd-1234'
   const uuidSpy = vi.spyOn(uuid, 'genUUID').mockReturnValue(dummyUUID)
 
-  it('generate vaild structure', () => {
+  it('generate valid structure', () => {
     const result = getApiChannelMap(apiHandlers)
     assert.deepEqual(result, {
       invoke: {
@@ -45,7 +45,7 @@ describe('Generate api channel map', () => {
     })
   })
 
-  it('same channelmap are retured when multiple called', () => {
+  it('same channelMap are returned when multiple called', () => {
     uuidSpy.mockRestore()
     const result1 = getApiChannelMap(apiHandlers)
     const result2 = getApiChannelMap(apiHandlers)

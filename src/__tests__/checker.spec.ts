@@ -119,7 +119,7 @@ describe('haveSameStructure', () => {
           fn2: 'uuid-fn2',
           name1: {
             fn1: 'uuid-name1-fn1',
-            // fn2: 'uuid-name1-fn2', // unmatch
+            // fn2: 'uuid-name1-fn2', // nomatch
           },
         },
         on: {
@@ -138,7 +138,7 @@ describe('haveSameStructure', () => {
           fn2: 'uuid-fn2',
           // name1: {
           //   fn1: 'uuid-name1-fn1',
-          //   fn2: 'uuid-name1-fn2', // unmatch
+          //   fn2: 'uuid-name1-fn2', // nomatch
           // },
         },
         on: {
@@ -157,7 +157,7 @@ describe('haveSameStructure', () => {
           fn2: 'uuid-fn2',
           name1: {
             fn1: 'uuid-name1-fn1',
-            fn99: 'uuid-name1-fn2', // unmatch
+            fn99: 'uuid-name1-fn2', // nomatch
           },
         },
         on: {
@@ -176,7 +176,7 @@ describe('haveSameStructure', () => {
           fn2: 'uuid-fn2',
           name99: {
             fn1: 'uuid-name1-fn1',
-            fn2: 'uuid-name1-fn2', // unmatch
+            fn2: 'uuid-name1-fn2', // nomatch
           },
         },
         on: {
@@ -193,7 +193,7 @@ describe('haveSameStructure', () => {
         on: {
           fn1: 'uuid-fn1',
           fn2: 'uuid-fn2',
-          name1: 'uuid-name1-fn3', // unmatch
+          name1: 'uuid-name1-fn3', // nomatch
         },
       }
       // @ts-expect-error
@@ -205,7 +205,7 @@ describe('haveSameStructure', () => {
         on: {
           fn1: 'uuid-fn1',
           fn2: 'uuid-fn2',
-          name1: 'uuid-name1-fn3', // unmatch
+          name1: 'uuid-name1-fn3', // nomatch
         },
       }
       // @ts-expect-error

@@ -71,11 +71,11 @@ describe('preload', () => {
       mocks.ipcRenderer.on.mock.calls[0][1]
     )
     // simulate call from main (arg1: event, arg2: return for api)
-    const expectedvalue = 3
-    mocks.ipcRenderer.on.mock.calls[0][1]({}, expectedvalue)
+    const expectedValue = 3
+    mocks.ipcRenderer.on.mock.calls[0][1]({}, expectedValue)
 
     // test
     expect(callback).toHaveBeenCalledOnce()
-    expect(result).toBe(expectedvalue)
+    expect(result).toBe(expectedValue)
   })
 })

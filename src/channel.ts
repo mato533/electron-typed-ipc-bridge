@@ -37,26 +37,31 @@ export type IpcBridgeApiChannelMapItemTypeGenerator<T extends IpcBridgeApiHandle
       ? IpcBridgeApiChannelMapItemTypeGenerator<T[K]>
       : never
 }
+export type IpcBridgeApiCommonGenerator<T, OnType, InvokeType> = 'on' extends keyof T
+  ? 'invoke' extends keyof T
+    ? {
+        on: OnType
+        invoke: InvokeType
+      }
+    : {
+        on: OnType
+      }
+  : {
+      invoke: InvokeType
+    }
 
 export type IpcBridgeApiChannelMapGenerator<T extends IpcBridgeApiImplementation> =
-  'on' extends keyof T
-    ? 'invoke' extends keyof T
-      ? {
-          on: IpcBridgeApiChannelMapItemTypeGenerator<T['on']>
-          invoke: IpcBridgeApiChannelMapItemTypeGenerator<T['invoke']>
-        }
-      : {
-          on: IpcBridgeApiChannelMapItemTypeGenerator<T['on']>
-        }
-    : {
-        invoke: IpcBridgeApiChannelMapItemTypeGenerator<T['invoke']>
-      }
-
+  IpcBridgeApiCommonGenerator<
+    T,
+    IpcBridgeApiChannelMapItemTypeGenerator<T['on']>,
+    IpcBridgeApiChannelMapItemTypeGenerator<T['invoke']>
+  >
 let channelMap = undefined
 
 function getApiChannelMap<T extends IpcBridgeApiImplementation>(
   apiHandlers: T
 ): IpcBridgeApiChannelMapGenerator<T>
+
 function getApiChannelMap(apiHandlers: IpcBridgeApiImplementation) {
   if (channelMap && haveSameStructure(apiHandlers, channelMap)) {
     return channelMap

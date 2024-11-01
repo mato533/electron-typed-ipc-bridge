@@ -2,12 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.0] - 2024-11-01
+
+### 🚜 Refactor
+
+- Reduce cyclomatic complexity ([#60](https://github.com/mato533/electron-typed-ipc-bridge/pull/60))
+- Fix typos ([#61](https://github.com/mato533/electron-typed-ipc-bridge/pull/61))
+- Fix typo for logger ([#62](https://github.com/mato533/electron-typed-ipc-bridge/pull/62))
+
+### ⚙️ Miscellaneous Tasks
+
+- Update release workflow ([#57](https://github.com/mato533/electron-typed-ipc-bridge/pull/57))
+
 ## [2.0.2] - 2024-10-29
 
 ### ⚙️ Miscellaneous Tasks
 
 - Update ci to use common actions ([#50](https://github.com/mato533/electron-typed-ipc-bridge/pull/50))
 - Update rollup config to disable sourcemap in the CI ([#52](https://github.com/mato533/electron-typed-ipc-bridge/pull/52))
+- _(release)_ V2.0.2 ([#56](https://github.com/mato533/electron-typed-ipc-bridge/pull/56))
 
 ### 🛠️ Bump Dependencies
 

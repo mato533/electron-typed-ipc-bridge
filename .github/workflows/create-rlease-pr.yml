@@ -100,11 +100,21 @@ jobs:
 
       - name: Update the changelog
         env:
-          APP_VERSION: ${{steps.identify-version.outputs.app-version}}
           APP_VERSION_TEXT: ${{steps.identify-version.outputs.app-version-text}}
         run: |
           pnpm run changelog --tag "${APP_VERSION_TEXT}"
           pnpm exec prettier --write CHANGELOG.md
+
+      - name: Spell Check and Fix of changelog
+        uses: crate-ci/typos@master
+        with:
+          files: ./CHANGELOG.md
+          write_changes: true
+
+      - name: Commit the changelog
+        env:
+          APP_VERSION_TEXT: ${{steps.identify-version.outputs.app-version-text}}
+        run: |
           git add CHANGELOG.md
           git commit -F-<<EOF
           chore: update the CHANGELOG.md for ${APP_VERSION_TEXT}

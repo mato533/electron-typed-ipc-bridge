@@ -1,4 +1,4 @@
-name: Run Test
+name: TEST
 run-name: 'TEST@${{github.ref_name}}'
 on:
   workflow_call:

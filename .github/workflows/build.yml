@@ -18,7 +18,8 @@ jobs:
       contents: read
       id-token: write
     steps:
-      - uses: mato533/cicd-actions/setup-pnpm@main
+      - name: Setup node environments
+        uses: mato533/cicd-actions/setup-pnpm@main
         with:
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
@@ -37,20 +38,29 @@ jobs:
       - build
     runs-on: ubuntu-latest
     steps:
-      - uses: mato533/cicd-actions/setup-pnpm@main
+      - name: Setup node environments
+        uses: mato533/cicd-actions/setup-pnpm@main
         with:
           cache: 'pnpm'
 
       - name: Run tests with coverage
         id: test
         env:
-          TEST_RESULT: 'junit.xml'
+          TEST_RESULT: 'coverage/junit.xml'
         run: |
-          pnpm exec vitest run --coverage --reporter=junit --outputFile="${TEST_RESULT}"
+          pnpm exec vitest run --coverage \
+                               --coverage.reportOnFailure \
+                               --coverage.reporter=json-summary \
+                               --coverage.reporter=json \
+                               --coverage.reporter=clover \
+                               --reporter=default \
+                               --reporter=junit \
+                               --outputFile="${TEST_RESULT}"
           echo "file-name=${TEST_RESULT}" >>"${GITHUB_OUTPUT}"
           echo "file-name=${TEST_RESULT}"
 
-      - uses: codecov/codecov-action@v4
+      - name: Upload coverage report to Codecov
+        uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/coverage-final.json
@@ -62,6 +72,13 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: ${{ steps.test.outputs.file-name }}
 
+      - name: Upload coverage report to the code climate
+        uses: paambaati/codeclimate-action@v9
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
+          coverageLocations: ${{ github.workspace }}/coverage/clover.xml:clover
+
   create-release:
     name: Create Release
     runs-on: ubuntu-latest
@@ -70,7 +87,8 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: mato533/cicd-actions/setup-pnpm@main
+      - name: Setup node environments
+        uses: mato533/cicd-actions/setup-pnpm@main
         with:
           fetch-depth: 0
           cache: 'pnpm'

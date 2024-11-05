@@ -6,9 +6,14 @@ export default defineConfig({
   test: {
     globals: true,
     silent: true,
-    reporters: 'verbose',
     coverage: {
       exclude: ['src/index.ts', 'playground/*', ...coverageConfigDefaults.exclude],
+      thresholds: {
+        lines: 70,
+        branches: 70,
+        functions: 70,
+        statements: 70,
+      },
     },
   },
   resolve: {

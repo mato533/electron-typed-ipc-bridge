@@ -1,6 +1,6 @@
 import { builtinModules } from 'node:module'
-import { readFileSync } from 'node:fs'
 import { dirname } from 'node:path'
+import { readFileSync } from 'node:fs'
 
 import typescript from '@rollup/plugin-typescript'
 import del from 'rollup-plugin-delete'
@@ -53,59 +53,54 @@ const getPlugins = (plugins: Plugin[]): Plugin[] => {
 }
 const sourcemap = () => process.env.CI !== 'true'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const defineConfig = (pkg: Record<string, any>) => {
-  const external = Object.keys(pkg.dependencies || {})
-    .concat(Object.keys(pkg.peerDependencies || {}))
-    .concat(builtinModules)
-  return [
+const pkg = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'))
+
+const external = [].concat(Object.keys(pkg.peerDependencies || {}), builtinModules)
+
+const buildConfig = {
+  input: {
+    index: 'src/index.ts',
+    main: 'src/main.ts',
+    preload: 'src/preload.ts',
+    channel: 'src/channel.ts',
+  },
+  external,
+  onwarn,
+  strictDeprecations: true,
+  output: [
     {
-      input: {
-        index: 'src/index.ts',
-        main: 'src/main.ts',
-        preload: 'src/preload.ts',
-        channel: 'src/channel.ts',
-      },
-      external,
-      onwarn,
-      strictDeprecations: true,
-      output: [
-        {
-          format: 'cjs',
-          dir: dirname(pkg.main),
-          exports: 'named',
-          footer: 'module.exports = Object.assign(exports.default, exports);',
-          sourcemap: sourcemap(),
-        },
-        {
-          format: 'es',
-          dir: dirname(pkg.module),
-          plugins: [emitModulePackageFile()],
-          sourcemap: sourcemap(),
-        },
-      ],
-      plugins: getPlugins([
-        typescript({
-          sourceMap: sourcemap(),
-        }),
-        json(),
-        nodeExternals(),
-      ]),
+      format: 'cjs',
+      dir: dirname(pkg.main),
+      exports: 'named',
+      footer: 'module.exports = Object.assign(exports.default, exports);',
+      sourcemap: sourcemap(),
     },
     {
-      input: {
-        index: 'src/types/index.d.ts',
-        main: 'src/types/main.d.ts',
-        preload: 'src/types/preload.d.ts',
-      },
-      output: [{ dir: dirname(pkg.types) }],
-      external,
-      onwarn: onwarnGenDts,
-      plugins: getPlugins([dts(), nodeExternals()]),
+      format: 'es',
+      dir: dirname(pkg.module),
+      plugins: [emitModulePackageFile()],
+      sourcemap: sourcemap(),
     },
-  ]
+  ],
+  plugins: getPlugins([
+    typescript({
+      sourceMap: sourcemap(),
+    }),
+    json(),
+    nodeExternals(),
+  ]),
 }
 
-export default defineConfig(
-  JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'))
-)
+const dtsConfig = {
+  input: {
+    index: 'src/types/index.d.ts',
+    main: 'src/types/main.d.ts',
+    preload: 'src/types/preload.d.ts',
+  },
+  output: [{ dir: dirname(pkg.types) }],
+  external,
+  onwarn: onwarnGenDts,
+  plugins: getPlugins([dts(), nodeExternals()]),
+}
+
+export default [buildConfig, dtsConfig]

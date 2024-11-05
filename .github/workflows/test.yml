@@ -40,7 +40,7 @@ jobs:
         run: pnpm run build
 
   coverage:
-    name: Upload coverage to code climate
+    name: Report Coverage
     runs-on: ubuntu-latest
     if: ${{ success() || failure() }}
     needs:
@@ -49,7 +49,8 @@ jobs:
       contents: read
       pull-requests: write
     steps:
-      - uses: mato533/cicd-actions/setup-pnpm@main
+      - name: Setup node environments
+        uses: mato533/cicd-actions/setup-pnpm@main
         with:
           cache: 'pnpm'
 
@@ -65,14 +66,14 @@ jobs:
                                --coverage.reporter=clover \
                                --reporter=default
 
-      - uses: paambaati/codeclimate-action@v9
+      - name: Upload coverage report to the code climate
+        uses: paambaati/codeclimate-action@v9
         if: ${{ github.event_name == 'push' }}
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageCommand: pnpm exec vitest run --coverage
           coverageLocations: ${{ github.workspace }}/coverage/clover.xml:clover
 
-      - name: 'Report Coverage'
+      - name: Write coverage report to pull request
         if: ${{ github.event_name == 'pull_request' }}
         uses: davelosert/vitest-coverage-report-action@v2

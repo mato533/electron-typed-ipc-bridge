@@ -8,6 +8,12 @@ export default defineConfig({
     silent: true,
     coverage: {
       exclude: ['src/index.ts', 'playground/*', ...coverageConfigDefaults.exclude],
+      thresholds: {
+        lines: 70,
+        branches: 70,
+        functions: 70,
+        statements: 70,
+      },
     },
   },
   resolve: {

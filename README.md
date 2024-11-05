@@ -15,7 +15,7 @@ There are following reasons.
 
    <img width="824" alt="image" src="https://github.com/user-attachments/assets/cbe58812-bda6-4294-bb28-911f549c6a3e">
 
-1. We want to be freed from channel management.
+1. We want to be free from channel management.
 
    This library is automatically generate channel ids with uuid.  
    We can feel free to manage channel strings.(don't worry about typos. e.g. say-hello or do-hello??)

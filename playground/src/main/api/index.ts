@@ -1,6 +1,6 @@
 import { getContextMenuHandler } from './showContextMenu'
 
-import type { IpcMainInvokeEvent } from 'electron'
+import type { BrowserWindow, IpcMainInvokeEvent } from 'electron'
 import type {
   IpcBridgeApiEmitterGenerator,
   IpcBridgeApiGenerator
@@ -19,12 +19,25 @@ export const api = {
         return arg0 - arg1
       }
     },
-    showContextMenu: getContextMenuHandler()
+    showContextMenu: getContextMenuHandler(),
+    emitEvent: (_: IpcMainInvokeEvent) => {
+      if (emitter && mainWindow) {
+        emitter.send.updateCounter(mainWindow, 1)
+      }
+    }
   },
   on: {
     updateCounter: (value: number) => value
   }
 }
+type IpcBridgeApiEmitter = IpcBridgeApiEmitterGenerator<typeof api>
+type IpcBridgeApi = IpcBridgeApiGenerator<typeof api>
 
-export type IpcBridgeApiEmitter = IpcBridgeApiEmitterGenerator<typeof api>
-export type IpcBridgeApi = IpcBridgeApiGenerator<typeof api>
+let mainWindow: BrowserWindow | undefined = undefined
+let emitter: IpcBridgeApiEmitter | undefined = undefined
+const setInstanceOfMain = (window: BrowserWindow, api: IpcBridgeApiEmitter) => {
+  mainWindow = window
+  emitter = api
+}
+
+export { setInstanceOfMain, type IpcBridgeApiEmitter, type IpcBridgeApi }

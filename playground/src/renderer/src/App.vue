@@ -3,12 +3,18 @@ import { onBeforeUnmount, onMounted, ref } from 'vue'
 import Versions from './components/Versions.vue'
 
 const ipcHandle = () => window.api.invoke.ping()
+const counter = ref(0)
+
 const ipcHandleAdd = async () => {
   counter.value = await window.api.invoke.culc.add(counter.value, 2)
 }
-const ipcHandleMinus = async () =>
-  (counter.value = await window.api.invoke.culc.minus(counter.value, 2))
-const counter = ref(0)
+const ipcHandleMinus = async () => {
+  counter.value = await window.api.invoke.culc.minus(counter.value, 2)
+}
+const emitEvent = () => {
+  window.api.invoke.emitEvent()
+}
+
 const handler = (event: MouseEvent) => {
   event.preventDefault()
   window.api.invoke.showContextMenu()
@@ -37,21 +43,24 @@ onBeforeUnmount(() => {
   <p class="tip">Please try pressing <code>F12</code> to open the devTool</p>
   <div class="actions">
     <div class="action">
-      <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">Documentation</a>
-    </div>
-    <div class="action">
       <a target="_blank" rel="noreferrer" @click="ipcHandle">Send IPC</a>
     </div>
-    <div class="action">
+    <div id="btn-reset" class="action">
+      <a target="_blank" rel="noreferrer" @click="counter = 0">Reset</a>
+    </div>
+    <div id="btn-add" class="action">
       <a target="_blank" rel="noreferrer" @click="ipcHandleAdd">Add 2 to counter</a>
     </div>
-    <div class="action">
+    <div id="btn-minus" class="action">
       <a target="_blank" rel="noreferrer" @click="ipcHandleMinus">Minus 2 to counter</a>
+    </div>
+    <div id="btn-on-test" class="action">
+      <a target="_blank" rel="noreferrer" @click="emitEvent">Test Main to Renderer</a>
     </div>
   </div>
   <p class="tip">Please try right click and test message menu. Updated below counter</p>
   <p class="tip">
-    counter: <code>{{ counter }}</code>
+    counter: <code id="counter">{{ counter }}</code>
   </p>
   <Versions />
 </template>

@@ -9,7 +9,7 @@ import {
 } from 'electron-typed-ipc-bridge/main'
 
 import icon from '../../resources/icon.png?asset'
-import { api } from './api'
+import { api, setInstanceOfMain } from './api'
 import { setMenu } from './menu'
 import { MyLogger } from './logger'
 
@@ -30,6 +30,7 @@ function createWindow(api: IpcBridgeApiEmitter): void {
   })
 
   setMenu(mainWindow, api)
+  setInstanceOfMain(mainWindow, api)
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()

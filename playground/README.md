@@ -31,6 +31,22 @@ $ pnpm install
 $ pnpm dev
 ```
 
+## How to E2E tests
+
+### build the library
+
+```bash
+$ cd ..
+$ TAR_NAME="$(pnpm build)"
+```
+
+### Install the library
+
+```bash
+$ cd playground/
+$ pnpm install "../${TAR_NAME}"
+```
+
 ### Build
 
 ```bash
@@ -43,3 +59,5 @@ $ pnpm build:mac
 # For Linux
 $ pnpm build:linux
 ```
+
+### Run the E2E tests

@@ -37,7 +37,51 @@ jobs:
         run: pnpm run test
 
       - name: Build
-        run: pnpm run build
+        id: build
+        shell: bash
+        run: |
+          pnpm run build
+          TAR_NAME="$(pnpm pack)"
+          ls -l "${TAR_NAME}"
+          RESULT="tar-name=${TAR_NAME}" 
+          echo "${RESULT}" >>"${GITHUB_OUTPUT}"
+          echo "${RESULT}"
+
+      - name: Setup playground
+        env:
+          TAR_NAME: ${{ steps.build.outputs.tar-name }}
+        working-directory: ./playground
+        shell: bash
+        run: |
+          pnpm install "../${TAR_NAME}"
+
+      - name: Type check
+        working-directory: ./playground
+        run: pnpm run typecheck
+
+      - name: Build (Windows)
+        if: runner.os == 'Windows'
+        working-directory: ./playground
+        run: pnpm build:win
+
+      - name: Test (E2E) on Windows
+        if: runner.os == 'Windows'
+        working-directory: ./playground
+        run: pnpm test:e2e
+
+      - name: Build (Linux)
+        if: runner.os == 'Linux'
+        working-directory: ./playground
+        run: pnpm build:linux
+
+      - name: Test (E2E) on Linux
+        if: runner.os == 'Linux'
+        working-directory: ./playground
+        run: |
+          export XDG_RUNTIME_DIR="/run/user/$(id -u)"
+          export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
+          dbus-daemon --session --address=${DBUS_SESSION_BUS_ADDRESS} --nofork --nopidfile --syslog-only &
+          xvfb-run -a pnpm test:e2e
 
   coverage:
     name: Report Coverage

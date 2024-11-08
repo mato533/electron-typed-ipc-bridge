@@ -5,11 +5,11 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import {
   getIpcBridgeApiEmitter,
   initialize,
-  registerIpcHandler
+  registerIpcHandler,
 } from 'electron-typed-ipc-bridge/main'
 
 import icon from '../../resources/icon.png?asset'
-import { api } from './api'
+import { api, setInstanceOfMain } from './api'
 import { setMenu } from './menu'
 import { MyLogger } from './logger'
 
@@ -25,11 +25,12 @@ function createWindow(api: IpcBridgeApiEmitter): void {
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.mjs'),
-      sandbox: false
-    }
+      sandbox: false,
+    },
   })
 
   setMenu(mainWindow, api)
+  setInstanceOfMain(mainWindow, api)
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()

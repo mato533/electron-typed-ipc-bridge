@@ -139,13 +139,20 @@ const createInvoker = (channel: string, path: string[]) => {
     return ipcRenderer.invoke(channel, ...args)
   }
 }
-const createReceiver = (channel: string, path: string[]) => {
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Callback = (event: IpcRendererEvent, arg0: any) => void
+
+const createListener = (channel: string, path: string[], callback: Callback) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return (callback: (event: IpcRendererEvent, arg0: any) => void) =>
-    ipcRenderer.on(channel, (event, value) => {
-      log.silly(`receive message from main: ${path.join('.')} (channel: ${channel})`)
-      callback(event, value)
-    })
+  return (event: IpcRendererEvent, value: any) => {
+    log.silly(`receive message from main: ${path.join('.')} (channel: ${channel})`)
+    callback(event, value)
+  }
+}
+
+const createReceiver = (channel: string, path: string[]) => {
+  return (callback: Callback) => ipcRenderer.on(channel, createListener(channel, path, callback))
 }
 
 export {

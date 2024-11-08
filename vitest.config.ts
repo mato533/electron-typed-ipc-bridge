@@ -6,6 +6,7 @@ export default defineConfig({
   test: {
     globals: true,
     silent: true,
+    include: ['src/**/*.spec.ts'],
     coverage: {
       exclude: ['src/index.ts', 'playground/*', ...coverageConfigDefaults.exclude],
       thresholds: {

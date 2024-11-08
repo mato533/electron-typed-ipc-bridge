@@ -24,14 +24,14 @@ importers:
         specifier: ^8.42.3
         version: 8.42.3
       '@types/node':
-        specifier: ^22.8.6
+        specifier: ^22.9.0
         version: 22.9.0
       '@vitest/coverage-v8':
         specifier: ^2.1.4
         version: 2.1.4(vitest@2.1.4(@types/node@22.9.0))
       electron:
-        specifier: ^33.0.2
-        version: 33.1.0
+        specifier: ^33.2.0
+        version: 33.2.0
       eslint:
         specifier: ^9.14.0
         version: 9.14.0
@@ -51,7 +51,7 @@ importers:
         specifier: ^3.3.3
         version: 3.3.3
       rollup:
-        specifier: ^4.24.3
+        specifier: ^4.24.4
         version: 4.24.4
       rollup-plugin-delete:
         specifier: ^2.1.0
@@ -69,7 +69,7 @@ importers:
         specifier: ^5.6.3
         version: 5.6.3
       typescript-eslint:
-        specifier: ^8.12.2
+        specifier: ^8.13.0
         version: 8.13.0(eslint@9.14.0)(typescript@5.6.3)
       vitest:
         specifier: ^2.1.4
@@ -859,8 +859,8 @@ packages:
   electron-to-chromium@1.5.52:
     resolution: {integrity: sha512-xtoijJTZ+qeucLBDNztDOuQBE1ksqjvNjvqFoST3nGC7fSpqJ+X6BdTBaY5BHG+IhWWmpc6b/KfpeuEDupEPOQ==}
 
-  electron@33.1.0:
-    resolution: {integrity: sha512-7KiY6MtRo1fVFLPGyHS7Inh8yZfrbUTy43nNwUgMD2CBk729BgSwOC2WhmcptNJVlzHJpVxSWkiVi2hp9mH/bw==}
+  electron@33.2.0:
+    resolution: {integrity: sha512-PVw1ICAQDPsnnsmpNFX/b1i/49h67pbSPxuIENd9K9WpGO1tsRaQt+K2bmXqTuoMJsbzIc75Ce8zqtuwBPqawA==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -2871,7 +2871,7 @@ snapshots:
 
   electron-to-chromium@1.5.52: {}
 
-  electron@33.1.0:
+  electron@33.2.0:
     dependencies:
       '@electron/get': 2.0.3
       '@types/node': 20.17.6

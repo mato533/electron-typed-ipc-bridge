@@ -27,8 +27,6 @@
     "electron-typed-ipc-bridge": "link:.."
   },
   "devDependencies": {
-    "@electron-toolkit/eslint-config": "^1.0.2",
-    "@electron-toolkit/eslint-config-ts": "^2.0.0",
     "@electron-toolkit/tsconfig": "^1.0.1",
     "@rushstack/eslint-patch": "^1.10.4",
     "@types/node": "^22.8.6",
@@ -43,6 +41,7 @@
     "prettier": "^3.3.3",
     "typescript": "^5.6.3",
     "vite": "^5.4.10",
+    "vitest": "^2.1.4",
     "vue": "^3.5.12",
     "vue-tsc": "^2.1.10"
   }

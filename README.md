@@ -1,6 +1,8 @@
 [![npm version](https://badge.fury.io/js/electron-typed-ipc-bridge.svg)](https://badge.fury.io/js/electron-typed-ipc-bridge)
 [![Run Test](https://github.com/mato533/electron-typed-ipc-bridge/actions/workflows/test.yml/badge.svg)](https://github.com/mato533/electron-typed-ipc-bridge/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/mato533/electron-typed-ipc-bridge/graph/badge.svg?token=T4ICAR3SCF)](https://codecov.io/gh/mato533/electron-typed-ipc-bridge)
+[![CodeFactor](https://www.codefactor.io/repository/github/mato533/electron-typed-ipc-bridge/badge)](https://www.codefactor.io/repository/github/mato533/electron-typed-ipc-bridge)
+[![Maintainability](https://api.codeclimate.com/v1/badges/9c2ebe526ae977ef54ab/maintainability)](https://codeclimate.com/github/mato533/electron-typed-ipc-bridge/maintainability)
 [![GitHub](https://img.shields.io/github/license/mato533/rollup-plugin-gas)](https://github.com/mato533/rollup-plugin-gas/blob/main/LICENSE)
 
 # What is the electron-typed-ipc-bridge?

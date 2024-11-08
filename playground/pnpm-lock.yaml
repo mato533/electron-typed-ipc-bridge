@@ -10,10 +10,10 @@ importers:
     dependencies:
       '@electron-toolkit/preload':
         specifier: ^3.0.1
-        version: 3.0.1(electron@33.1.0)
+        version: 3.0.1(electron@33.2.0)
       '@electron-toolkit/utils':
         specifier: ^3.0.0
-        version: 3.0.0(electron@33.1.0)
+        version: 3.0.0(electron@33.2.0)
       electron-typed-ipc-bridge:
         specifier: link:..
         version: link:..
@@ -25,7 +25,7 @@ importers:
         specifier: ^1.10.4
         version: 1.10.4
       '@types/node':
-        specifier: ^22.8.6
+        specifier: ^22.9.0
         version: 22.9.0
       '@vitejs/plugin-vue':
         specifier: ^5.1.4
@@ -37,11 +37,11 @@ importers:
         specifier: ^14.1.3
         version: 14.1.3(@typescript-eslint/parser@8.13.0(eslint@9.14.0)(typescript@5.6.3))(eslint-plugin-vue@9.30.0(eslint@9.14.0))(eslint@9.14.0)(typescript@5.6.3)
       '@wdio/cli':
-        specifier: ^9.2.10
-        version: 9.2.10
+        specifier: ^9.2.11
+        version: 9.2.11
       '@wdio/local-runner':
-        specifier: ^9.2.8
-        version: 9.2.8
+        specifier: ^9.2.11
+        version: 9.2.11
       '@wdio/mocha-framework':
         specifier: ^9.2.8
         version: 9.2.8
@@ -49,11 +49,11 @@ importers:
         specifier: ^9.2.8
         version: 9.2.8
       electron:
-        specifier: ^33.0.2
-        version: 33.1.0
+        specifier: ^33.2.0
+        version: 33.2.0
       electron-builder:
         specifier: ^25.1.8
-        version: 25.1.8(electron-builder-squirrel-windows@25.1.8(dmg-builder@25.1.8))
+        version: 25.1.8(electron-builder-squirrel-windows@25.1.8)
       electron-vite:
         specifier: ^2.3.0
         version: 2.3.0(vite@5.4.10(@types/node@22.9.0))
@@ -83,7 +83,7 @@ importers:
         version: 2.1.10(typescript@5.6.3)
       wdio-electron-service:
         specifier: ^7.2.0
-        version: 7.2.0(electron@33.1.0)(webdriverio@9.2.8)
+        version: 7.2.0(electron@33.2.0)(webdriverio@9.2.8)
 
 packages:
 
@@ -1059,8 +1059,8 @@ packages:
   '@vue/shared@3.5.12':
     resolution: {integrity: sha512-L2RPSAwUFbgZH20etwrXyVyCBu9OxRSi8T/38QsvnkJyvq2LufW2lDCOzm7t/U9C1mkhJGWYfCuFBCmIuNivrg==}
 
-  '@wdio/cli@9.2.10':
-    resolution: {integrity: sha512-5xk2J8qS9Kl1B1kHTMyylXoawz4hw9NdSSl57JSlAwDHrPoLb/1KoT1ndSPungGezEjjd0v5k9U4Lbl+jic/+w==}
+  '@wdio/cli@9.2.11':
+    resolution: {integrity: sha512-vXt5rs4lSNqBpYZkEL2msV3QeczOBqXNdtuEwVolOTChQ6huwnvxARM0l0XAnzDYfGIx3mxIWEVjEQ9TmLQUdw==}
     engines: {node: '>=18.20.0'}
     hasBin: true
 
@@ -1075,12 +1075,16 @@ packages:
     resolution: {integrity: sha512-96WqSpE8uivl+iNJGtxGn4lw20q8C6WeQH6WEnn5Ek+xtgBgKw8pA+rKQOoClwDJmVnDf4IzwcE86TLeG2uCOQ==}
     engines: {node: '>=18 || >=20'}
 
+  '@wdio/globals@9.2.11':
+    resolution: {integrity: sha512-wdsRt4Dd5tRvm8cAGry9dU1a7F+wi1VnrQou9pkGNvAdn/holiLz7qV8Rk+PO5t9uP1gY8JbXpNnPUVRS9htIA==}
+    engines: {node: '>=18.20.0'}
+
   '@wdio/globals@9.2.8':
     resolution: {integrity: sha512-FBklmM2mOgMPenu5SrTA++RJCjvyUFlDxpDcVA0drh5pRfvD+DFAE40yi4+w6ji42tdTHsiB2KFkM4wJL0fXIA==}
     engines: {node: '>=18.20.0'}
 
-  '@wdio/local-runner@9.2.8':
-    resolution: {integrity: sha512-klRfNMtJz+KZKBOzklnNr2nOOVkhdITzaIcIB/JNSkp8EUVI/9gRusc8okhXvjfrcZRusSz4P3a37r03qk6h2A==}
+  '@wdio/local-runner@9.2.11':
+    resolution: {integrity: sha512-3TkdpgfcQkH2RQy/aHJePuy9y2qtkR/Y6yZZykg2GsD9lPoybAYfgXZDKoPA7RR5uAVOLzTfcM4N/HMlWNTjSw==}
     engines: {node: '>=18.20.0'}
 
   '@wdio/logger@8.38.0':
@@ -1106,8 +1110,8 @@ packages:
     resolution: {integrity: sha512-3FxIMol0lTQ8S0gSlgvBpjTg9w/GRCFH+juHVIwjmdeqgKwID0IoKGxLo2enLjR7T3wsWUzN6JaqL/fa4nAK4A==}
     engines: {node: '>=18.20.0'}
 
-  '@wdio/runner@9.2.8':
-    resolution: {integrity: sha512-W2aD/218cC7wALxEYWm8Hl9UP79noqCeJIyx8P9jlCHrxhlM9mfTY+4WJAlQIPh0CHIDZzgJ6/TeXHucjoEA5w==}
+  '@wdio/runner@9.2.11':
+    resolution: {integrity: sha512-W+KSatpXsI+m2NdZMI4h2cOZNS+IpX79Jxdwh3i7fljg9BI2+QpI/ssTjtA49v+PA9APsDECgU+Zb+6kg1aGlQ==}
     engines: {node: '>=18.20.0'}
 
   '@wdio/spec-reporter@9.2.8':
@@ -1761,8 +1765,8 @@ packages:
       '@swc/core':
         optional: true
 
-  electron@33.1.0:
-    resolution: {integrity: sha512-7KiY6MtRo1fVFLPGyHS7Inh8yZfrbUTy43nNwUgMD2CBk729BgSwOC2WhmcptNJVlzHJpVxSWkiVi2hp9mH/bw==}
+  electron@33.2.0:
+    resolution: {integrity: sha512-PVw1ICAQDPsnnsmpNFX/b1i/49h67pbSPxuIENd9K9WpGO1tsRaQt+K2bmXqTuoMJsbzIc75Ce8zqtuwBPqawA==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -3740,6 +3744,15 @@ packages:
     resolution: {integrity: sha512-40NtUC1zME9tPHNfZv6ETSE3+aE75qZuKjbVAA0gj02AkO1Nl3yJmf5RLdaLLfIQ2WlrbRP1g8KXlkiiVCmakg==}
     engines: {node: '>=18.20.0'}
 
+  webdriverio@9.2.11:
+    resolution: {integrity: sha512-JZJiFUy7Rv5C2PmCIN2GjPxp6qUrUhvlhshbrczkySLUmv1NW1EGWOwpJiJ9AFQC94ydDq80EdFaRdyNZSs6DQ==}
+    engines: {node: '>=18.20.0'}
+    peerDependencies:
+      puppeteer-core: ^22.3.0
+    peerDependenciesMeta:
+      puppeteer-core:
+        optional: true
+
   webdriverio@9.2.8:
     resolution: {integrity: sha512-LQa7DlwatyWc0WmBqdklrSzi43SLdva5q5CUFOIXtzhdngsjsqv9w2TxZnlyo2BTf/f/BbQ1L4FgiWADuTAZ/w==}
     engines: {node: '>=18.20.0'}
@@ -3993,17 +4006,17 @@ snapshots:
       ajv: 6.12.6
       ajv-keywords: 3.5.2(ajv@6.12.6)
 
-  '@electron-toolkit/preload@3.0.1(electron@33.1.0)':
+  '@electron-toolkit/preload@3.0.1(electron@33.2.0)':
     dependencies:
-      electron: 33.1.0
+      electron: 33.2.0
 
   '@electron-toolkit/tsconfig@1.0.1(@types/node@22.9.0)':
     dependencies:
       '@types/node': 22.9.0
 
-  '@electron-toolkit/utils@3.0.0(electron@33.1.0)':
+  '@electron-toolkit/utils@3.0.0(electron@33.2.0)':
     dependencies:
-      electron: 33.1.0
+      electron: 33.2.0
 
   '@electron/asar@3.2.16':
     dependencies:
@@ -4909,12 +4922,12 @@ snapshots:
 
   '@vue/shared@3.5.12': {}
 
-  '@wdio/cli@9.2.10':
+  '@wdio/cli@9.2.11':
     dependencies:
       '@types/node': 20.17.6
       '@vitest/snapshot': 2.1.4
       '@wdio/config': 9.2.8
-      '@wdio/globals': 9.2.8(@wdio/logger@9.1.3)
+      '@wdio/globals': 9.2.11(@wdio/logger@9.1.3)
       '@wdio/logger': 9.1.3
       '@wdio/protocols': 9.2.2
       '@wdio/types': 9.2.2
@@ -4934,7 +4947,7 @@ snapshots:
       read-pkg-up: 10.1.0
       recursive-readdir: 2.2.3
       tsx: 4.19.2
-      webdriverio: 9.2.8
+      webdriverio: 9.2.11
       yargs: 17.7.2
     transitivePeerDependencies:
       - bufferutil
@@ -4968,6 +4981,17 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  '@wdio/globals@9.2.11(@wdio/logger@9.1.3)':
+    optionalDependencies:
+      expect-webdriverio: 5.0.3(@wdio/globals@9.2.11(@wdio/logger@9.1.3))(@wdio/logger@9.1.3)(webdriverio@9.2.11)
+      webdriverio: 9.2.11
+    transitivePeerDependencies:
+      - '@wdio/logger'
+      - bufferutil
+      - puppeteer-core
+      - supports-color
+      - utf-8-validate
+
   '@wdio/globals@9.2.8(@wdio/logger@9.1.3)':
     optionalDependencies:
       expect-webdriverio: 5.0.3(@wdio/globals@9.2.8(@wdio/logger@9.1.3))(@wdio/logger@9.1.3)(webdriverio@9.2.8)
@@ -4979,12 +5003,12 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@wdio/local-runner@9.2.8':
+  '@wdio/local-runner@9.2.11':
     dependencies:
       '@types/node': 20.17.6
       '@wdio/logger': 9.1.3
       '@wdio/repl': 9.0.8
-      '@wdio/runner': 9.2.8
+      '@wdio/runner': 9.2.11
       '@wdio/types': 9.2.2
       async-exit-hook: 2.0.1
       split2: 4.2.0
@@ -5034,18 +5058,18 @@ snapshots:
       diff: 7.0.0
       object-inspect: 1.13.2
 
-  '@wdio/runner@9.2.8':
+  '@wdio/runner@9.2.11':
     dependencies:
       '@types/node': 20.17.6
       '@wdio/config': 9.2.8
-      '@wdio/globals': 9.2.8(@wdio/logger@9.1.3)
+      '@wdio/globals': 9.2.11(@wdio/logger@9.1.3)
       '@wdio/logger': 9.1.3
       '@wdio/types': 9.2.2
       '@wdio/utils': 9.2.8
       deepmerge-ts: 7.1.3
-      expect-webdriverio: 5.0.3(@wdio/globals@9.2.8(@wdio/logger@9.1.3))(@wdio/logger@9.1.3)(webdriverio@9.2.8)
+      expect-webdriverio: 5.0.3(@wdio/globals@9.2.11(@wdio/logger@9.1.3))(@wdio/logger@9.1.3)(webdriverio@9.2.11)
       webdriver: 9.2.8
-      webdriverio: 9.2.8
+      webdriverio: 9.2.11
     transitivePeerDependencies:
       - bufferutil
       - puppeteer-core
@@ -5157,7 +5181,7 @@ snapshots:
 
   app-builder-bin@5.0.0-alpha.10: {}
 
-  app-builder-lib@25.1.8(dmg-builder@25.1.8(electron-builder-squirrel-windows@25.1.8))(electron-builder-squirrel-windows@25.1.8(dmg-builder@25.1.8)):
+  app-builder-lib@25.1.8(dmg-builder@25.1.8)(electron-builder-squirrel-windows@25.1.8):
     dependencies:
       '@develar/schema-utils': 2.6.5
       '@electron/notarize': 2.5.0
@@ -5719,7 +5743,7 @@ snapshots:
 
   dmg-builder@25.1.8(electron-builder-squirrel-windows@25.1.8):
     dependencies:
-      app-builder-lib: 25.1.8(dmg-builder@25.1.8(electron-builder-squirrel-windows@25.1.8))(electron-builder-squirrel-windows@25.1.8(dmg-builder@25.1.8))
+      app-builder-lib: 25.1.8(dmg-builder@25.1.8)(electron-builder-squirrel-windows@25.1.8)
       builder-util: 25.1.7
       builder-util-runtime: 9.2.10
       fs-extra: 10.1.0
@@ -5797,7 +5821,7 @@ snapshots:
 
   electron-builder-squirrel-windows@25.1.8(dmg-builder@25.1.8):
     dependencies:
-      app-builder-lib: 25.1.8(dmg-builder@25.1.8(electron-builder-squirrel-windows@25.1.8))(electron-builder-squirrel-windows@25.1.8(dmg-builder@25.1.8))
+      app-builder-lib: 25.1.8(dmg-builder@25.1.8)(electron-builder-squirrel-windows@25.1.8)
       archiver: 5.3.2
       builder-util: 25.1.7
       fs-extra: 10.1.0
@@ -5806,9 +5830,9 @@ snapshots:
       - dmg-builder
       - supports-color
 
-  electron-builder@25.1.8(electron-builder-squirrel-windows@25.1.8(dmg-builder@25.1.8)):
+  electron-builder@25.1.8(electron-builder-squirrel-windows@25.1.8):
     dependencies:
-      app-builder-lib: 25.1.8(dmg-builder@25.1.8(electron-builder-squirrel-windows@25.1.8))(electron-builder-squirrel-windows@25.1.8(dmg-builder@25.1.8))
+      app-builder-lib: 25.1.8(dmg-builder@25.1.8)(electron-builder-squirrel-windows@25.1.8)
       builder-util: 25.1.7
       builder-util-runtime: 9.2.10
       chalk: 4.1.2
@@ -5849,7 +5873,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  electron@33.1.0:
+  electron@33.2.0:
     dependencies:
       '@electron/get': 2.0.3
       '@types/node': 20.17.6
@@ -6099,6 +6123,16 @@ snapshots:
 
   expect-type@1.1.0: {}
 
+  expect-webdriverio@5.0.3(@wdio/globals@9.2.11(@wdio/logger@9.1.3))(@wdio/logger@9.1.3)(webdriverio@9.2.11):
+    dependencies:
+      '@vitest/snapshot': 2.1.4
+      '@wdio/globals': 9.2.11(@wdio/logger@9.1.3)
+      '@wdio/logger': 9.1.3
+      expect: 29.7.0
+      jest-matcher-utils: 29.7.0
+      lodash.isequal: 4.5.0
+      webdriverio: 9.2.11
+
   expect-webdriverio@5.0.3(@wdio/globals@9.2.8(@wdio/logger@9.1.3))(@wdio/logger@9.1.3)(webdriverio@9.2.8):
     dependencies:
       '@vitest/snapshot': 2.1.4
@@ -6108,6 +6142,7 @@ snapshots:
       jest-matcher-utils: 29.7.0
       lodash.isequal: 4.5.0
       webdriverio: 9.2.8
+    optional: true
 
   expect@29.7.0:
     dependencies:
@@ -7980,7 +8015,7 @@ snapshots:
     dependencies:
       defaults: 1.0.4
 
-  wdio-electron-service@7.2.0(electron@33.1.0)(webdriverio@9.2.8):
+  wdio-electron-service@7.2.0(electron@33.2.0)(webdriverio@9.2.8):
     dependencies:
       '@vitest/spy': 2.1.4
       '@wdio/electron-types': 7.1.1-next.7
@@ -7995,7 +8030,7 @@ snapshots:
       tinyspy: 3.0.2
       webdriverio: 9.2.8
     optionalDependencies:
-      electron: 33.1.0
+      electron: 33.2.0
     transitivePeerDependencies:
       - bufferutil
       - puppeteer-core
@@ -8015,6 +8050,40 @@ snapshots:
       '@wdio/utils': 9.2.8
       deepmerge-ts: 7.1.3
       ws: 8.18.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
+
+  webdriverio@9.2.11:
+    dependencies:
+      '@types/node': 20.17.6
+      '@types/sinonjs__fake-timers': 8.1.5
+      '@wdio/config': 9.2.8
+      '@wdio/logger': 9.1.3
+      '@wdio/protocols': 9.2.2
+      '@wdio/repl': 9.0.8
+      '@wdio/types': 9.2.2
+      '@wdio/utils': 9.2.8
+      archiver: 7.0.1
+      aria-query: 5.3.2
+      cheerio: 1.0.0
+      css-shorthand-properties: 1.1.2
+      css-value: 0.0.1
+      grapheme-splitter: 1.0.4
+      htmlfy: 0.3.2
+      import-meta-resolve: 4.1.0
+      is-plain-obj: 4.1.0
+      jszip: 3.10.1
+      lodash.clonedeep: 4.5.0
+      lodash.zip: 4.2.0
+      minimatch: 9.0.5
+      query-selector-shadow-dom: 1.0.1
+      resq: 1.11.0
+      rgb2hex: 0.2.5
+      serialize-error: 11.0.3
+      urlpattern-polyfill: 10.0.0
+      webdriver: 9.2.8
     transitivePeerDependencies:
       - bufferutil
       - supports-color

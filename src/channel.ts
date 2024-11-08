@@ -26,10 +26,6 @@ type IpcBridgeApiImplementation = {
   invoke?: IpcBridgeApiInvokeHandler
 }
 
-type IpcBridgeApiChannelMapItem = {
-  [key: string]: string | IpcBridgeApiChannelMapItem
-}
-
 type IpcBridgeApiChannelMapItemTypeGenerator<T extends IpcBridgeApiHandler> = {
   [K in keyof T]: T[K] extends IpcBridgeApiFunction
     ? string
@@ -58,28 +54,25 @@ type IpcBridgeApiChannelMapGenerator<T extends IpcBridgeApiImplementation> =
   >
 let channelMap = undefined
 
-function getApiChannelMap<T extends IpcBridgeApiImplementation>(
+const generateChannelMap = (apiHandler: IpcBridgeApiHandler) => {
+  return Object.keys(apiHandler).reduce((channelMap, key) => {
+    if (typeof apiHandler[key] === 'object') {
+      channelMap[key] = generateChannelMap(apiHandler[key])
+    } else {
+      channelMap[key] = genUUID()
+    }
+    return channelMap
+  }, {})
+}
+const getApiChannelMap = <T extends IpcBridgeApiImplementation>(
   apiHandlers: T
-): IpcBridgeApiChannelMapGenerator<T>
-
-function getApiChannelMap(apiHandlers: IpcBridgeApiImplementation) {
+): IpcBridgeApiChannelMapGenerator<T> => {
   if (channelMap && haveSameStructure(apiHandlers, channelMap)) {
     return channelMap
   }
 
-  const _getApiChannelMap = (apiHandler: IpcBridgeApiHandler) => {
-    const channelMap: IpcBridgeApiChannelMapItem = {}
-    Object.keys(apiHandler).forEach((key) => {
-      if (typeof apiHandler[key] === 'object') {
-        channelMap[key] = _getApiChannelMap(apiHandler[key])
-      } else {
-        channelMap[key] = genUUID()
-      }
-    })
-    return channelMap
-  }
-  channelMap = _getApiChannelMap(apiHandlers)
-  return channelMap
+  channelMap = generateChannelMap(apiHandlers)
+  return channelMap as IpcBridgeApiChannelMapGenerator<T>
 }
 
 const MODE = {

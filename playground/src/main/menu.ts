@@ -11,20 +11,26 @@ const createMenu = (targetWindow: BrowserWindow, api: IpcBridgeApiEmitter) => {
         label: 'Increment',
         click: () => {
           api.send.updateCounter(targetWindow, 1)
-        }
+        },
       },
       {
         label: 'Decrement',
-        click: () => api.send.updateCounter(targetWindow, -1)
-      }
-    ]
+        click: () => api.send.updateCounter(targetWindow, -1),
+      },
+    ],
   })
 }
 
-export const setMenu = (targetWindow: BrowserWindow, api: IpcBridgeApiEmitter) => {
+export const setMenu = (
+  targetWindow: BrowserWindow,
+  api: IpcBridgeApiEmitter
+) => {
   const appMenu = Menu.getApplicationMenu()
   const menuItems = appMenu
-    ? appMenu.items.concat([new MenuItem({ type: 'separator' })], createMenu(targetWindow, api))
+    ? appMenu.items.concat(
+        [new MenuItem({ type: 'separator' })],
+        createMenu(targetWindow, api)
+      )
     : [createMenu(targetWindow, api)]
   const newMenu = new Menu()
   menuItems.forEach((item, index) => {

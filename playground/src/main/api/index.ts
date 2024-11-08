@@ -3,7 +3,7 @@ import { getContextMenuHandler } from './showContextMenu'
 import type { BrowserWindow, IpcMainInvokeEvent } from 'electron'
 import type {
   IpcBridgeApiEmitterGenerator,
-  IpcBridgeApiGenerator
+  IpcBridgeApiGenerator,
 } from 'electron-typed-ipc-bridge/main'
 
 export const api = {
@@ -17,18 +17,18 @@ export const api = {
       minus: (_event: IpcMainInvokeEvent, arg0: number, arg1: number) => {
         console.log(`arg0: ${arg0}, arg1: ${arg1}`)
         return arg0 - arg1
-      }
+      },
     },
     showContextMenu: getContextMenuHandler(),
     emitEvent: (_: IpcMainInvokeEvent) => {
       if (emitter && mainWindow) {
         emitter.send.updateCounter(mainWindow, 1)
       }
-    }
+    },
   },
   on: {
-    updateCounter: (value: number) => value
-  }
+    updateCounter: (value: number) => value,
+  },
 }
 type IpcBridgeApiEmitter = IpcBridgeApiEmitterGenerator<typeof api>
 type IpcBridgeApi = IpcBridgeApiGenerator<typeof api>

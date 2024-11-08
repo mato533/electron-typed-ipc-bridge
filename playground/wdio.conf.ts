@@ -21,13 +21,15 @@ const getConfigFilepath = () => {
 }
 
 const loadBuilderConfig = (path: string): AppBuildInfo => {
-  const config = yaml.load(fs.readFileSync(path, { encoding: 'utf-8' })) as BuilderConfig
+  const config = yaml.load(
+    fs.readFileSync(path, { encoding: 'utf-8' })
+  ) as BuilderConfig
   const appName = config.productName!
   return {
     appName,
     config,
     isForge: false,
-    isBuilder: true
+    isBuilder: true,
   }
 }
 
@@ -43,7 +45,11 @@ const filePath = getConfigFilepath()
 
 const buildInfo = loadBuilderConfig(filePath.builderConfigPath)
 const electronVersion = getElVersion(filePath.packageJsonPath)
-const appBinaryPath = await getBinaryPath(filePath.packageJsonPath, buildInfo, electronVersion)
+const appBinaryPath = await getBinaryPath(
+  filePath.packageJsonPath,
+  buildInfo,
+  electronVersion
+)
 
 export const config: Options.Testrunner = {
   //
@@ -121,7 +127,7 @@ export const config: Options.Testrunner = {
       // Electron service options
       // see https://webdriver.io/docs/desktop-testing/electron/configuration/#service-options
       'wdio:electronServiceOptions': {
-        appBinaryPath
+        appBinaryPath,
         // custom application args
         //     appArgs: [],
       },
@@ -131,9 +137,9 @@ export const config: Options.Testrunner = {
       'goog:chromeOptions': {
         //   port: PORT,
         //   args: [`--remote-debugging-port=${PORT}`],
-        args: ['--disable-dev-shm-usage', '--disable-gpu', '--headless']
-      }
-    }
+        args: ['--disable-dev-shm-usage', '--disable-gpu', '--headless'],
+      },
+    },
   ],
 
   //
@@ -213,8 +219,8 @@ export const config: Options.Testrunner = {
   // See the full list at http://mochajs.org/
   mochaOpts: {
     ui: 'bdd',
-    timeout: 60000
-  }
+    timeout: 60000,
+  },
 
   //
   // =====

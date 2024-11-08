@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { contextBridge } from 'electron'
 import { exposeElectronAPI } from '@electron-toolkit/preload'
-import { AbstractLogger, generateIpcBridgeApi, initialize } from 'electron-typed-ipc-bridge/preload'
+import {
+  AbstractLogger,
+  generateIpcBridgeApi,
+  initialize,
+} from 'electron-typed-ipc-bridge/preload'
 
 import type { LogLevel } from 'electron-typed-ipc-bridge/preload'
 import type { IpcBridgeApi } from '../main/api'

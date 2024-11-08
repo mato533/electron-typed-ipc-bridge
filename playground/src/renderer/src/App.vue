@@ -23,7 +23,9 @@ const handler = (event: MouseEvent) => {
 onMounted(() => {
   window.addEventListener('contextmenu', handler)
   // handle message from main process
-  window.api.on.updateCounter((_e, value) => (counter.value = counter.value + value))
+  window.api.on.updateCounter(
+    (_e, value) => (counter.value = counter.value + value)
+  )
 })
 
 onBeforeUnmount(() => {
@@ -49,16 +51,24 @@ onBeforeUnmount(() => {
       <a target="_blank" rel="noreferrer" @click="counter = 0">Reset</a>
     </div>
     <div id="btn-add" class="action">
-      <a target="_blank" rel="noreferrer" @click="ipcHandleAdd">Add 2 to counter</a>
+      <a target="_blank" rel="noreferrer" @click="ipcHandleAdd"
+        >Add 2 to counter</a
+      >
     </div>
     <div id="btn-minus" class="action">
-      <a target="_blank" rel="noreferrer" @click="ipcHandleMinus">Minus 2 to counter</a>
+      <a target="_blank" rel="noreferrer" @click="ipcHandleMinus"
+        >Minus 2 to counter</a
+      >
     </div>
     <div id="btn-on-test" class="action">
-      <a target="_blank" rel="noreferrer" @click="emitEvent">Test Main to Renderer</a>
+      <a target="_blank" rel="noreferrer" @click="emitEvent"
+        >Test Main to Renderer</a
+      >
     </div>
   </div>
-  <p class="tip">Please try right click and test message menu. Updated below counter</p>
+  <p class="tip">
+    Please try right click and test message menu. Updated below counter
+  </p>
   <p class="tip">
     counter: <code id="counter">{{ counter }}</code>
   </p>

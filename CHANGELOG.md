@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.1] - 2024-11-09
+
+### 📚 Documentation
+
+- Add badges to README.md ([#75](https://github.com/mato533/electron-typed-ipc-bridge/pull/75))
+
+### 🧪 Testing
+
+- Add missing abnormal condition tests ([#64](https://github.com/mato533/electron-typed-ipc-bridge/pull/64))
+- Update test name ([#67](https://github.com/mato533/electron-typed-ipc-bridge/pull/67))
+- Add the E2E testing ([#72](https://github.com/mato533/electron-typed-ipc-bridge/pull/72))
+
+### ⚙️ Miscellaneous Tasks
+
+- Update test workflow ([#65](https://github.com/mato533/electron-typed-ipc-bridge/pull/65))
+- Update config for renovate ([#66](https://github.com/mato533/electron-typed-ipc-bridge/pull/66))
+- Update ci ([#70](https://github.com/mato533/electron-typed-ipc-bridge/pull/70))
+- Update rollup configurations ([#71](https://github.com/mato533/electron-typed-ipc-bridge/pull/71))
+- Update ci.yml ([#76](https://github.com/mato533/electron-typed-ipc-bridge/pull/76))
+
+### 🛠️ Bump Dependencies
+
+- _(deps)_ Update playground package.json changes ([#68](https://github.com/mato533/electron-typed-ipc-bridge/pull/68))
+- _(deps)_ Update all non-major dependencies ([#69](https://github.com/mato533/electron-typed-ipc-bridge/pull/69))
+- _(deps)_ Update playground package.json changes ([#73](https://github.com/mato533/electron-typed-ipc-bridge/pull/73))
+- _(deps)_ Update all non-major dependencies ([#74](https://github.com/mato533/electron-typed-ipc-bridge/pull/74))
+- _(deps)_ Update dependency rollup to ^4.25.0 ([#77](https://github.com/mato533/electron-typed-ipc-bridge/pull/77))
+- _(deps)_ Update technote-space/workflow-conclusion-action action to v3 ([#78](https://github.com/mato533/electron-typed-ipc-bridge/pull/78))
+
 ## [2.1.0] - 2024-11-01
 
 ### 🚜 Refactor
@@ -13,6 +42,7 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - Update release workflow ([#57](https://github.com/mato533/electron-typed-ipc-bridge/pull/57))
+- _(release)_ V2.1.0 ([#63](https://github.com/mato533/electron-typed-ipc-bridge/pull/63))
 
 ## [2.0.2] - 2024-10-29
 

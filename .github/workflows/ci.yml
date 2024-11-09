@@ -99,7 +99,7 @@ jobs:
       - test
     if: ${{ !cancelled() && (needs.pre-check.outputs.is-skip-check > 0 || needs.check.outputs.is-updated == 0) }}
     steps:
-      - uses: technote-space/workflow-conclusion-action@v2
+      - uses: technote-space/workflow-conclusion-action@v3
       - name: Conclusion
         env:
           WORKFLOW_CONCLUSION: ${{ env.WORKFLOW_CONCLUSION }}

@@ -109,7 +109,23 @@ jobs:
                                --coverage.reporter=json-summary \
                                --coverage.reporter=json \
                                --coverage.reporter=clover \
-                               --reporter=default
+                               --reporter=default \
+                               --reporter=junit \
+                               --outputFile="coverage/junit.xml"
+
+      - name: Upload coverage report to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/coverage-final.json
+          verbose: true
+
+      - name: Upload test results to Codecov
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: coverage/junit.xml
+          verbose: true
 
       - name: Upload coverage report to the code climate
         uses: paambaati/codeclimate-action@v9

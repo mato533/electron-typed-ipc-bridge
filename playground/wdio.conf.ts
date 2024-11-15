@@ -1,55 +1,4 @@
-import { fileURLToPath } from 'node:url'
-import { join, dirname } from 'node:path'
-import fs from 'node:fs'
-
-import yaml from 'js-yaml'
-import { getBinaryPath, getElectronVersion } from '@wdio/electron-utils'
-
-import type { AppBuildInfo, BuilderConfig } from '@wdio/electron-types'
 import type { Options } from '@wdio/types'
-import type { NormalizedPackageJson } from 'read-package-up'
-
-const getConfigFilepath = () => {
-  const packageConfig = 'package.json'
-  const builderConfig = 'electron-builder.yml'
-
-  const __dirname = dirname(fileURLToPath(import.meta.url))
-
-  const builderConfigPath = join(__dirname, builderConfig)
-  const packageJsonPath = join(__dirname, packageConfig)
-  return { packageJsonPath, builderConfigPath }
-}
-
-const loadBuilderConfig = (path: string): AppBuildInfo => {
-  const config = yaml.load(
-    fs.readFileSync(path, { encoding: 'utf-8' })
-  ) as BuilderConfig
-  const appName = config.productName!
-  return {
-    appName,
-    config,
-    isForge: false,
-    isBuilder: true,
-  }
-}
-
-const getElVersion = (path) => {
-  const packageJson = JSON.parse(
-    fs.readFileSync(path, { encoding: 'utf-8' })
-  ) as NormalizedPackageJson
-  const pkg = { packageJson, path: path }
-  return getElectronVersion(pkg)
-}
-
-const filePath = getConfigFilepath()
-
-const buildInfo = loadBuilderConfig(filePath.builderConfigPath)
-const electronVersion = getElVersion(filePath.packageJsonPath)
-const appBinaryPath = await getBinaryPath(
-  filePath.packageJsonPath,
-  buildInfo,
-  electronVersion
-)
 
 export const config: Options.Testrunner = {
   //
@@ -126,11 +75,11 @@ export const config: Options.Testrunner = {
       browserName: 'electron',
       // Electron service options
       // see https://webdriver.io/docs/desktop-testing/electron/configuration/#service-options
-      'wdio:electronServiceOptions': {
-        appBinaryPath,
-        // custom application args
-        //     appArgs: [],
-      },
+      // 'wdio:electronServiceOptions': {
+      //   appBinaryPath,
+      //   // custom application args
+      //   //     appArgs: [],
+      // },
       // 'wdio:chromedriverOptions': {
       //   logLevel: 'ALL'
       // },

@@ -48,7 +48,7 @@ onBeforeUnmount(() => {
       <a target="_blank" rel="noreferrer" @click="ipcHandle">Send IPC</a>
     </div>
     <div id="btn-reset" class="action">
-      <a target="_blank" rel="noreferrer" @click="counter = 0">Reset</a>
+      <a target="_blank" rel="noreferrer" @click="(counter = 0)">Reset</a>
     </div>
     <div id="btn-add" class="action">
       <a target="_blank" rel="noreferrer" @click="ipcHandleAdd"

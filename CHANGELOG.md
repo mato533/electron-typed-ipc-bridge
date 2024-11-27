@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.2] - 2024-11-27
+
+### 🚜 Refactor
+
+- Remove unnecessary config for wdio ([#85](https://github.com/mato533/electron-typed-ipc-bridge/pull/85))
+
+### ⚙️ Miscellaneous Tasks
+
+- _(config)_ Migrate renovate config ([#81](https://github.com/mato533/electron-typed-ipc-bridge/pull/81))
+
+### 🛠️ Bump Dependencies
+
+- _(deps)_ Update playground package.json changes ([#83](https://github.com/mato533/electron-typed-ipc-bridge/pull/83))
+- _(deps)_ Update codecov/codecov-action action to v5 ([#84](https://github.com/mato533/electron-typed-ipc-bridge/pull/84))
+- _(deps)_ Update playground package.json changes ([#86](https://github.com/mato533/electron-typed-ipc-bridge/pull/86))
+- _(deps)_ Update all non-major dependencies ([#82](https://github.com/mato533/electron-typed-ipc-bridge/pull/82))
+- _(deps)_ Update playground package.json changes ([#87](https://github.com/mato533/electron-typed-ipc-bridge/pull/87))
+- _(deps)_ Update all non-major dependencies ([#89](https://github.com/mato533/electron-typed-ipc-bridge/pull/89))
+- _(deps)_ Update dependency vite to v6 ([#90](https://github.com/mato533/electron-typed-ipc-bridge/pull/90))
+
 ## [2.1.1] - 2024-11-09
 
 ### 📚 Documentation
@@ -21,6 +41,7 @@ All notable changes to this project will be documented in this file.
 - Update ci ([#70](https://github.com/mato533/electron-typed-ipc-bridge/pull/70))
 - Update rollup configurations ([#71](https://github.com/mato533/electron-typed-ipc-bridge/pull/71))
 - Update ci.yml ([#76](https://github.com/mato533/electron-typed-ipc-bridge/pull/76))
+- _(release)_ V2.1.1 ([#80](https://github.com/mato533/electron-typed-ipc-bridge/pull/80))
 
 ### 🛠️ Bump Dependencies
 

@@ -80,12 +80,12 @@ export default [
   },
   {
     ignores: [
-      'node_modules/*',
+      '**/node_modules/*',
       'dist/*',
       '**/*/.gitignore',
       'coverage/*',
-      'playground/dist/*',
-      'playground/out/*',
+      'packages/**/dist/**/*',
+      'packages/sample-app/out/*',
     ],
   },
 ]

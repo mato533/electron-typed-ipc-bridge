@@ -8,7 +8,7 @@ export default defineConfig({
     silent: true,
     include: ['src/**/*.spec.ts'],
     coverage: {
-      exclude: ['src/index.ts', 'playground/*', ...coverageConfigDefaults.exclude],
+      exclude: ['src/index.ts', ...coverageConfigDefaults.exclude],
       thresholds: {
         lines: 70,
         branches: 70,

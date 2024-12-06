@@ -4,12 +4,7 @@
     "module": "ESNext",
     "baseUrl": ".",
     "moduleResolution": "bundler",
-    "noEmit": true,
-    "types": ["vitest/globals"],
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "noEmit": true
   },
-  "include": ["rollup.config.ts", "src/**/*.ts"],
   "exclude": ["node_modules/**", "playground/**"]
 }

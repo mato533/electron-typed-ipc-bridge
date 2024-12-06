@@ -25,6 +25,9 @@ export default [
       '**/*.mts',
       '**/*.vue',
     ],
+    settings: {
+      'import/extensions': ['error', 'never', { png: 'always' }],
+    },
     rules: {
       '@typescript-eslint/no-unused-vars': [
         'error',

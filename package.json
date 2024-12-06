@@ -60,7 +60,14 @@
     "coverage": "vitest run --coverage",
     "changelog": "git-cliff -o CHANGELOG.md",
     "typecheck": "tsc --noEmit -p tsconfig.json --composite false",
-    "build": "tsc --noEmit && rollup --config rollup.config.ts --configPlugin typescript"
+    "build": "tsc --noEmit && rollup --config rollup.config.ts --configPlugin typescript",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "**/*.{yml,json,md,ts,js}": [
+      "prettier --write --cache .",
+      "eslint --fix --cache --cache-location node_modules/.cache/eslint/ ."
+    ]
   },
   "repository": {
     "type": "git",
@@ -90,6 +97,8 @@
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-unicorn": "^56.0.1",
     "git-cliff": "^2.7.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.10",
     "prettier": "^3.4.1",
     "rollup": "^4.28.0",
     "rollup-plugin-delete": "^2.1.0",

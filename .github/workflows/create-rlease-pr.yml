@@ -105,7 +105,6 @@ jobs:
           APP_VERSION_TEXT: ${{steps.identify-version.outputs.app-version-text}}
         run: |
           pnpm run changelog --tag "${APP_VERSION_TEXT}"
-          pnpm exec prettier --write CHANGELOG.md
 
       - name: Spell Check and Fix of changelog
         uses: crate-ci/typos@master
@@ -125,6 +124,7 @@ jobs:
           EOF
 
       - name: Commit package.json
+        working-directory: packages/electron-typed-ipc-bridge
         env:
           APP_VERSION: ${{steps.identify-version.outputs.app-version}}
           APP_VERSION_TEXT: ${{steps.identify-version.outputs.app-version-text}}
@@ -135,6 +135,7 @@ jobs:
 
           [AUTO] this commit is created by github actions automatically.
           EOF
+
       - name: Push commits
         env:
           BRANCH_NAME: ${{ steps.create-repository.outputs.branch-name }}

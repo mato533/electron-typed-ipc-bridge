@@ -11,7 +11,6 @@
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "editor.formatOnSave": true,
   "editor.tabSize": 2,
   "eslint.useFlatConfig": true,
   "cSpell.words": ["codecov", "culc", "onwarn", "typecheck", "typeof"]

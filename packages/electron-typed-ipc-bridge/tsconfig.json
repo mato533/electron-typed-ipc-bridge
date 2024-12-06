@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "moduleResolution": "bundler",
+    "noEmit": true,
+    "types": ["vitest/globals"],
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["rollup.config.ts", "src/**/*.ts"],
+  "exclude": ["node_modules/**"]
+}

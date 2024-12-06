@@ -8,6 +8,7 @@ export default defineConfig({
     silent: true,
     include: ['src/**/*.spec.ts'],
     coverage: {
+      provider: 'v8',
       exclude: ['src/index.ts', ...coverageConfigDefaults.exclude],
       thresholds: {
         lines: 70,

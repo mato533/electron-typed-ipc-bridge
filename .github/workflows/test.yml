@@ -32,14 +32,17 @@ jobs:
           cache: 'pnpm'
 
       - name: Type check
+        working-directory: packages/electron-typed-ipc-bridge
         run: pnpm run typecheck
 
       - name: Run the test
+        working-directory: packages/electron-typed-ipc-bridge
         run: pnpm run test
 
       - name: Build
         id: build
         shell: bash
+        working-directory: packages/electron-typed-ipc-bridge
         run: |
           pnpm run build
           TAR_INFO="$(pnpm pack --json)"
@@ -52,33 +55,33 @@ jobs:
       - name: Setup playground
         env:
           TAR_NAME: ${{ steps.build.outputs.tar-name }}
-        working-directory: ./playground
+        working-directory: packages/sample-app
         shell: bash
         run: |
           pnpm install "../${TAR_NAME}"
 
       - name: Type check
-        working-directory: ./playground
+        working-directory: packages/sample-app
         run: pnpm run typecheck
 
       - name: Build (Windows)
         if: runner.os == 'Windows'
-        working-directory: ./playground
+        working-directory: packages/sample-app
         run: pnpm build:win
 
       - name: Test (E2E) on Windows
         if: runner.os == 'Windows'
-        working-directory: ./playground
+        working-directory: packages/sample-app
         run: pnpm test:e2e
 
       - name: Build (Linux)
         if: runner.os == 'Linux'
-        working-directory: ./playground
+        working-directory: packages/sample-app
         run: pnpm build:linux
 
       - name: Test (E2E) on Linux
         if: runner.os == 'Linux'
-        working-directory: ./playground
+        working-directory: packages/sample-app
         run: |
           export XDG_RUNTIME_DIR="/run/user/$(id -u)"
           export DBUS_SESSION_BUS_ADDRESS="unix:path=${XDG_RUNTIME_DIR}/bus"
@@ -104,6 +107,7 @@ jobs:
         id: test
         env:
           TEST_RESULT: 'coverage/junit.xml'
+        working-directory: packages/electron-typed-ipc-bridge
         run: |
           pnpm exec vitest run --coverage \
                                --coverage.reportOnFailure \
@@ -118,14 +122,14 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/coverage-final.json
+          files: packages/electron-typed-ipc-bridge/coverage/coverage-final.json
           verbose: true
 
       - name: Upload test results to Codecov
         uses: codecov/test-results-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: coverage/junit.xml
+          file: packages/electron-typed-ipc-bridge/coverage/junit.xml
           verbose: true
 
       - name: Upload coverage report to the code climate
@@ -134,8 +138,10 @@ jobs:
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageLocations: ${{ github.workspace }}/coverage/clover.xml:clover
+          coverageLocations: packages/electron-typed-ipc-bridge/coverage/clover.xml:clover
 
       - name: Write coverage report to pull request
         if: ${{ github.event_name == 'pull_request' }}
         uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          working-directory: packages/electron-typed-ipc-bridge/

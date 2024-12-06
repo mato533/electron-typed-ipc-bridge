@@ -23,11 +23,17 @@ jobs:
         with:
           cache: 'pnpm'
           registry-url: 'https://registry.npmjs.org'
+      - name: Copy license and readme
+        run: |
+          cp README.md packages/electron-typed-ipc-bridge/
+          cp LICENSE   packages/electron-typed-ipc-bridge/
 
       - name: Build
+        working-directory: packages/electron-typed-ipc-bridge
         run: pnpm run build
 
       - name: Publish
+        working-directory: packages/electron-typed-ipc-bridge
         run: pnpm publish --provenance --no-git-checks --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -45,6 +51,7 @@ jobs:
 
       - name: Run tests with coverage
         id: test
+        working-directory: packages/electron-typed-ipc-bridge
         env:
           TEST_RESULT: 'coverage/junit.xml'
         run: |
@@ -63,21 +70,21 @@ jobs:
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/coverage-final.json
+          files: packages/electron-typed-ipc-bridge/coverage/coverage-final.json
           verbose: true
 
       - name: Upload test results to Codecov
         uses: codecov/test-results-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          file: ${{ steps.test.outputs.file-name }}
+          file: packages/electron-typed-ipc-bridge/${{ steps.test.outputs.file-name }}
 
       - name: Upload coverage report to the code climate
         uses: paambaati/codeclimate-action@v9
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageLocations: ${{ github.workspace }}/coverage/clover.xml:clover
+          coverageLocations: ${{ github.workspace }}/packages/electron-typed-ipc-bridge/coverage/clover.xml:clover
 
   create-release:
     name: Create Release
@@ -110,8 +117,8 @@ jobs:
       - name: Download tarball
         id: download
         run: |
-          APP_NAME="$(cat ./package.json |jq .name|sed -e 's/"//g'| head -n1)"
-          APP_VERSION="$(cat ./package.json |jq .version|sed -e 's/"//g'| head -n1)"
+          APP_NAME="$(cat ./package.json |jq -r .name)"
+          APP_VERSION="$(cat ./package.json |jq -r .version)"
           TAR_URL="$(pnpm view "${APP_NAME}@${APP_VERSION}" dist.tarball)"
           TAR_NAME="${TAR_URL##*/}"
           echo "URL: ${TAR_URL}"

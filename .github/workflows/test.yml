@@ -58,8 +58,7 @@ jobs:
         working-directory: packages/sample-app
         shell: bash
         run: |
-          cp "../electron-typed-ipc-bridge/${TAR_NAME}" .
-          pnpm install "${TAR_NAME}"
+          pnpm add "../electron-typed-ipc-bridge/${TAR_NAME}"
 
       - name: Type check
         working-directory: packages/sample-app

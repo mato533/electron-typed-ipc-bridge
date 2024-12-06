@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.3] - 2024-12-06
+
+### ⚙️ Miscellaneous Tasks
+
+- Change to monorepo ([#94](https://github.com/mato533/electron-typed-ipc-bridge/pull/94))
+- Add chengelog to script ([#95](https://github.com/mato533/electron-typed-ipc-bridge/pull/95))
+- Update create-release-pr.yml ([#96](https://github.com/mato533/electron-typed-ipc-bridge/pull/96))
+
+### 🛠️ Bump Dependencies
+
+- _(deps)_ Update all non-major dependencies ([#93](https://github.com/mato533/electron-typed-ipc-bridge/pull/93))
+
 ## [2.1.2] - 2024-11-27
 
 ### 🚜 Refactor
@@ -11,6 +23,7 @@ All notable changes to this project will be documented in this file.
 ### ⚙️ Miscellaneous Tasks
 
 - _(config)_ Migrate renovate config ([#81](https://github.com/mato533/electron-typed-ipc-bridge/pull/81))
+- _(release)_ V2.1.2 ([#91](https://github.com/mato533/electron-typed-ipc-bridge/pull/91))
 
 ### 🛠️ Bump Dependencies
 

@@ -22,6 +22,7 @@ export default [
     ],
     settings: {
       'import/internal-regex': ['^@/'],
+      'import/extensions': ['error', 'never', { png: 'always' }],
     },
     plugins: {
       unicorn: eslintPluginUnicorn,

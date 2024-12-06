@@ -2,7 +2,7 @@
   "compilerOptions": {
     "composite": true,
     "baseUrl": ".",
-    "types": ["@wdio/globals/types", "mocha"],
+    "types": ["@wdio/globals/types"],
     "skipLibCheck": true
   },
   "include": ["e2e/**/*.ts"]

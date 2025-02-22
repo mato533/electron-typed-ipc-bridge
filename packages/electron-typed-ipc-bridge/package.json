@@ -72,20 +72,20 @@
   "homepage": "https://github.com/mato533/electron-typed-ipc-bridge#readme",
   "author": "Taiki Abe <taiki.abe@ymail.ne.jp>",
   "license": "MIT",
-  "packageManager": "pnpm@9.15.3",
+  "packageManager": "pnpm@9.15.5",
   "peerDependencies": {
     "electron": "^32.0.0 || ^33.0.0"
   },
   "devDependencies": {
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-typescript": "^12.1.2",
-    "@vitest/coverage-v8": "^2.1.8",
-    "electron": "^33.3.1",
-    "rollup": "^4.30.1",
-    "rollup-plugin-delete": "^2.1.0",
+    "@vitest/coverage-v8": "^2.1.9",
+    "electron": "^33.4.1",
+    "rollup": "^4.34.8",
+    "rollup-plugin-delete": "^2.2.0",
     "rollup-plugin-dts": "^6.1.1",
     "rollup-plugin-node-externals": "^8.0.0",
-    "vitest": "^2.1.8"
+    "vitest": "^2.1.9"
   },
   "keywords": [
     "electron",

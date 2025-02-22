@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       electron:
-        specifier: ^32.0.0 || ^33.0.0
-        version: 33.2.1
+        specifier: ^32.0.0 || ^33.0.0 || ^34.0.0
+        version: 34.2.0
     devDependencies:
       '@eslint/js':
         specifier: ^9.21.0
@@ -67,8 +67,8 @@ importers:
         specifier: ^2.1.9
         version: 2.1.9(vitest@2.1.9(@types/node@22.13.5))
       electron:
-        specifier: ^33.4.1
-        version: 33.4.1
+        specifier: ^34.2.0
+        version: 34.2.0
       rollup:
         specifier: ^4.34.8
         version: 4.34.8
@@ -89,10 +89,10 @@ importers:
     dependencies:
       '@electron-toolkit/preload':
         specifier: ^3.0.1
-        version: 3.0.1(electron@33.4.1)
+        version: 3.0.1(electron@34.2.0)
       '@electron-toolkit/utils':
         specifier: ^3.0.0
-        version: 3.0.0(electron@33.4.1)
+        version: 3.0.0(electron@34.2.0)
       electron-typed-ipc-bridge:
         specifier: workspace:*
         version: link:../electron-typed-ipc-bridge
@@ -131,8 +131,8 @@ importers:
         specifier: ^9.9.0
         version: 9.9.0
       electron:
-        specifier: ^33.4.1
-        version: 33.4.1
+        specifier: ^34.2.0
+        version: 34.2.0
       electron-builder:
         specifier: ^25.1.8
         version: 25.1.8(electron-builder-squirrel-windows@25.1.8)
@@ -165,7 +165,7 @@ importers:
         version: 2.2.2(typescript@5.7.3)
       wdio-electron-service:
         specifier: ^7.3.1
-        version: 7.3.1(electron@33.4.1)(webdriverio@9.2.14)
+        version: 7.3.1(electron@34.2.0)(webdriverio@9.2.14)
 
 packages:
 
@@ -2208,13 +2208,8 @@ packages:
       '@swc/core':
         optional: true
 
-  electron@33.2.1:
-    resolution: {integrity: sha512-SG/nmSsK9Qg1p6wAW+ZfqU+AV8cmXMTIklUL18NnOKfZLlum4ZsDoVdmmmlL39ZmeCaq27dr7CgslRPahfoVJg==}
-    engines: {node: '>= 12.20.55'}
-    hasBin: true
-
-  electron@33.4.1:
-    resolution: {integrity: sha512-ICXI9hw3Ru3XwaZLZdwyARn85GpoF9n4BrrwkHJtsoi4rl3qA7IM/Qu5HlDhqnbH4XuPNmHwoJ8bGJqo0lJ4+A==}
+  electron@34.2.0:
+    resolution: {integrity: sha512-SYwBJNeXBTm1q/ErybQMUBZAYqEreBUqBwTrNkw1rV4YatDZk5Aittpcus3PPeC4UoI/tqmJ946uG8AKHTd6CA==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -5134,17 +5129,17 @@ snapshots:
       ajv: 6.12.6
       ajv-keywords: 3.5.2(ajv@6.12.6)
 
-  '@electron-toolkit/preload@3.0.1(electron@33.4.1)':
+  '@electron-toolkit/preload@3.0.1(electron@34.2.0)':
     dependencies:
-      electron: 33.4.1
+      electron: 34.2.0
 
   '@electron-toolkit/tsconfig@1.0.1(@types/node@22.13.5)':
     dependencies:
       '@types/node': 22.13.5
 
-  '@electron-toolkit/utils@3.0.0(electron@33.4.1)':
+  '@electron-toolkit/utils@3.0.0(electron@34.2.0)':
     dependencies:
-      electron: 33.4.1
+      electron: 34.2.0
 
   '@electron/asar@3.2.17':
     dependencies:
@@ -7365,15 +7360,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  electron@33.2.1:
-    dependencies:
-      '@electron/get': 2.0.3
-      '@types/node': 20.17.9
-      extract-zip: 2.0.1
-    transitivePeerDependencies:
-      - supports-color
-
-  electron@33.4.1:
+  electron@34.2.0:
     dependencies:
       '@electron/get': 2.0.3
       '@types/node': 20.17.9
@@ -10285,7 +10272,7 @@ snapshots:
     dependencies:
       defaults: 1.0.4
 
-  wdio-electron-service@7.3.1(electron@33.4.1)(webdriverio@9.2.14):
+  wdio-electron-service@7.3.1(electron@34.2.0)(webdriverio@9.2.14):
     dependencies:
       '@vitest/spy': 2.1.8
       '@wdio/electron-types': 7.3.1
@@ -10300,7 +10287,7 @@ snapshots:
       tinyspy: 3.0.2
       webdriverio: 9.2.14
     optionalDependencies:
-      electron: 33.4.1
+      electron: 34.2.0
     transitivePeerDependencies:
       - bufferutil
       - puppeteer-core

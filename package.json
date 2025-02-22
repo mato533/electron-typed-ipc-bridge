@@ -25,25 +25,25 @@
   "homepage": "https://github.com/mato533/electron-typed-ipc-bridge#readme",
   "author": "Taiki Abe <taiki.abe@ymail.ne.jp>",
   "license": "MIT",
-  "packageManager": "pnpm@9.15.3",
+  "packageManager": "pnpm@9.15.5",
   "peerDependencies": {
     "electron": "^32.0.0 || ^33.0.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.18.0",
+    "@eslint/js": "^9.21.0",
     "@types/eslint-config-prettier": "^6.11.3",
     "@types/eslint__js": "^8.42.3",
-    "@types/node": "^22.10.5",
-    "eslint": "^9.18.0",
+    "@types/node": "^22.13.5",
+    "eslint": "^9.21.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-unicorn": "^56.0.1",
-    "git-cliff": "^2.7.0",
+    "git-cliff": "^2.8.0",
     "husky": "^9.1.7",
-    "lint-staged": "^15.3.0",
-    "prettier": "^3.4.2",
+    "lint-staged": "^15.4.3",
+    "prettier": "^3.5.2",
     "typescript": "~5.7.3",
-    "typescript-eslint": "^8.19.1"
+    "typescript-eslint": "^8.24.1"
   },
   "keywords": [
     "electron",

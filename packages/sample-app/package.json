@@ -47,7 +47,7 @@
     "prettier": "^3.5.2",
     "tsx": "^4.19.3",
     "vite": "^6.1.1",
-    "vitest": "^2.1.9",
+    "vitest": "^3.0.7",
     "vue": "^3.5.13",
     "vue-tsc": "^2.2.2",
     "wdio-electron-service": "^8.0.0"

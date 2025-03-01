@@ -41,7 +41,7 @@
     "@wdio/spec-reporter": "^9.10.1",
     "electron": "^34.3.0",
     "electron-builder": "^25.1.8",
-    "electron-vite": "^2.3.0",
+    "electron-vite": "^3.0.0",
     "eslint": "^9.21.0",
     "eslint-plugin-vue": "^9.32.0",
     "prettier": "^3.5.2",

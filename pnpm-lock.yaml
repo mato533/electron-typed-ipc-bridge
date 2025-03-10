@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       electron:
-        specifier: ^32.0.0 || ^33.0.0 || ^34.0.0
-        version: 34.2.0
+        specifier: ^32.0.0 || ^33.0.0 || ^34.0.0 || ^35.0.0
+        version: 35.0.1
     devDependencies:
       '@eslint/js':
         specifier: ^9.22.0
@@ -67,8 +67,8 @@ importers:
         specifier: ^3.0.8
         version: 3.0.8(vitest@3.0.8(@types/debug@4.1.12)(@types/node@22.13.10)(tsx@4.19.3)(yaml@2.7.0))
       electron:
-        specifier: ^34.3.1
-        version: 34.3.1
+        specifier: ^35.0.1
+        version: 35.0.1
       rollup:
         specifier: ^4.35.0
         version: 4.35.0
@@ -89,10 +89,10 @@ importers:
     dependencies:
       '@electron-toolkit/preload':
         specifier: ^3.0.1
-        version: 3.0.1(electron@34.3.1)
+        version: 3.0.1(electron@35.0.1)
       '@electron-toolkit/utils':
         specifier: ^4.0.0
-        version: 4.0.0(electron@34.3.1)
+        version: 4.0.0(electron@35.0.1)
       electron-typed-ipc-bridge:
         specifier: workspace:*
         version: link:../electron-typed-ipc-bridge
@@ -131,8 +131,8 @@ importers:
         specifier: ^9.11.0
         version: 9.11.0
       electron:
-        specifier: ^34.3.1
-        version: 34.3.1
+        specifier: ^35.0.1
+        version: 35.0.1
       electron-builder:
         specifier: ^25.1.8
         version: 25.1.8(electron-builder-squirrel-windows@25.1.8)
@@ -165,7 +165,7 @@ importers:
         version: 2.2.8(typescript@5.8.2)
       wdio-electron-service:
         specifier: ^8.0.1
-        version: 8.0.1(electron@34.3.1)(rollup@4.35.0)(webdriverio@9.11.0(puppeteer-core@22.15.0))
+        version: 8.0.1(electron@35.0.1)(rollup@4.35.0)(webdriverio@9.11.0(puppeteer-core@22.15.0))
 
 packages:
 
@@ -2044,13 +2044,8 @@ packages:
       '@swc/core':
         optional: true
 
-  electron@34.2.0:
-    resolution: {integrity: sha512-SYwBJNeXBTm1q/ErybQMUBZAYqEreBUqBwTrNkw1rV4YatDZk5Aittpcus3PPeC4UoI/tqmJ946uG8AKHTd6CA==}
-    engines: {node: '>= 12.20.55'}
-    hasBin: true
-
-  electron@34.3.1:
-    resolution: {integrity: sha512-Vsgxc4FDGg7hjduKyvTP5qfNDxZHTliZIiWD1HlR5hHXx3BFjyVv3db/uEH1GaCU0KKyeNsBXRwS4WAOMaSH5g==}
+  electron@35.0.1:
+    resolution: {integrity: sha512-iQonj6lnPhqfqha2KXx6LzV1dnu6UPTCWK+b7f9Zvg828umGemi22DKbcJ3/q+Opn7iUVTWyqp9z1JQqkIi6OA==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -4893,17 +4888,17 @@ snapshots:
       ajv: 6.12.6
       ajv-keywords: 3.5.2(ajv@6.12.6)
 
-  '@electron-toolkit/preload@3.0.1(electron@34.3.1)':
+  '@electron-toolkit/preload@3.0.1(electron@35.0.1)':
     dependencies:
-      electron: 34.3.1
+      electron: 35.0.1
 
   '@electron-toolkit/tsconfig@1.0.1(@types/node@22.13.10)':
     dependencies:
       '@types/node': 22.13.10
 
-  '@electron-toolkit/utils@4.0.0(electron@34.3.1)':
+  '@electron-toolkit/utils@4.0.0(electron@35.0.1)':
     dependencies:
-      electron: 34.3.1
+      electron: 35.0.1
 
   '@electron/asar@3.2.17':
     dependencies:
@@ -6988,18 +6983,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  electron@34.2.0:
+  electron@35.0.1:
     dependencies:
       '@electron/get': 2.0.3
-      '@types/node': 20.17.9
-      extract-zip: 2.0.1
-    transitivePeerDependencies:
-      - supports-color
-
-  electron@34.3.1:
-    dependencies:
-      '@electron/get': 2.0.3
-      '@types/node': 20.17.9
+      '@types/node': 22.13.10
       extract-zip: 2.0.1
     transitivePeerDependencies:
       - supports-color
@@ -9831,7 +9818,7 @@ snapshots:
     dependencies:
       defaults: 1.0.4
 
-  wdio-electron-service@8.0.1(electron@34.3.1)(rollup@4.35.0)(webdriverio@9.11.0(puppeteer-core@22.15.0)):
+  wdio-electron-service@8.0.1(electron@35.0.1)(rollup@4.35.0)(webdriverio@9.11.0(puppeteer-core@22.15.0)):
     dependencies:
       '@vitest/spy': 3.0.7
       '@wdio/electron-types': 8.0.1
@@ -9847,7 +9834,7 @@ snapshots:
       tinyspy: 3.0.2
       webdriverio: 9.11.0(puppeteer-core@22.15.0)
     optionalDependencies:
-      electron: 34.3.1
+      electron: 35.0.1
     transitivePeerDependencies:
       - bufferutil
       - rollup

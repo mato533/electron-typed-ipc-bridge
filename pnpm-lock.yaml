@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       electron:
-        specifier: ^32.0.0 || ^33.0.0 || ^34.0.0 || ^35.0.0
-        version: 35.3.0
+        specifier: ^32.0.0 || ^33.0.0 || ^34.0.0 || ^35.0.0 || ^36.0.0
+        version: 36.3.1
     devDependencies:
       '@eslint/js':
         specifier: ^9.26.0
@@ -67,8 +67,8 @@ importers:
         specifier: ^3.1.3
         version: 3.1.3(vitest@3.1.3(@types/debug@4.1.12)(@types/node@22.15.17)(tsx@4.19.4)(yaml@2.7.0))
       electron:
-        specifier: ^35.3.0
-        version: 35.3.0
+        specifier: ^36.3.1
+        version: 36.3.1
       rollup:
         specifier: ^4.40.2
         version: 4.40.2
@@ -89,10 +89,10 @@ importers:
     dependencies:
       '@electron-toolkit/preload':
         specifier: ^3.0.2
-        version: 3.0.2(electron@35.3.0)
+        version: 3.0.2(electron@36.3.1)
       '@electron-toolkit/utils':
         specifier: ^4.0.0
-        version: 4.0.0(electron@35.3.0)
+        version: 4.0.0(electron@36.3.1)
       electron-typed-ipc-bridge:
         specifier: workspace:*
         version: link:../electron-typed-ipc-bridge
@@ -131,8 +131,8 @@ importers:
         specifier: ^9.12.6
         version: 9.12.6
       electron:
-        specifier: ^35.3.0
-        version: 35.3.0
+        specifier: ^36.3.1
+        version: 36.3.1
       electron-builder:
         specifier: ^26.0.12
         version: 26.0.12(electron-builder-squirrel-windows@25.1.8)
@@ -165,7 +165,7 @@ importers:
         version: 2.2.10(typescript@5.8.3)
       wdio-electron-service:
         specifier: ^8.1.0
-        version: 8.1.0(electron@35.3.0)(webdriverio@9.12.7(puppeteer-core@22.15.0))
+        version: 8.1.0(electron@36.3.1)(webdriverio@9.12.7(puppeteer-core@22.15.0))
 
 packages:
 
@@ -2063,8 +2063,8 @@ packages:
       '@swc/core':
         optional: true
 
-  electron@35.3.0:
-    resolution: {integrity: sha512-6dLslJrQYB1qvqVPYRv1PhAA/uytC66nUeiTcq2JXiBzrmTWCHppqtGUjZhvnSRVatBCT5/SFdizdzcBiEiYUg==}
+  electron@36.3.1:
+    resolution: {integrity: sha512-LeOZ+tVahmctHaAssLCGRRUa2SAO09GXua3pKdG+WzkbSDMh+3iOPONNVPTqGp8HlWnzGj4r6mhsIbM2RgH+eQ==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -5097,17 +5097,17 @@ snapshots:
       ajv: 6.12.6
       ajv-keywords: 3.5.2(ajv@6.12.6)
 
-  '@electron-toolkit/preload@3.0.2(electron@35.3.0)':
+  '@electron-toolkit/preload@3.0.2(electron@36.3.1)':
     dependencies:
-      electron: 35.3.0
+      electron: 36.3.1
 
   '@electron-toolkit/tsconfig@1.0.1(@types/node@22.15.17)':
     dependencies:
       '@types/node': 22.15.17
 
-  '@electron-toolkit/utils@4.0.0(electron@35.3.0)':
+  '@electron-toolkit/utils@4.0.0(electron@36.3.1)':
     dependencies:
-      electron: 35.3.0
+      electron: 36.3.1
 
   '@electron/asar@3.2.17':
     dependencies:
@@ -7417,7 +7417,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  electron@35.3.0:
+  electron@36.3.1:
     dependencies:
       '@electron/get': 2.0.3
       '@types/node': 22.15.17
@@ -10441,7 +10441,7 @@ snapshots:
     dependencies:
       defaults: 1.0.4
 
-  wdio-electron-service@8.1.0(electron@35.3.0)(webdriverio@9.12.7(puppeteer-core@22.15.0)):
+  wdio-electron-service@8.1.0(electron@36.3.1)(webdriverio@9.12.7(puppeteer-core@22.15.0)):
     dependencies:
       '@vitest/spy': 3.1.1
       '@wdio/electron-types': 8.1.0
@@ -10457,7 +10457,7 @@ snapshots:
       tinyspy: 4.0.2
       webdriverio: 9.12.7(puppeteer-core@22.15.0)
     optionalDependencies:
-      electron: 35.3.0
+      electron: 36.3.1
     transitivePeerDependencies:
       - bufferutil
       - supports-color

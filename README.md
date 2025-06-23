@@ -37,9 +37,7 @@ npm install electron-typed-ipc-bridge
 **There are 5 STEPS to use this library.**
 
 1. #### Create api on **`main`** script
-
    1. Implement the API of the IPC context bridge
-
       - `invoke` : **renderer --(data)--> main --(return data)--> renderer**  
         return data is the option
       - `on` : **main --(data)--> renderer**  
@@ -58,7 +56,6 @@ npm install electron-typed-ipc-bridge
       ```
 
    1. Generate and export type definitions
-
       - `IpcBridgeApiEmitter`: For the type of Emitter to use message from main to renderer.(defined at `on` by step.1-1)
       - `IpcBridgeApi` : For the type of exposed api(exposed to renderer, defined at `invoke` and `on` by step.1-1)
 
@@ -74,7 +71,6 @@ npm install electron-typed-ipc-bridge
    See the playground code: [`main/api/index.ts`](playground/src/main/api/index.ts)
 
 1. #### Add handler at `main.ts`
-
    1. Resister IPC handlers(apis defined at `invoke`)
 
       ```typescript
@@ -99,7 +95,6 @@ npm install electron-typed-ipc-bridge
    See the playground code: [`main/index.ts`](playground/src/main/index.ts)
 
 1. #### Add invoker at `preload.ts`
-
    1. Generate Ipc Context Bridge API
 
       ```typescript
@@ -131,7 +126,6 @@ npm install electron-typed-ipc-bridge
    See the playground code: [`preload/index.d.ts`](playground/src/preload/index.d.ts)
 
 1. #### Call the exposed API or add a handler for messages sent via the API at renderer.
-
    1. Use api defined at `invoke` with type-safe!
 
       ```typescript

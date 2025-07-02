@@ -39,7 +39,7 @@
     "@wdio/local-runner": "^9.15.0",
     "@wdio/mocha-framework": "^9.15.0",
     "@wdio/spec-reporter": "^9.15.0",
-    "electron": "^36.3.2",
+    "electron": "^37.2.0",
     "electron-builder": "^26.0.12",
     "electron-vite": "^3.1.0",
     "eslint": "^9.28.0",

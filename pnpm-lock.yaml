@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       electron:
-        specifier: ^32.0.0 || ^33.0.0 || ^34.0.0 || ^35.0.0 || ^36.0.0 || ^37.0.0
-        version: 37.2.0
+        specifier: ^32.0.0 || ^33.0.0 || ^34.0.0 || ^35.0.0 || ^36.0.0 || ^37.0.0 || ^39.0.0
+        version: 39.2.7
     devDependencies:
       '@eslint/js':
         specifier: ^9.28.0
@@ -67,8 +67,8 @@ importers:
         specifier: ^3.1.4
         version: 3.1.4(vitest@3.1.4(@types/debug@4.1.12)(@types/node@22.15.29)(tsx@4.19.4)(yaml@2.8.0))
       electron:
-        specifier: ^37.2.0
-        version: 37.2.0
+        specifier: ^39.2.7
+        version: 39.2.7
       rollup:
         specifier: ^4.41.1
         version: 4.41.1
@@ -89,10 +89,10 @@ importers:
     dependencies:
       '@electron-toolkit/preload':
         specifier: ^3.0.2
-        version: 3.0.2(electron@37.2.0)
+        version: 3.0.2(electron@39.2.7)
       '@electron-toolkit/utils':
         specifier: ^4.0.0
-        version: 4.0.0(electron@37.2.0)
+        version: 4.0.0(electron@39.2.7)
       electron-typed-ipc-bridge:
         specifier: workspace:*
         version: link:../electron-typed-ipc-bridge
@@ -131,8 +131,8 @@ importers:
         specifier: ^9.15.0
         version: 9.15.0
       electron:
-        specifier: ^37.2.0
-        version: 37.2.0
+        specifier: ^39.2.7
+        version: 39.2.7
       electron-builder:
         specifier: ^26.0.12
         version: 26.0.12(electron-builder-squirrel-windows@25.1.8)
@@ -165,7 +165,7 @@ importers:
         version: 2.2.10(typescript@5.8.3)
       wdio-electron-service:
         specifier: ^8.1.0
-        version: 8.1.0(electron@37.2.0)(webdriverio@9.15.0(puppeteer-core@22.15.0))
+        version: 8.1.0(electron@39.2.7)(webdriverio@9.15.0(puppeteer-core@22.15.0))
 
 packages:
 
@@ -2052,8 +2052,8 @@ packages:
       '@swc/core':
         optional: true
 
-  electron@37.2.0:
-    resolution: {integrity: sha512-dE6+qeg6SBUVd5d8CD2+GH82kh+gF1v40+hs+U+UOno681NMSGmBtgqwldQRpbvtnQDD7V2M9Cpfr3+Abw7aBg==}
+  electron@39.2.7:
+    resolution: {integrity: sha512-KU0uFS6LSTh4aOIC3miolcbizOFP7N1M46VTYVfqIgFiuA2ilfNaOHLDS9tCMvwwHRowAsvqBrh9NgMXcTOHCQ==}
     engines: {node: '>= 12.20.55'}
     hasBin: true
 
@@ -4632,6 +4632,7 @@ packages:
   whatwg-encoding@3.1.1:
     resolution: {integrity: sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==}
     engines: {node: '>=18'}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-mimetype@4.0.0:
     resolution: {integrity: sha512-QaKxh0eNIi2mE9p2vEdzfagOKHCcj1pJ56EEHGQOVxp8r9/iszLUUV7v89x9O1p/T+NlTM5W7jW6+cz4Fq1YVg==}
@@ -4921,17 +4922,17 @@ snapshots:
       ajv: 6.12.6
       ajv-keywords: 3.5.2(ajv@6.12.6)
 
-  '@electron-toolkit/preload@3.0.2(electron@37.2.0)':
+  '@electron-toolkit/preload@3.0.2(electron@39.2.7)':
     dependencies:
-      electron: 37.2.0
+      electron: 39.2.7
 
   '@electron-toolkit/tsconfig@1.0.1(@types/node@22.15.29)':
     dependencies:
       '@types/node': 22.15.29
 
-  '@electron-toolkit/utils@4.0.0(electron@37.2.0)':
+  '@electron-toolkit/utils@4.0.0(electron@39.2.7)':
     dependencies:
-      electron: 37.2.0
+      electron: 39.2.7
 
   '@electron/asar@3.2.17':
     dependencies:
@@ -7222,7 +7223,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  electron@37.2.0:
+  electron@39.2.7:
     dependencies:
       '@electron/get': 2.0.3
       '@types/node': 22.15.29
@@ -10037,7 +10038,7 @@ snapshots:
     dependencies:
       defaults: 1.0.4
 
-  wdio-electron-service@8.1.0(electron@37.2.0)(webdriverio@9.15.0(puppeteer-core@22.15.0)):
+  wdio-electron-service@8.1.0(electron@39.2.7)(webdriverio@9.15.0(puppeteer-core@22.15.0)):
     dependencies:
       '@vitest/spy': 3.1.1
       '@wdio/electron-types': 8.1.0
@@ -10053,7 +10054,7 @@ snapshots:
       tinyspy: 4.0.2
       webdriverio: 9.15.0(puppeteer-core@22.15.0)
     optionalDependencies:
-      electron: 37.2.0
+      electron: 39.2.7
     transitivePeerDependencies:
       - bufferutil
       - supports-color

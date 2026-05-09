@@ -119,7 +119,7 @@ jobs:
                                --outputFile="coverage/junit.xml"
 
       - name: Upload coverage report to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: packages/electron-typed-ipc-bridge/coverage/coverage-final.json

@@ -28,7 +28,7 @@
     "electron-typed-ipc-bridge": "workspace:*"
   },
   "devDependencies": {
-    "@electron-toolkit/tsconfig": "^1.0.1",
+    "@electron-toolkit/tsconfig": "^2.0.0",
     "@rushstack/eslint-patch": "^1.11.0",
     "@types/node": "^22.15.29",
     "@vitejs/plugin-vue": "^5.2.4",
